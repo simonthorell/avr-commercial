@@ -5,6 +5,9 @@ Emil Kool
 Nicole Nilsson  
 
 ### BASIC OUTLINE
+Wokwi link for the LCD
+```https://wokwi.com/projects/382555255453881345```
+
 The main loop
 ```
 void loop() {
