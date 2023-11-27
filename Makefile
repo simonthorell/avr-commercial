@@ -1,60 +1,42 @@
 # Tool Definitions
-CC=/opt/homebrew/bin/avr-gcc
-LD=/opt/homebrew/bin/avr-ld
-OBJCOPY=/opt/homebrew/bin/avr-objcopy
-OBJDUMP=/opt/homebrew/bin/avr-objdump
-AVRSIZE=/opt/homebrew/bin/avr-size
-OBJISP=/opt/homebrew/bin/avrdude
+CC=avr-g++
+OBJCOPY=avr-objcopy
 MCU=atmega328p
 CFLAGS=-Wall -Wextra -Wundef -pedantic \
-        -Os -std=gnu99 -DF_CPU=16000000UL -mmcu=$(MCU) -DBAUD=19200
+        -Os -std=c++11 -DF_CPU=16000000UL -mmcu=$(MCU) -DBAUD=19200 -Iinclude
 LDFLAGS=-mmcu=$(MCU)
-PORT=/dev/ttyACM0 # Update this with your port
-BIN=helloarduino
-OUT=${BIN}.hex
-SOURCES = main.cpp
+BIN=avr-commercial
+APP_DIR=app
+OUT=$(APP_DIR)/$(BIN).hex
+SRC_DIR=src
+INCLUDE_DIR=include
+OBJ_DIR=obj
 
-DEBUG?=1
+# Source and Object Files
+SOURCES=$(wildcard $(SRC_DIR)/*.cpp)
+OBJECTS=$(addprefix $(OBJ_DIR)/,$(notdir $(SOURCES:.cpp=.o)))
 
-ifeq ($(DEBUG), 1)
-	OUTPUTDIR=bin/debug
-else
-	OUTPUTDIR=bin/release
-endif
+# Default target
+all: $(OUT)
 
-OBJS =  $(addprefix $(OUTPUTDIR)/,$(SOURCES:.cpp=.o))
+# Compile
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	@mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
 
-all: $(OUTPUTDIR)  $(OUT) 
+# Link
+$(APP_DIR)/$(BIN).elf: $(OBJECTS)
+	@mkdir -p $(APP_DIR)
+	$(CC) $(LDFLAGS) -o $@ $^
 
-$(OBJS): Makefile
+# Hex
+$(OUT): $(APP_DIR)/$(BIN).elf
+	$(OBJCOPY) -O ihex -R .eeprom $< $@
 
-$(OUTPUTDIR)/%.o:%.cpp
-	$(CC) $(CFLAGS) -MD -o $@ -c $<
-
-%.lss: %.elf
-	$(OBJDUMP) -h -S -s $< > $@
-
-%.elf: $(OBJS)
-	$(CC) -Wl,-Map=$(@:.elf=.map) $(LDFLAGS) -o $@ $^
-	$(AVRSIZE) $@
-
-
-$(OBJS):$(SOURCES)
-
-%.hex: %.elf
-	$(OBJCOPY) -O ihex -R .fuse -R .lock -R .user_signatures -R .comment $< $@
-
-isp: ${BIN}.hex
-	$(OBJISP) -F -V -c arduino -p ${MCU} -P ${PORT} -U flash:w:$<
-
-
+# Clean
 clean:
-	del "$(OUT)"  *.map *.P *.d
+	rm -f $(OBJ_DIR)/*.o $(APP_DIR)/$(BIN).elf $(OUT)
+	rm -rf $(APP_DIR) $(OBJ_DIR)
 
-# $(OUTPUTDIR): 
-# 	@mkdir "$(OUTPUTDIR)"
-
-$(OUTPUTDIR):
-	mkdir -p $(OUTPUTDIR)
-
-.PHONY: clean dirs
+# Phony Targets
+.PHONY: all clean
