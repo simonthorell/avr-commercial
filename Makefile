@@ -30,10 +30,15 @@ CFLAGS=-Wall -Wextra -Wundef -pedantic \
         -Os -std=c++11 -DF_CPU=16000000UL -mmcu=$(MCU) -DBAUD=19200 -Iinclude
 LDFLAGS=-mmcu=$(MCU)
 
+# Libraries directory
+LIBS_DIR=libs
+CFLAGS += -I$(LIBS_DIR)
+
 # Source and Object Directories
 SRC_DIR=src
 INCLUDE_DIR=include
 OBJ_DIR=obj
+LIBS_SRC=$(wildcard $(LIBS_DIR)/*.cpp) # Assuming your library files are .cpp
 
 # Output directory
 APP_DIR=app
@@ -42,8 +47,8 @@ ELF_OUT=$(APP_DIR)/$(BIN).elf
 OUT=$(APP_DIR)/$(BIN).hex
 
 # Source and Object Files
-SOURCES=$(wildcard $(SRC_DIR)/*.cpp)
-HEADERS=$(wildcard $(INCLUDE_DIR)/*.h)
+SOURCES=$(wildcard $(SRC_DIR)/*.cpp) $(LIBS_SRC)
+HEADERS=$(wildcard $(INCLUDE_DIR)/*.h) $(wildcard $(LIBS_DIR)/*.h)
 OBJECTS=$(addprefix $(OBJ_DIR)/,$(notdir $(SOURCES:.cpp=.o)))
 
 # Debug/Release Output Directory
@@ -58,7 +63,7 @@ endif
 all: $(OUT)
 
 # Compile
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp $(HEADERS)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp $(HEADERS) $(LIBS_SRC)
 	@mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
