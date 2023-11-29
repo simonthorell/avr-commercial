@@ -6,13 +6,13 @@ int main(void){
     HD44780 lcd;
 
     // Initialize the LCD
-    lcd.Initalize();
+    lcd.Initialize();
 
     // Clear the LCD screen
     lcd.Clear();
 
     // Define the text to be displayed
-    char text[] = "Hello World!";
+    char text[] = "Hello World! Test something new!";
 
     // Display the text on the LCD
     lcd.WriteText(text);
