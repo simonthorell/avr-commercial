@@ -52,14 +52,22 @@ void HD44780::WriteCommand(unsigned char commandToWrite) {
 void HD44780::WriteData(unsigned char dataToWrite) {
 	LCD_RS_PORT |= LCD_RS;
 	Write(dataToWrite);
-	if (position_x == 15 && position_y == 0) {
-		position_x = 0;
-		position_y = 1;
-	} else if (position_x == 15) {
-		position_x = 0;
-		position_y = 0;
-	}
-	++position_x;
+	
+	// if (position_x == 15 && position_y == 0) {
+	// 	position_x = 0;
+	// 	position_y = 1;
+	// } else if (position_x == 15) {
+	// 	position_x = 0;
+	// 	position_y = 0;
+	// }
+
+	// Modify the condition to correctly handle line wrapping
+    if (++position_x >= 16) {
+        position_x = 0;
+        position_y = (position_y + 1) % 2; // This ensures wrapping between two lines
+    }
+
+	// ++position_x;
 }
 //-------------------------------------------------------------------------------------------------
 //
