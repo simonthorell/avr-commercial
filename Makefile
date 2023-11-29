@@ -1,3 +1,10 @@
+# Define MKDIR command based on the OS
+ifeq ($(OS),Windows_NT)
+    MKDIR=if not exist "$(1)" mkdir "$(1)"
+else
+    MKDIR=mkdir -p $(1)
+endif
+
 # Tool Definitions (Linux, Mac & Windows)
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Linux)
@@ -64,12 +71,12 @@ all: $(OUT)
 
 # Compile
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp $(HEADERS) $(LIBS_SRC)
-	@mkdir -p $(OBJ_DIR)
+	@$(call MKDIR,$(OBJ_DIR))
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Rule for compiling library sources
 $(OBJ_DIR)/%.o: $(LIBS_DIR)/%.cpp $(HEADERS)
-	@mkdir -p $(OBJ_DIR)
+	@$(call MKDIR,$(OBJ_DIR))
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Link
