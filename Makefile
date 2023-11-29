@@ -81,7 +81,7 @@ $(OBJ_DIR)/%.o: $(LIBS_DIR)/%.cpp $(HEADERS)
 
 # Link
 $(ELF_OUT): $(OBJECTS)
-	@mkdir -p $(APP_DIR)
+	@MKDIR $(APP_DIR)
 	$(CC) $(LDFLAGS) -o $@ $^
 	$(AVRSIZE) $@
 
