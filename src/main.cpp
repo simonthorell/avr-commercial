@@ -16,22 +16,25 @@ int main(void) {
 
   // Define the text to be displayed
   char text[] = "abc";
-  // text[4] = replaceÖ;
-  // text[1] = replaceÄ;
-
-  // Display the text on the LCD
-  // lcd.WriteText(text);
 
   // very good looking å
   unsigned char customChar[8] = {0b00100, 0b01010, 0b00100, 0b01110,
-                        0b00001, 0b01111, 0b10001, 0b01111};
+                                 0b00001, 0b01111, 0b10001, 0b01111};
+  //testing
+  unsigned char customCharTwo[8] = {
+    0b10000, 0b01000, 0b00100, 0b00010, 0b00001, 0b00010, 0b00100, 0b01000
+  };
   lcd.CreateChar(0, customChar);
+  lcd.CreateChar(1, customCharTwo);
   lcd.Clear();
-  char test[4];
+  char test[5];
+  //Address for first custom character is 8 for some reason?
   test[0] = 0x8;
   test[1] = replaceÄ;
-  test[2] = replaceÖ; 
-  test[3] = 0x0;
+  test[2] = replaceÖ;
+  //second address is 9? Idk it should be 0 and 1
+  test[3] = 0x9;
+  test[4] = 0x0;
   lcd.WriteText(test);
   lcd.GoTo(0, 1);
   lcd.WriteText(text);
