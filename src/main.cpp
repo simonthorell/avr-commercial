@@ -1,6 +1,9 @@
 #include <avr/io.h>
 #include "lcd.h"
 
+#define replaceÖ (char)0xEF
+#define replaceÄ (char)0xE1
+
 int main(void){
     // Create an instance of the LCD
     HD44780 lcd;
@@ -13,6 +16,8 @@ int main(void){
 
     // Define the text to be displayed
     char text[] = "Hello World! Test something new!";
+    text[4] = replaceÖ;
+    text[1] = replaceÄ;
 
     // Display the text on the LCD
     lcd.WriteText(text);
