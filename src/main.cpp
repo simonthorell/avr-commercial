@@ -1,5 +1,6 @@
 #include <avr/io.h>
 #include "lcd.h"
+#include "lcd_display_options.h"
 
 int main(void){
     // Create an instance of the LCD
@@ -12,15 +13,14 @@ int main(void){
     lcd.Clear();
 
     // Define the text to be displayed
-    char text[] = "Hello World! Test something new!";
-
-    // Display the text on the LCD
-    lcd.WriteText(text);
+    char text1[] = "Welcome to      awesome company!";
+    char text2[] = "This is a rolling commercial!";
 
     // The microcontroller typically runs in an infinite loop
     while (1) {
-        // Your main program logic here
-        // If you want to update the display, you can call lcd.WriteText with new text
+        displayText(lcd, text1);
+        _delay_ms(2000);
+        displayScrollingText(lcd, text2, sizeof(text2) / sizeof(char));
     }
     
     return 0;
