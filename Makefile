@@ -29,8 +29,8 @@ MCU=atmega328p
 CFLAGS=-Wall -Wextra -Wundef -pedantic \
         -Os -std=c++11 -DF_CPU=16000000UL -mmcu=$(MCU) -DBAUD=19200 -Iinclude
 LDFLAGS=-mmcu=$(MCU)
-BIN=avr-commercial
-OUT=bin/$(BIN).hex
+
+# Source and Object Directories
 SRC_DIR=src
 INCLUDE_DIR=include
 OBJ_DIR=obj
