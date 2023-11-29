@@ -46,6 +46,7 @@ public:
     void Clear(void);
     void Home(void);
     void Initialize(void);
+    void CreateChar(unsigned char location, unsigned char charArray[]);
 
 private:
     int position_x;
