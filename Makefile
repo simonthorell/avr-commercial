@@ -67,6 +67,11 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp $(HEADERS) $(LIBS_SRC)
 	@mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
+# Rule for compiling library sources
+$(OBJ_DIR)/%.o: $(LIBS_DIR)/%.cpp $(HEADERS)
+	@mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
 # Link
 $(ELF_OUT): $(OBJECTS)
 	@mkdir -p $(APP_DIR)
