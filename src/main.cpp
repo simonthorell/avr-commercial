@@ -16,11 +16,11 @@ int main(void){
         Customer customer = getCustomer(i);
 
         if(customer.displayProperties[i] == SCROLLING) {
-            displayScrollingText(lcd, customer.billboards[i], sizeof(customer.billboards[i]));
+            displayScrollingText(&lcd, customer.billboards[i], sizeof(customer.billboards[i]));
         } else if (customer.displayProperties[i] == STATIC) {
-            displayStaticText(lcd, customer.billboards[i]);
+            displayStaticText(&lcd, customer.billboards[i]);
         } else if (customer.displayProperties[i] == BLINKING) {
-            displayBlinkingText(lcd, customer.billboards[i], 5);
+            displayBlinkingText(&lcd, customer.billboards[i], 5);
         } else {
             continue;
         }
