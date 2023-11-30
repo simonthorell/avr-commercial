@@ -71,6 +71,10 @@ void HD44780::Initialize(void) {
   WriteCommand(0x0C); // Display ON, Cursor OFF, Blink OFF
   Clear();
   WriteCommand(0x06); // Entry mode: Increment cursor
+
+  _delay_us(25); //safety delay
+  uint8_t customChar[] = customÅ;
+  CreateChar(0, customChar);
 }
 
 void HD44780::OutNibble(unsigned char nibble) {
@@ -102,10 +106,10 @@ void HD44780::Write(unsigned char byte) {
 }
 
 #define LCD_SETCGRAMADDR 0x40
-void HD44780::CreateChar(unsigned char location, unsigned char charArray[]) {
+void HD44780::CreateChar(uint8_t location, uint8_t charArray[]) {
   location &= 0x7;
   WriteCommand(LCD_SETCGRAMADDR | (location << 3));
-  for (unsigned char i = 0; i < 8; i++) {
+  for (uint8_t i = 0; i < 8; i++) {
     WriteData(charArray[i]);
   }
 }

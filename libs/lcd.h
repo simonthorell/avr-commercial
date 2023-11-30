@@ -4,6 +4,7 @@
 
 #include <avr/io.h>
 #include <util/delay.h>
+#include <avr/pgmspace.h>
 
 // Pin configuration
 #define LCD_RS_DIR DDRD
@@ -35,6 +36,9 @@
 #define HD44780_HOME 0x02
 // ... [rest of the command set]
 
+#define customÅ                                                               \
+  { 0x4, 0x0, 0xe, 0x1, 0xf, 0x11, 0xf, 0x0 }
+
 // HD44780 LCD class
 class HD44780 {
 public:
@@ -46,7 +50,7 @@ public:
   void Clear(void);
   void Home(void);
   void Initialize(void);
-  void CreateChar(unsigned char location, unsigned char charArray[]);
+  void CreateChar(uint8_t location, uint8_t charArray[]);
 
 private:
   int position_x;
