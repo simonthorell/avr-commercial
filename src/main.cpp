@@ -3,7 +3,7 @@
 
 #define OE "\xEF"
 #define AE "\xE1"
-#define AA "\x08" //YOU NEED TO CREATE THE CHARACTER FIRST!
+#define AA "\x08"
 
 int main(void) {
   // Create an instance of the LCD
