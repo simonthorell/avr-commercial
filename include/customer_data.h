@@ -1,31 +1,26 @@
 #ifndef CUSTOMER_DATA_H
 #define CUSTOMER_DATA_H
 
-#define scrollFlag 1
-#define blinkFLag 2
-#define evenOnlyFlag 4
-#define oddOnlyFlag 8
+// Define the number of customers
+#define MAX_CUSTOMERS 10
+#define MAX_CUSTOMER_NAME_LENGTH 20
+#define MAX_BILLBOARDS 5
+#define MAX_BILLBOARD_TEXT_LENGTH 35
 
-class Message { //make message struct or class?
-public:
-  void setMessage(char messageText[]);
-  char *getMessage();
+// Define flags for billboard display properties
+#define STATIC      0x00
+#define SCROLLING   0x01
+#define BLINKING    0x02
 
-private:
-  char messageText[40]; //how to handle string in avr?
-  char flags;
+// Define a structure for customer data
+struct Customer {
+    char name[MAX_CUSTOMER_NAME_LENGTH];  // Customer name
+    float balance;  // Account balance
+    char billboards[MAX_BILLBOARDS][MAX_BILLBOARD_TEXT_LENGTH];  // Array of billboard strings
+    char displayProperties[5]; // Display properties for each billboard
 };
 
-class Customer {
-public:
-  Customer(unsigned int paid){
-
-  }
-  Message* getList();
-
-private:
-  unsigned int paid;
-  Message list[5];
-};
+// Define a function to get a customer from PROGMEM
+Customer getCustomer(int index);
 
 #endif
