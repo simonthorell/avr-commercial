@@ -7,10 +7,10 @@
 #define MAX_BILLBOARDS 5
 #define MAX_BILLBOARD_TEXT_LENGTH 35
 
-// Define flags for billboard display properties
-#define STATIC      0x00
-#define SCROLLING   0x01
-#define BLINKING    0x02
+// Define special characters
+#define OE "\xEF"
+#define AE "\xE1"
+#define AA "\x08" //YOU NEED TO CREATE THE CHARACTER FIRST!
 
 // Define a structure for customer data
 struct Customer {

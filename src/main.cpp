@@ -12,6 +12,7 @@ int main(void){
 
     int i = 0;
     while(1) {
+        // LOOP FOR TESTING
         Customer customer = getCustomer(i);
 
         if(customer.displayProperties[i] == SCROLLING) {

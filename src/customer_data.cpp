@@ -1,6 +1,7 @@
 // #include <avr/io.h>
 #include <avr/pgmspace.h>
 #include "customer_data.h"
+#include "lcd_display_options.h" // For the display properties
 
 /********************************************************************
 *                          CUSTOMER DATA
@@ -10,7 +11,7 @@ const Customer customers[] PROGMEM = {
     { "Customer1", 1000.0, 
         {SCROLLING, STATIC, BLINKING, STATIC, SCROLLING},
         {
-         "Billboard 1", 
+         "En god bil" AA "ff" AE "r (f" OE "r Harry!)", 
          "Billboard 2", 
          "Billboard 3", 
          "Billboard 4", 
