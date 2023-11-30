@@ -22,10 +22,10 @@ int main(void) {
   uint16_t *factorPtrArray[2];
 
   factorPtrArray[0] = factorize(420, &lcd);
-  factorPtrArray[1] = factorize(430, &lcd);
+  factorPtrArray[1] = factorize(1500, &lcd);
   lcd.Clear();
   lcd.GoTo(0, 0);
-  removeCommonFactors(factorPtrArray, 2, &lcd);
+  removeCommonFactors(factorPtrArray, 2);
 
   lcd.Clear();
   lcd.GoTo(0, 0);

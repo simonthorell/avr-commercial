@@ -93,19 +93,17 @@ uint16_t *factorize(uint16_t value, HD44780 *lcd) {
   return factors;
 }
 
-void removeCommonFactors(uint16_t **ptrToArray, uint8_t arrayLength,
-                         HD44780 *lcd) {
-  uint16_t *array1 = *ptrToArray;
-  uint16_t *array2 = *(ptrToArray + 1);
+void removeCommonFactors(uint16_t **ptrToArray, uint8_t arrayLength) {
+  uint16_t min;
   for (uint8_t i = 0; i < 25; i++) {
-    if (array1[i] != 0 && array2[i] != 0) {
-      if (array1[i] <= array2[i]) {
-        array2[i] -= array1[i];
-        array1[i] -= array1[i];
-      } else {
-        array1[i] -= array2[i];
-        array2[i] -= array2[i];
+    min = ptrToArray[0][i];
+    for (uint8_t j = 0; j < arrayLength; j++) {
+      if (min > ptrToArray[j][i]) {
+        min = ptrToArray[j][i];
       }
+    }
+    for (uint8_t k = 0; k < arrayLength; k++) {
+      ptrToArray[k][i] -= min;
     }
   }
 }
@@ -165,5 +163,4 @@ uint16_t deFactorize(uint16_t value) {
   default:
     return value;
   }
-  return value;
 }

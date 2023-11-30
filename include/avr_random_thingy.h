@@ -11,7 +11,7 @@
 // }factorization;
 
 uint16_t* factorize(uint16_t value, HD44780 *lcd);
-void removeCommonFactors(uint16_t ** ptrToArray, uint8_t arrayLength, HD44780 *lcd);
+void removeCommonFactors(uint16_t ** ptrToArray, uint8_t arrayLength);
 uint16_t deFactorize(uint16_t value);
 
 #endif // !__random_h
