@@ -26,7 +26,7 @@ int main(void) {
   while (1) {
     displayText(lcd, text1);
     _delay_ms(2000);
-    isplayScrollingText(lcd, text2, sizeof(text2) / sizeof(char));
+    displayScrollingText(lcd, text2, sizeof(text2) / sizeof(char));
   }
 
   return 0;
