@@ -7,6 +7,7 @@ uint16_t randomValue(uint16_t maxInclusive) { return maxInclusive; }
 
 // Probably put a table into progmem?
 // I hate this so much but it works
+// TODO: Replace with a map if possible, maybe in progmem?
 uint16_t indexSwitch(uint16_t value) {
   switch (value) {
   case 2:
