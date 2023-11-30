@@ -10,23 +10,23 @@ int main(void){
     lcd.Initialize();
     lcd.Clear();
 
-    int i = 0;
     while(1) {
-        // LOOP FOR TESTING
-        Customer customer = getCustomer(i);
+        // LOOP THROUGH ALL CUSTOMERS FOR TESTING
+        for (int customerIndex = 0; customerIndex < 5; customerIndex++) {
+            Customer customer = getCustomer(customerIndex);
 
-        if(customer.displayProperties[i] == SCROLLING) {
-            displayScrollingText(&lcd, customer.billboards[i], sizeof(customer.billboards[i]));
-        } else if (customer.displayProperties[i] == STATIC) {
-            displayStaticText(&lcd, customer.billboards[i]);
-        } else if (customer.displayProperties[i] == BLINKING) {
-            displayBlinkingText(&lcd, customer.billboards[i], 5);
-        } else {
-            continue;
+            for (int billboardIndex = 0; billboardIndex < 5; billboardIndex++) {
+                if (customer.displayProperties[billboardIndex] == SCROLLING) {
+                    displayScrollingText(&lcd, customer.billboards[billboardIndex], sizeof(customer.billboards[billboardIndex]));
+                } else if (customer.displayProperties[billboardIndex] == STATIC) {
+                    displayStaticText(&lcd, customer.billboards[billboardIndex]);
+                } else if (customer.displayProperties[billboardIndex] == BLINKING) {
+                    displayBlinkingText(&lcd, customer.billboards[billboardIndex], 5);
+                } else {
+                    continue;
+                }
+            }
         }
-
-        if (!(i > 1)) {i++;} else {i=0;}
     }
-    
     return 0;
 }
