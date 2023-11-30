@@ -1,47 +1,52 @@
-### GROUP MEMBERS
-Simon Thorell  
-Robert Krantz  
-Emil Kool  
-Nicole Nilsson  
+# AVR-GCC LCD Interface Project
 
-### BASIC OUTLINE
-Wokwi link for the LCD
-```https://wokwi.com/projects/382555255453881345```
+## Introduction
+This project presents a streamlined solution for programming an LCD1602 display using an Atmega328p   microcontroller with AVR-GCC. Focused on embedded programming in C/C++, it offers a cross-platform   framework suitable for a range of applications in embedded systems development.  
 
-The main loop
-```
-void loop() {
-  arrayMedKunder[];
-  unsigned int lastShown;
-  loop {
-    hitta randomkund;
-    dubbelkolla att den inte visades senast
+## Team Members
+- Simon Thorell
+- Robert Krantz
+- Emil Kool
+- Nicole Nilsson
 
-        slumpa kundens medellande kolla flaggor för scroll,
-        blink osv visa text + flaggor vänta 20sec
-  }
-}
-```
+## Project Overview
+This project aims to program an LCD1602 display using AVR-GCC for an Atmega328p microcontroller. The   code is written in C/C++ and is designed to be cross-platform, ensuring compatibility with various  operating systems.
 
-Customer class
-```
-class customer {
-public:
-  unsigned int paid;
-  const char *messages;
-};
-```
+## Project Structure
+The project is organized into several directories, each containing specific types of files:
 
-Message class
-```
-#define scrollFlag 1
-#define blinkFLag 2
-#define evenOnlyFlag 4
-#define oddOnlyFlag 8
+### /include
+- `customer_data.h`: Header file containing customer data structures.
+- `lcd_display_option.h`: Header file for LCD display options.
 
-class message {
-public:
-  std::string messageText;
-  char flags;
-};
-```
+### /libs
+- `lcd.cpp`: Source file for the LCD control functions.
+- `lcd.h`: Header file for the LCD control functions.
+
+### /src
+- `customer_data.cpp`: Implementation of customer data handling.
+- `lcd_display_options.cpp`: Implementation of LCD display options.
+- `main.cpp`: The main entry point for the program.
+
+### Root Directory
+- `Makefile`: Contains commands to compile the project.
+- `README.md`: This file, providing an overview and instructions.
+
+## How to Use
+1. Ensure you have AVR-GCC installed on your system.
+2. Clone the repository to your local machine.
+3. Navigate to the root directory of the project.
+4. Run `make` to compile the project.
+5. After successful compilation, upload the binary to the Atmega328p microcontroller.
+6. The LCD should display the programmed output upon successful upload.
+
+## Cross-Platform Compatibility
+This project is designed to be cross-platform. It has been tested on [list operating systems here], but it should work on other systems where AVR-GCC is supported.
+
+## Contributions
+For any contributions or modifications, please contact one of the team members.
+
+## License
+License what?! This is free to use!
+
+Thank you for your interest in our AVR-GCC LCD Interface Project!
