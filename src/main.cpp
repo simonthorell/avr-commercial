@@ -1,5 +1,7 @@
 #include "lcd.h"
 #include <avr/io.h>
+#include "lcd_display_options.h"
+
 
 #define OE "\xEF"
 #define AE "\xE1"
@@ -12,19 +14,19 @@ int main(void) {
   // Initialize the LCD
   lcd.Initialize();
 
+
   // Clear the LCD screen
   lcd.Clear();
-
-  // testing
-  lcd.Clear();
   char test[] = "En god bil" AA "ff" AE "r (f" OE "r Harry!)";
-  // Address for first custom character is 8 for some reason?
   lcd.WriteText(test);
+  _delay_ms(2500);
+  char text1[] = "Welcome to      awesome company!";
+  char text2[] = "This is a rolling commercial!";
   // The microcontroller typically runs in an infinite loop
   while (1) {
-    // Your main program logic here
-    // If you want to update the display, you can call lcd.WriteText with new
-    // text
+    displayText(lcd, text1);
+    _delay_ms(2000);
+    isplayScrollingText(lcd, text2, sizeof(text2) / sizeof(char));
   }
 
   return 0;
