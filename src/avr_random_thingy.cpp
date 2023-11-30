@@ -4,6 +4,7 @@
 
 uint16_t randomValue(uint16_t maxInclusive) { return maxInclusive; }
 
+//I hate this so much but it works
 uint16_t indexSwitch(uint16_t value) {
   switch (value) {
   case 2:
