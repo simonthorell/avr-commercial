@@ -23,12 +23,13 @@ void HD44780::WriteText(char *text) {
   while (*text) {
     if (charCount == 16) { // Move to the second line after 16 characters
       GoTo(0, 1);
-    } else if (charCount ==
-               32) { // Reset if more than 32 characters (display size)
-      Clear();       // Clear the display
-      GoTo(0, 0);    // Return to the first line
-      charCount = 0; // Reset character count
-    }
+    } 
+    // else if (charCount ==
+    //            32) { // Reset if more than 32 characters (display size)
+    //   Clear();       // Clear the display
+    //   GoTo(0, 0);    // Return to the first line
+    //   charCount = 0; // Reset character count
+    // }
     WriteData(*text++);
     charCount++;
   }
