@@ -1,10 +1,12 @@
 #include "avr_random_thingy.h"
 #include <stdint.h> //So I dont get all the uint errors, just for my IDE
 #include <stdio.h>
+#include <stdlib.h>
 
 uint16_t randomValue(uint16_t maxInclusive) { return maxInclusive; }
 
-//I hate this so much but it works
+// Probably put a table into progmem?
+// I hate this so much but it works
 uint16_t indexSwitch(uint16_t value) {
   switch (value) {
   case 2:
@@ -62,10 +64,10 @@ uint16_t indexSwitch(uint16_t value) {
   }
 }
 
-void factorize(uint16_t value, HD44780 *lcd) {
-  uint16_t factors[25];
-  //Need to clear the memory since we only do a nullcheck later on
-  for(uint8_t i = 0; i < 25; i++){
+uint16_t *factorize(uint16_t value, HD44780 *lcd) {
+  uint16_t *factors = (uint16_t *)malloc(sizeof(uint16_t) * 25);
+  // Need to clear the memory since we only do a nullcheck later on
+  for (uint8_t i = 0; i < 25; i++) {
     factors[i] = 0;
   }
   while (value % 2 == 0) {
@@ -88,4 +90,80 @@ void factorize(uint16_t value, HD44780 *lcd) {
       lcd->WriteText(buff);
     }
   }
+  return factors;
+}
+
+void removeCommonFactors(uint16_t **ptrToArray, uint8_t arrayLength,
+                         HD44780 *lcd) {
+  uint16_t *array1 = *ptrToArray;
+  uint16_t *array2 = *(ptrToArray + 1);
+  for (uint8_t i = 0; i < 25; i++) {
+    if (array1[i] != 0 && array2[i] != 0) {
+      if (array1[i] <= array2[i]) {
+        array2[i] -= array1[i];
+        array1[i] -= array1[i];
+      } else {
+        array1[i] -= array2[i];
+        array2[i] -= array2[i];
+      }
+    }
+  }
+}
+
+uint16_t deFactorize(uint16_t value) {
+  switch (value) {
+  case 0:
+    return 2;
+  case 1:
+    return 3;
+  case 2:
+    return 5;
+  case 3:
+    return 7;
+  case 4:
+    return 11;
+  case 5:
+    return 13;
+  case 6:
+    return 17;
+  case 7:
+    return 19;
+  case 8:
+    return 23;
+  case 9:
+    return 29;
+  case 10:
+    return 31;
+  case 11:
+    return 37;
+  case 12:
+    return 41;
+  case 13:
+    return 43;
+  case 14:
+    return 47;
+  case 15:
+    return 53;
+  case 16:
+    return 59;
+  case 17:
+    return 61;
+  case 18:
+    return 67;
+  case 19:
+    return 71;
+  case 20:
+    return 73;
+  case 21:
+    return 79;
+  case 22:
+    return 83;
+  case 23:
+    return 89;
+  case 24:
+    return 97;
+  default:
+    return value;
+  }
+  return value;
 }
