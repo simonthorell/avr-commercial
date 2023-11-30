@@ -64,6 +64,7 @@ uint16_t indexSwitch(uint16_t value) {
 
 void factorize(uint16_t value, HD44780 *lcd) {
   uint16_t factors[25];
+  //Need to clear the memory since we only do a nullcheck later on
   for(uint8_t i = 0; i < 25; i++){
     factors[i] = 0;
   }
