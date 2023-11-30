@@ -2,6 +2,7 @@
 #include "lcd.h"
 #include "lcd_display_options.h"
 #include "customer_data.h"
+#include "avr_random_thingy.h"
 
 int main(void){
     // Create an instance of the LCD
@@ -10,22 +11,29 @@ int main(void){
     lcd.Initialize();
     lcd.Clear();
 
-    int i = 0;
+    char str[] = "pFactors of 1250";
+    
+    lcd.WriteText(str);
+    lcd.GoTo(0, 1);
+
+    factorize(1250, &lcd);
+
+    // int i = 0;
     while(1) {
         // LOOP FOR TESTING
-        Customer customer = getCustomer(i);
-
-        if(customer.displayProperties[i] == SCROLLING) {
-            displayScrollingText(&lcd, customer.billboards[i], sizeof(customer.billboards[i]));
-        } else if (customer.displayProperties[i] == STATIC) {
-            displayStaticText(&lcd, customer.billboards[i]);
-        } else if (customer.displayProperties[i] == BLINKING) {
-            displayBlinkingText(&lcd, customer.billboards[i], 5);
-        } else {
-            continue;
-        }
-
-        if (!(i > 1)) {i++;} else {i=0;}
+        // Customer customer = getCustomer(i);
+        //
+        // if(customer.displayProperties[i] == SCROLLING) {
+        //     displayScrollingText(&lcd, customer.billboards[i], sizeof(customer.billboards[i]));
+        // } else if (customer.displayProperties[i] == STATIC) {
+        //     displayStaticText(&lcd, customer.billboards[i]);
+        // } else if (customer.displayProperties[i] == BLINKING) {
+        //     displayBlinkingText(&lcd, customer.billboards[i], 5);
+        // } else {
+        //     continue;
+        // }
+        //
+        // if (!(i > 1)) {i++;} else {i=0;}
     }
     
     return 0;
