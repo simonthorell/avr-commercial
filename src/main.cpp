@@ -14,9 +14,34 @@ int main(void){
     while(1) {
         // Do nothing! :)
         Customer customer = getCustomer(i);
-        displayText(lcd, customer.billboards[i]);
-        _delay_ms(1000);
-        
+
+        if(customer.displayProperties[i] == SCROLLING) {
+            lcd.Clear();
+            displayScrollingText(lcd, customer.billboards[i], sizeof(customer.billboards[i]));
+            _delay_ms(1000);
+        } else if (customer.displayProperties[i] == STATIC) {
+            lcd.Clear();
+            displayText(lcd, customer.billboards[i]);
+            _delay_ms(3000);
+        } else if (customer.displayProperties[i] == BLINKING) {
+            lcd.Clear();
+            displayText(lcd, customer.billboards[i]);
+            _delay_ms(500);
+            lcd.Clear();
+            _delay_ms(500);
+            displayText(lcd, customer.billboards[i]);
+            _delay_ms(500);
+            lcd.Clear();
+            _delay_ms(500);
+            displayText(lcd, customer.billboards[i]);
+            _delay_ms(500);
+            lcd.Clear();
+            _delay_ms(500);
+            displayText(lcd, customer.billboards[i]);
+        } else {
+            continue;
+        }
+
         if (!(i > 1)) {
             i++;
         } else {
