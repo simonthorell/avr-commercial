@@ -73,7 +73,7 @@ void HD44780::Initialize(void) {
   WriteCommand(0x06); // Entry mode: Increment cursor
 
   _delay_us(25); //safety delay
-  uint8_t customChar[] = customÅ;
+  uint8_t customChar[] = customA;
   CreateChar(0, customChar);
 }
 

@@ -36,7 +36,7 @@
 #define HD44780_HOME 0x02
 // ... [rest of the command set]
 
-#define customÅ                                                               \
+#define customA                                                              \
   { 0x4, 0x0, 0xe, 0x1, 0xf, 0x11, 0xf, 0x0 }
 
 // HD44780 LCD class

@@ -1,9 +1,9 @@
 #include "lcd.h"
 #include <avr/io.h>
 
-#define Ö "\xEF"
-#define Ä "\xE1"
-#define Å "\x08" //YOU NEED TO CREATE THE CHARACTER FIRST!
+#define OE "\xEF"
+#define AE "\xE1"
+#define AA "\x08" //YOU NEED TO CREATE THE CHARACTER FIRST!
 
 int main(void) {
   // Create an instance of the LCD
@@ -17,7 +17,7 @@ int main(void) {
 
   // testing
   lcd.Clear();
-  char test[] = "En god bilaff" Ä "r (f" Ö "r Harry!)";
+  char test[] = "En god bil" AA "ff" AE "r (f" OE "r Harry!)";
   // Address for first custom character is 8 for some reason?
   lcd.WriteText(test);
   // The microcontroller typically runs in an infinite loop
