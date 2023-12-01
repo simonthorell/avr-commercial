@@ -10,6 +10,11 @@
 int main(void) {
   // Create an instance of the LCD
   HD44780 lcd;
+  PRR &= ~(1 << PRADC);
+  ADMUX &= ~((1 << REFS0) | (1 << REFS1));
+  ADMUX |= PD3;
+  ADCSRA |= ((1 << ADPS0) | (1 << ADPS1));
+  ADCSRA |= (1 << ADEN);
   // Initialize & clear the LCD
   lcd.Initialize();
   lcd.Clear();
@@ -50,8 +55,16 @@ int main(void) {
   free(factorPtrArray[0]);
   free(factorPtrArray[1]);
 
+  uint16_t rnd = 0;
+  char rndBuff[16];
   // int i = 0;
   while (1) {
+    lcd.Clear();
+    lcd.GoTo(0, 0);
+    rnd = randomValue(rnd); 
+    sprintf(rndBuff, "%d", rnd);
+    lcd.WriteText(rndBuff);
+    _delay_ms(500);
     // LOOP FOR TESTING
     // Customer customer = getCustomer(i);
     //

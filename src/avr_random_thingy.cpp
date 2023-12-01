@@ -2,8 +2,19 @@
 #include <stdint.h> //So I dont get all the uint errors, just for my IDE
 #include <stdio.h>
 #include <stdlib.h>
+#include <avr/io.h>
 
-uint16_t randomValue(uint16_t maxInclusive) { return maxInclusive; }
+uint16_t randomValue(uint16_t maxInclusive) {
+  uint16_t rnd = 0;
+  ADCSRA |= (1 << ADSC);
+  while(ADCSRA & (1 << ADSC)){
+    asm("");
+  }
+  rnd = ADCL;
+  rnd += (ADCH << 8);
+
+  return rnd;
+}
 
 // Probably put a table into progmem?
 // I hate this so much but it works
