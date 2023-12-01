@@ -8,36 +8,41 @@
 ********************************************************************/
 // Create an array of customers and store it in PROGMEM
 const Customer customers[] PROGMEM = {
-    { "Customer1", 1000.0, 
-        {SCROLLING, STATIC, BLINKING, STATIC, SCROLLING},
+    { "Hederlige Harrys Bilar", 5000.0,
+        {SCROLLING, STATIC, BLINKING},
         {
-         "En god bil" AA "ff" AE "r (f" OE "r Harry!)", 
-         "Billboard 2", 
-         "Billboard 3", 
-         "Billboard 4", 
-         "Billboard 5"
-        },
+         "K" OE "p bil hos Harry",
+         "En god bil" AA "ff" AE "r (f" OE "r Harry!)",
+         "Hederlige Harrys Bilar",
+        }
     },
-    { "Customer2", 1500.0,
-        {BLINKING, STATIC, BLINKING, STATIC, SCROLLING},
+    { "Farmor Ankas Pajer AB", 3000.0,
+        {SCROLLING, STATIC},
         {
-         "Billboard A", 
-         "Billboard B", 
-         "Billboard C", 
-         "Billboard D", 
-         "Billboard E"
-        },
+         "K" OE "p paj hos Farmor Anka",
+         "Skynda innan M" AA "rten " AE "tit alla pajer",
+        }
     },
-    { "Customer3", 2000.0,
-        {BLINKING, STATIC, BLINKING, SCROLLING, SCROLLING},
+    { "Svarte Petters Svartbyggen", 1500.0,
+        {SCROLLING, STATIC},
         {
-         "Billboard A1", 
-         "Billboard B2", 
-         "Billboard C3", 
-         "Billboard D4", 
-         "Billboard E5"
-        },
+         "L" AA "t Petter bygga " AA "t dig",
+         "Bygga svart? Ring Petter"
+        }
     },
+    { "L" AA "ngbens detektivbyr" AA, 4000.0,
+        {STATIC, STATIC},
+        {
+         "Mysterier? Ring L" AA "ngben",
+         "L" AA "ngben fixar biffen"
+        }
+    },
+    { "IOT:s Reklambyr" AA, 1000.0,
+        {STATIC},
+        {
+         "Synas h" AE "r? IOT:s Reklambyr" AA
+        }
+    }
 };
 
 /********************************************************************
