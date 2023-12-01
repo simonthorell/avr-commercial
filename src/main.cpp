@@ -7,14 +7,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-//Only here for debug purposes, lets you print out the binary format
-#define BYTE_TO_BINARY_PATTERN "%c%c%c%c%c%c%c%c"
-#define BYTE_TO_BINARY(byte)                                                   \
-  ((byte) & 0x80 ? '1' : '0'), ((byte) & 0x40 ? '1' : '0'),                    \
-      ((byte) & 0x20 ? '1' : '0'), ((byte) & 0x10 ? '1' : '0'),                \
-      ((byte) & 0x08 ? '1' : '0'), ((byte) & 0x04 ? '1' : '0'),                \
-      ((byte) & 0x02 ? '1' : '0'), ((byte) & 0x01 ? '1' : '0')
-
 int main(void) {
   // Create an instance of the LCD
   HD44780 lcd;
