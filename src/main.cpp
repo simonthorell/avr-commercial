@@ -23,24 +23,9 @@ int main(void) {
   lcd.Initialize();
   lcd.Clear();
   initializeRandom();
+  randomTest(&lcd);
 
-  uint16_t rnd = 0;
-  uint8_t rndLow = 0;
-  uint8_t rndHigh = 0;
-  char rndBuff[30];
   while (1) {
-    lcd.Clear();
-    lcd.GoTo(0, 0);
-    rnd = getRandom(2);
-    rndLow = rnd & 0xff;
-    rndHigh = rnd >> 8;
-    sprintf(rndBuff, "%u", rnd);
-    lcd.WriteText(rndBuff);
-    sprintf(rndBuff, BYTE_TO_BINARY_PATTERN BYTE_TO_BINARY_PATTERN,
-            BYTE_TO_BINARY(rndHigh), BYTE_TO_BINARY(rndLow));
-    lcd.GoTo(0, 1);
-    lcd.WriteText(rndBuff);
-    _delay_ms(500);
   }
   return 0;
 }
