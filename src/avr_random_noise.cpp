@@ -40,23 +40,23 @@ uint16_t getRandom(uint8_t numBytes) {
 }
 
 //FIXME: Remove before release
-void randomtest(hd44780 *lcd){
+void randomTest(HD44780 *lcd){
   uint16_t rnd = 0;
-  uint8_t rndlow = 0;
-  uint8_t rndhigh = 0;
-  char rndbuff[30];
+  uint8_t rndLow = 0;
+  uint8_t rndHigh = 0;
+  char rndBuff[30];
   while (1) {
-    lcd->clear();
-    lcd->goto(0, 0);
-    rnd = getrandom(2);
-    rndlow = rnd & 0xff;
-    rndhigh = rnd >> 8;
-    sprintf(rndbuff, "%u", rnd);
-    lcd->writetext(rndbuff);
-    sprintf(rndbuff, byte_to_binary_pattern byte_to_binary_pattern,
-            byte_to_binary(rndhigh), byte_to_binary(rndlow));
-    lcd->goto(0, 1);
-    lcd->writetext(rndbuff);
+    lcd->Clear();
+    lcd->GoTo(0, 0);
+    rnd = getRandom(2);
+    rndLow = rnd & 0xff;
+    rndHigh = rnd >> 8;
+    sprintf(rndBuff, "%u", rnd);
+    lcd->WriteText(rndBuff);
+    sprintf(rndBuff, BYTE_TO_BINARY_PATTERN BYTE_TO_BINARY_PATTERN,
+            BYTE_TO_BINARY(rndHigh), BYTE_TO_BINARY(rndLow));
+    lcd->GoTo(0, 1);
+    lcd->WriteText(rndBuff);
     _delay_ms(500);
   }
   return;
