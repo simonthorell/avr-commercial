@@ -27,15 +27,18 @@ uint16_t randomValue() {
   return rnd;
 }
 
-uint16_t getRandom(uint16_t limit) {
+uint16_t getRandom(uint16_t max) {
   uint16_t value = 0;
   uint16_t rnd;
-  uint8_t numBytes = getNumBytes(value);
+  uint8_t numBytes = 2; //getNumBytes(value);
   for (uint8_t i = 0; i < numBytes * 4; i++) {
     rnd = randomValue();
     rnd = rnd & 0x3;
     value += rnd << i * 2;
   }
+  // value = 0xFFFF;
+  // value = 0x0;
+  value = scaleNumber(max, value);
   return value;
 }
 
@@ -48,6 +51,12 @@ uint8_t getNumBytes(uint16_t value) {
   return 0;
 }
 
+//off by one, it can roll 0
+uint16_t scaleNumber(uint16_t max, uint16_t value){
+  uint32_t longValue = value;
+  return (((max) * (longValue + 1)) / 0xFFFF - 1) + 1;
+}
+
 // FIXME: Remove before release
 void randomTest(HD44780 *lcd) {
   uint16_t rnd = 0;
@@ -57,7 +66,7 @@ void randomTest(HD44780 *lcd) {
   while (1) {
     lcd->Clear();
     lcd->GoTo(0, 0);
-    rnd = getRandom(2);
+    rnd = getRandom(1372);
     rndLow = rnd & 0xff;
     rndHigh = rnd >> 8;
     sprintf(rndBuff, "%u", rnd);

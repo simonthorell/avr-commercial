@@ -16,8 +16,9 @@
 
 void initializeRandom(void);
 uint16_t randomValue();
-uint16_t getRandom(uint16_t limit);
+uint16_t getRandom(uint16_t max);
 uint8_t getNumBytes(uint16_t value);
+uint16_t scaleNumber(uint16_t max, uint16_t value);
 void randomTest(HD44780 *lcd); //FIXME: Remove before release
 
 #endif // !__avr_random_noise_h
