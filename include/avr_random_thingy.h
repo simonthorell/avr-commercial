@@ -11,6 +11,7 @@
 // }factorization;
 
 uint16_t randomValue(uint16_t maxInclusive); 
+uint16_t getRandom(uint8_t numBytes); 
 uint16_t* factorize(uint16_t value, HD44780 *lcd);
 void removeCommonFactors(uint16_t ** ptrToArray, uint8_t arrayLength);
 uint16_t deFactorize(uint16_t value);

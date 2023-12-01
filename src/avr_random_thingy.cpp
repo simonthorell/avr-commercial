@@ -16,6 +16,17 @@ uint16_t randomValue(uint16_t maxInclusive) {
   return rnd;
 }
 
+uint16_t getRandom(uint8_t numBytes) {
+  uint16_t value = 0;
+  uint16_t rnd;
+  for (uint8_t i = 0; i < numBytes * 4; i++) {
+    rnd = randomValue(0);
+    rnd = rnd & 0x3;
+    value += rnd << i * 2;
+  }
+  return value;
+}
+
 // Probably put a table into progmem?
 // I hate this so much but it works
 // TODO: Replace with a map if possible, maybe in progmem?
