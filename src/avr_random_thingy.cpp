@@ -1,17 +1,17 @@
 #include "avr_random_thingy.h"
+#include <avr/io.h>
 #include <stdint.h> //So I dont get all the uint errors, just for my IDE
 #include <stdio.h>
 #include <stdlib.h>
-#include <avr/io.h>
 
 uint16_t randomValue(uint16_t maxInclusive) {
   uint16_t rnd = 0;
-  ADCSRA |= (1 << ADSC);
-  while(ADCSRA & (1 << ADSC)){
-    asm("");
+  ADCSRA |= (1 << ADSC);         // set the ADSC bit
+  while (ADCSRA & (1 << ADSC)) { // wait until its cleared, we have data then
+    asm(""); // dirty hack to make sure the loop doesnt get optimized out
   }
-  rnd = ADCL;
-  rnd += (ADCH << 8);
+  rnd = ADCL;         // read lower 8 bits
+  rnd += (ADCH << 8); // read the high 2 bits
 
   return rnd;
 }

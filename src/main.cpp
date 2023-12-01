@@ -10,11 +10,13 @@
 int main(void) {
   // Create an instance of the LCD
   HD44780 lcd;
-  PRR &= ~(1 << PRADC);
-  ADMUX &= ~((1 << REFS0) | (1 << REFS1));
-  ADMUX |= PD3;
-  ADCSRA |= ((1 << ADPS0) | (1 << ADPS1));
-  ADCSRA |= (1 << ADEN);
+  PRR &= ~(1 << PRADC);                    // Turn on power to the ADC
+  ADMUX &= ~((1 << REFS0) | (1 << REFS1)); // set VCC as voltage reference
+  ADMUX |= PD3;                            // Start pin 3
+  ADCSRA |=
+      ((1 << ADPS0) |
+       (1 << ADPS1));    // set the speed, lower speed needed for10bit accuracy
+  ADCSRA |= (1 << ADEN); // Start the ADC
   // Initialize & clear the LCD
   lcd.Initialize();
   lcd.Clear();
@@ -61,7 +63,7 @@ int main(void) {
   while (1) {
     lcd.Clear();
     lcd.GoTo(0, 0);
-    rnd = randomValue(rnd); 
+    rnd = randomValue(rnd);
     sprintf(rndBuff, "%d", rnd);
     lcd.WriteText(rndBuff);
     _delay_ms(500);
