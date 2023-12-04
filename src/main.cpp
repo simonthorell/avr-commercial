@@ -7,16 +7,28 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define maxCustomers 5
+
 int main(void) {
   // Create an instance of the LCD and random
   HD44780 lcd;
   pseudoRandom rnd;
+
+  uint16_t totalPayed = 0;
+  //FIXME: We should probably keep track of how many customers we have in total
+  for(uint8_t i = 0; i < maxCustomers; i++){
+    Customer customer = getCustomer(i);
+    totalPayed += customer.balance;
+  }
 
   // Initialize & clear the LCD
   lcd.Initialize();
   lcd.Clear();
 
     while(1) {
+
+    uint8_t winningCustomer = rnd.getRandomCustomer(maxCustomers, totalPayed);
+
         // LOOP THROUGH ALL CUSTOMERS FOR TESTING
         for (int customerIndex = 0; customerIndex < 5; customerIndex++) {
             Customer customer = getCustomer(customerIndex);

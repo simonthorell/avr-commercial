@@ -97,3 +97,15 @@ void pseudoRandom::randomTest(HD44780 *lcd) {
   }
   return;
 }
+
+uint8_t pseudoRandom::getRandomCustomer(uint8_t maxcustomers, uint16_t totalPayed){
+    uint16_t random = getRandom(totalPayed);
+    for(uint8_t i = 0; i < 5; i++){
+      Customer customer = getCustomer(i);
+      if(random < customer.balance){
+        return i;
+      }
+      random -= customer.balance;
+    }
+    return 0;
+}
