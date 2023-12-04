@@ -2,6 +2,7 @@
 #define __avr_random_noise_h
 
 #include "lcd.h" //FIXME: Remove when randomTest is gone
+#include "customer_data.h"
 #include <avr/io.h>
 #include <stdint.h> //So I dont get all the uint errors, just for my IDE
 
@@ -21,6 +22,8 @@ public:
   ~pseudoRandom(void);
   uint16_t getRandom(uint16_t max);
   void randomTest(HD44780 *lcd); // FIXME: Remove before release
+  uint8_t getRandomCustomer(uint8_t maxcustomers, uint16_t totalPayed);
+
 private:
   uint8_t port;
   void initializeRandom();
