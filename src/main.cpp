@@ -8,12 +8,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define maxCustomers 5
+#define maxCustomers 2
 
 int main(void) {
   // initialize timer (TODO: How to sync with NTP-server?)
   timer1_init();
-  
+
   // Create an instance of the LCD and random
   HD44780 lcd;
   pseudoRandom rnd;
@@ -30,27 +30,49 @@ int main(void) {
   lcd.Clear();
 
   uint8_t lastShown = maxCustomers; // Out of bounds to start
-  uint8_t winningCustomer = rnd.getRandomCustomer(maxCustomers - 1, totalPayed);
+  uint8_t winningCustomer = rnd.getRandomCustomer(maxCustomers, totalPayed);
 
+  char buff[33];
+  sprintf(buff, "%u", totalPayed);
+  lcd.WriteText(buff);
+  _delay_ms(1000);
   while (1) {
-    //Making sure same dont get shown twice
+    // Making sure same dont get shown twice
     while (lastShown == winningCustomer) {
-      //upper bound is inclusive so maxCustomers - 1
-      winningCustomer = rnd.getRandomCustomer(maxCustomers - 1, totalPayed);
+      sprintf(buff, "RNG THINGY");
+      lcd.Clear();
+      lcd.WriteText(buff);
+      // upper bound is inclusive so maxCustomers - 1
+      winningCustomer = rnd.getRandomCustomer(0, maxCustomers, totalPayed, &lcd);
     }
+    sprintf(buff, "%u", winningCustomer);
+    lcd.Clear();
+    lcd.WriteText(buff);
+    _delay_ms(1000);
 
     lastShown = winningCustomer;
 
     Customer customer = getCustomer(winningCustomer);
+    // Customer customer = getCustomer(0);
+    message custMessage = {0, nullptr};
+    uint16_t rndMsg = rnd.getRandom(0, customer.billboardsCount - 1);
+    memcpy_P(&custMessage, &customer.messageArray[rndMsg], sizeof(message));
 
     // Display random billboard
-    uint8_t randomBillboard = rnd.getRandom(customer.billboardsCount);
-    displayBillboard(&lcd, customer.billboards[randomBillboard], 
-                     sizeof(customer.billboards[randomBillboard]), 
-                     customer.displayProperties[randomBillboard]
-                    );
+    // uint8_t randomBillboard = rnd.getRandom(customer.billboardsCount);
+    // for (uint8_t i = 0; i < sizeof(buff); i++) {
+    //   memcpy_P(&buff + i, custMessage.messageText + i, sizeof(char));
+    //   if (buff[i] == '\0') {
+    //     break;
+    //   }
+    // }
+    memcpy_P(&buff, custMessage.messageText, 32);
+    displayBillboard(&lcd, buff, sizeof(buff), custMessage.messageFlags);
+    // displayBillboard(&lcd, customer.billboards[randomBillboard],
+    //                  sizeof(customer.billboards[randomBillboard]),
+    //                  customer.displayProperties[randomBillboard]
+    //                 );
   }
 
   return EXIT_SUCCESS;
-  
 }

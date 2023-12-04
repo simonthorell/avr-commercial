@@ -111,14 +111,23 @@ uint8_t pseudoRandom::getRandomCustomer(uint8_t maxCustomers,
 }
 
 uint8_t pseudoRandom::getRandomCustomer(uint8_t minCustomers, uint8_t maxCustomers,
-                                        uint16_t totalPayed) {
-  uint16_t random = getRandom(minCustomers, totalPayed);
+                                        uint16_t totalPayed, HD44780 *lcd) {
+  uint16_t random = getRandom(0, totalPayed);
+  char buff[30];
+  lcd->Clear();
+  sprintf(buff, "%u %u %u", random, totalPayed, maxCustomers);
+  lcd->WriteText(buff);
+  _delay_ms(2000);
   for (uint8_t i = 0; i < maxCustomers; i++) {
     Customer customer = getCustomer(i);
     if (random < customer.balance) {
       return i;
     }
     random -= customer.balance;
+    lcd->Clear();
+    sprintf(buff, "%u %u", random, i);
+    lcd->WriteText(buff);
+    _delay_ms(1000);
   }
   return 0;
 }

@@ -24,7 +24,7 @@ public:
   uint16_t getRandom(uint16_t minInclusive, uint16_t maxInclusive);
   void randomTest(HD44780 *lcd); // FIXME: Remove before release
   uint8_t getRandomCustomer(uint8_t maxCustomers, uint16_t totalPayed);
-  uint8_t getRandomCustomer(uint8_t minCustomers, uint8_t maxCustomers, uint16_t totalPayed);
+  uint8_t getRandomCustomer(uint8_t minCustomers, uint8_t maxCustomers, uint16_t totalPayed, HD44780 *lcd);
 
 private:
   uint8_t port;
