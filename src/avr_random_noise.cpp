@@ -6,15 +6,15 @@
 #include <stdlib.h>
 
 pseudoRandom::pseudoRandom(void) {
-  initializeRandom();
+  initializeRandom(3);
   return;
 }
 
 // FIXME: need to figure this out
-// pseudoRandom::pseudoRandom(uint8_t port) {
-//   initializeRandom(port);
-//   return;
-// }
+pseudoRandom::pseudoRandom(uint8_t port) {
+  initializeRandom(port);
+  return;
+}
 
 pseudoRandom::~pseudoRandom(void) {
   PRR ^= (1 << PRADC); // turn off the ADC
@@ -22,9 +22,8 @@ pseudoRandom::~pseudoRandom(void) {
 }
 
 // FIXME: sort this PD3 shit out
-// void pseudoRandom::initializeRandom(uint8_t port) {
-void pseudoRandom::initializeRandom() {
-  this->port = PD3;
+void pseudoRandom::initializeRandom(uint8_t port) {
+  this->port = port;
   PRR &= ~(1 << PRADC);                    // Turn on power to the ADC
   ADMUX &= ~((1 << REFS0) | (1 << REFS1)); // set VCC as voltage reference
   ADMUX |= this->port;                      // Start pin 3

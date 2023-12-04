@@ -18,7 +18,7 @@
 class pseudoRandom {
 public:
   pseudoRandom(void);
-  // pseudoRandom(uint8_t port);
+  pseudoRandom(uint8_t port);
   ~pseudoRandom(void);
   uint16_t getRandom(uint16_t max);
   void randomTest(HD44780 *lcd); // FIXME: Remove before release
@@ -26,7 +26,7 @@ public:
 
 private:
   uint8_t port;
-  void initializeRandom();
+  void initializeRandom(uint8_t port);
   uint16_t randomValue(void);
   uint8_t getNumBytes(uint16_t value);
   uint16_t scaleNumber(uint16_t max, uint16_t value);
