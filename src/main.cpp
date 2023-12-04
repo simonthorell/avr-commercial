@@ -43,28 +43,6 @@ int main(void) {
     displayStaticText(&lcd, customer.billboards[0]);
 
     _delay_ms(5000);
-
-    // LOOP THROUGH ALL CUSTOMERS FOR TESTING
-    // for (int customerIndex = 0; customerIndex < 5; customerIndex++) {
-    //     Customer customer = getCustomer(customerIndex);
-    //
-    //     for (int billboardIndex = 0; billboardIndex < 5; billboardIndex++) {
-    //         if (customer.displayProperties[billboardIndex] == SCROLLING) {
-    //             displayScrollingText(&lcd,
-    //             customer.billboards[billboardIndex],
-    //             sizeof(customer.billboards[billboardIndex]));
-    //         } else if (customer.displayProperties[billboardIndex] == STATIC)
-    //         {
-    //             displayStaticText(&lcd, customer.billboards[billboardIndex]);
-    //         } else if (customer.displayProperties[billboardIndex] ==
-    //         BLINKING) {
-    //             displayBlinkingText(&lcd,
-    //             customer.billboards[billboardIndex], 5);
-    //         } else {
-    //             continue;
-    //         }
-    //     }
-    // }
   }
   return 0;
 }
