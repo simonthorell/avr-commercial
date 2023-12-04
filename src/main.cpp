@@ -47,13 +47,13 @@ int main(void) {
     Customer customer = getCustomer(winningCustomer);
 
     if(customer.timeSpecific){
-      uint8_t i = 0;
+      uint8_t index = 0;
       if(count > 3){
-        i = 1;
+        index = 1;
       }
-      displayBillboard(&lcd, customer.billboards[i], 
-          sizeof(customer.billboards[i]), 
-          customer.displayProperties[i]
+      displayBillboard(&lcd, customer.billboards[index], 
+          sizeof(customer.billboards[index]), 
+          customer.displayProperties[index]
         );
     }else{
     // Display random billboard
