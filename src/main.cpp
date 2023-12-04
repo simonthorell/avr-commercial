@@ -8,14 +8,13 @@
 #include <stdlib.h>
 
 int main(void) {
-  // Create an instance of the LCD
+  // Create an instance of the LCD and random
   HD44780 lcd;
+  pseudoRandom rnd;
 
   // Initialize & clear the LCD
   lcd.Initialize();
   lcd.Clear();
-  pseudoRandom rnd;
-  rnd.randomTest(&lcd);
 
     while(1) {
         // LOOP THROUGH ALL CUSTOMERS FOR TESTING

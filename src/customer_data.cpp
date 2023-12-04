@@ -8,7 +8,7 @@
 ********************************************************************/
 // Create an array of customers and store it in PROGMEM
 const Customer customers[] PROGMEM = {
-    { "Hederlige Harrys Bilar", 5000.0,
+    { "Hederlige Harrys Bilar", 5000,
         {SCROLLING, STATIC, BLINKING},
         {
          "K" OE "p bil hos Harry",
@@ -16,28 +16,28 @@ const Customer customers[] PROGMEM = {
          "Hederlige Harrys Bilar",
         }
     },
-    { "Farmor Ankas Pajer AB", 3000.0,
+    { "Farmor Ankas Pajer AB", 3000,
         {SCROLLING, STATIC},
         {
          "K" OE "p paj hos Farmor Anka",
          "Skynda innan M" AA "rten " AE "tit alla pajer",
         }
     },
-    { "Svarte Petters Svartbyggen", 1500.0,
+    { "Svarte Petters Svartbyggen", 1500,
         {SCROLLING, STATIC},
         {
          "L" AA "t Petter bygga " AA "t dig",
          "Bygga svart? Ring Petter"
         }
     },
-    { "L" AA "ngbens detektivbyr" AA, 4000.0,
+    { "L" AA "ngbens detektivbyr" AA, 4000,
         {STATIC, STATIC},
         {
          "Mysterier? Ring L" AA "ngben",
          "L" AA "ngben fixar biffen"
         }
     },
-    { "IOT:s Reklambyr" AA, 1000.0,
+    { "IOT:s Reklambyr" AA, 1000,
         {STATIC},
         {
          "Synas h" AE "r? IOT:s Reklambyr" AA

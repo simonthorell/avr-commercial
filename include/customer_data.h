@@ -15,7 +15,7 @@
 // Define a structure for customer data
 struct Customer {
     char name[MAX_CUSTOMER_NAME_LENGTH];  // Customer name
-    float balance;  // Account balance
+    uint16_t balance;  // Account balance
     char displayProperties[5]; // Display properties for each billboard
     char billboards[MAX_BILLBOARDS][MAX_BILLBOARD_TEXT_LENGTH];  // Array of billboard strings
 };
