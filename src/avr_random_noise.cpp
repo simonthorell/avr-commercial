@@ -21,7 +21,9 @@ pseudoRandom::~pseudoRandom(void) {
   return;
 }
 
-void pseudoRandom::initializeRandom(uint8_t port) {
+// FIXME: sort this PD3 shit out
+// void pseudoRandom::initializeRandom(uint8_t port) {
+void pseudoRandom::initializeRandom() {
   this->port = PD3;
   PRR &= ~(1 << PRADC);                    // Turn on power to the ADC
   ADMUX &= ~((1 << REFS0) | (1 << REFS1)); // set VCC as voltage reference

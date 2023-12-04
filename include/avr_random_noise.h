@@ -23,7 +23,7 @@ public:
   void randomTest(HD44780 *lcd); // FIXME: Remove before release
 private:
   uint8_t port;
-  void initializeRandom(uint8_t port);
+  void initializeRandom();
   uint16_t randomValue(void);
   uint8_t getNumBytes(uint16_t value);
   uint16_t scaleNumber(uint16_t max, uint16_t value);
