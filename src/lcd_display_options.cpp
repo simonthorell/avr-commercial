@@ -2,8 +2,7 @@
 #include <util/delay.h>
 #include "lcd.h"
 #include "lcd_display_options.h"
-
-#include "timer.h"
+#include "timer.h" // Minutes and seconds
 
 /********************************************************************
 *                   LCD DISPLAY BILLBOARD MAIN FUNCTION

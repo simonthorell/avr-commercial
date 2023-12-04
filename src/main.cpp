@@ -2,17 +2,16 @@
 #include "customer_data.h"
 #include "lcd.h"
 #include "lcd_display_options.h"
+#include "timer.h"
 #include <avr/io.h>
 #include <stdint.h> //So I dont get all the uint errors, just for my IDE
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "timer.h"
-
 #define maxCustomers 5
 
 int main(void) {
-  // initialize timer
+  // initialize timer (TODO: How to sync with NTP-server?)
   timer1_init();
   
   // Create an instance of the LCD and random
