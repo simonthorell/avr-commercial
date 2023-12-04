@@ -32,7 +32,10 @@ int main(void) {
   uint8_t lastShown = maxCustomers; // Out of bounds to start
   uint8_t winningCustomer = rnd.getRandomCustomer(maxCustomers - 1, totalPayed);
 
+  uint8_t count = 0; //indicator for odd/even minutes
+
   while (1) {
+    count++;
     //Making sure same dont get shown twice
     while (lastShown == winningCustomer) {
       //upper bound is inclusive so maxCustomers - 1
@@ -43,12 +46,27 @@ int main(void) {
 
     Customer customer = getCustomer(winningCustomer);
 
+    if(customer.timeSpecific){
+      uint8_t i = 0;
+      if(count > 3){
+        i = 1;
+      }
+      displayBillboard(&lcd, customer.billboards[i], 
+          sizeof(customer.billboards[i]), 
+          customer.displayProperties[i]
+        );
+    }else{
     // Display random billboard
     uint8_t randomBillboard = rnd.getRandom(customer.billboardsCount);
     displayBillboard(&lcd, customer.billboards[randomBillboard], 
                      sizeof(customer.billboards[randomBillboard]), 
                      customer.displayProperties[randomBillboard]
                     );
+    }
+
+    if(count == 6){ //one loop = 20 sec
+      count = 0;
+    }
   }
 
   return EXIT_SUCCESS;

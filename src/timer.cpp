@@ -1,6 +1,8 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
+//OBS funktionen behövs ej om vi kör som main är nu
+
 // Global variables
 volatile uint8_t seconds = 0;
 volatile uint8_t minutes = 0;
