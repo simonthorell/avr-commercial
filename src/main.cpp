@@ -30,7 +30,9 @@ int main(void) {
 
   while (1) {
 
+    //Making sure same dont get shown twice
     while (lastShown == winningCustomer) {
+      //upper bound is inclusive so maxCustomers - 1
       winningCustomer = rnd.getRandomCustomer(maxCustomers - 1, totalPayed);
     }
 
