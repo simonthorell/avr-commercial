@@ -29,7 +29,6 @@ int main(void) {
   uint8_t winningCustomer = rnd.getRandomCustomer(maxCustomers - 1, totalPayed);
 
   while (1) {
-
     //Making sure same dont get shown twice
     while (lastShown == winningCustomer) {
       //upper bound is inclusive so maxCustomers - 1
@@ -40,9 +39,9 @@ int main(void) {
 
     Customer customer = getCustomer(winningCustomer);
 
-    displayStaticText(&lcd, customer.billboards[0]);
-
-    _delay_ms(5000);
+    displayBillboard(&lcd, customer.billboards[0], sizeof(customer.billboards[0]), customer.displayProperties[0]);
   }
-  return 0;
+
+  return EXIT_SUCCESS;
+  
 }
