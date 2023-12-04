@@ -7,9 +7,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "timer.h"
+
 #define maxCustomers 5
 
 int main(void) {
+  // initialize timer
+  timer1_init();
+  
   // Create an instance of the LCD and random
   HD44780 lcd;
   pseudoRandom rnd;

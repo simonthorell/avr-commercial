@@ -3,6 +3,8 @@
 #include "lcd.h"
 #include "lcd_display_options.h"
 
+#include "timer.h"
+
 /********************************************************************
 *                   LCD DISPLAY BILLBOARD MAIN FUNCTION
 ********************************************************************/
@@ -48,6 +50,15 @@ void displayBlinkingText(HD44780 *lcd, char* text) {
         _delay_ms(500);
         lcd->Clear();
         _delay_ms(500);
+    }
+}
+
+void displayTimebasedText(HD44780 *lcd, char* text) {
+    // psuedocode!
+    if (minutes % 2 == 0) {
+            // Code for even minutes
+    } else {
+        // Code for uneven minutes
     }
 }
 
