@@ -26,17 +26,17 @@ void pseudoRandom::initializeRandom(uint8_t port) {
   this->port = port;
   PRR &= ~(1 << PRADC);                    // Turn on power to the ADC
   ADMUX &= ~((1 << REFS0) | (1 << REFS1)); // set VCC as voltage reference
-  ADMUX |= this->port;                      // Start pin 3
+  ADMUX |= this->port;                     // Start selected pin 
   ADCSRA |=
-      ((1 << ADPS0) |
-       (1 << ADPS1));    // set the speed, lower speed needed for10bit accuracy
+      ~((1 << ADPS0) | (1 << ADPS1) |
+        (1 << ADPS2));   // Clear the speed division bits for maximum SPEEEEEED
   ADCSRA |= (1 << ADEN); // Start the ADC
   return;
 }
 
 uint16_t pseudoRandom::randomValue() {
   uint16_t rnd = 0;
-  ADCSRA |= (1 << ADSC);         // set the ADSC bit
+  ADCSRA |= (1 << ADSC);         // set the ADSC bit to start ADC conversion
   while (ADCSRA & (1 << ADSC)) { // wait until its cleared, we have data then
     asm(""); // dirty hack to make sure the loop doesnt get optimized out
   }
@@ -48,7 +48,8 @@ uint16_t pseudoRandom::randomValue() {
 uint16_t pseudoRandom::getRandom(uint16_t max) {
   uint16_t value = 0;
   uint16_t rnd;
-  uint8_t numBytes = 2; // getNumBytes(value);
+  // uint8_t numBytes = 2; // getNumBytes(value);
+  uint8_t numBytes = getNumBytes(value);
   for (uint8_t i = 0; i < numBytes * 4; i++) {
     rnd = randomValue();
     rnd = rnd & 0x3;
@@ -60,9 +61,9 @@ uint16_t pseudoRandom::getRandom(uint16_t max) {
 
 uint8_t pseudoRandom::getNumBytes(uint16_t value) {
   if (value > 0xFF) {
-    return 2;
+    return 1;
   } else if (0xFFFF >= value) {
-    return 4;
+    return 2;
   }
   return 0;
 }
@@ -97,14 +98,15 @@ void pseudoRandom::randomTest(HD44780 *lcd) {
   return;
 }
 
-uint8_t pseudoRandom::getRandomCustomer(uint8_t maxcustomers, uint16_t totalPayed){
-    uint16_t random = getRandom(totalPayed);
-    for(uint8_t i = 0; i < 5; i++){
-      Customer customer = getCustomer(i);
-      if(random < customer.balance){
-        return i;
-      }
-      random -= customer.balance;
+uint8_t pseudoRandom::getRandomCustomer(uint8_t maxcustomers,
+                                        uint16_t totalPayed) {
+  uint16_t random = getRandom(totalPayed);
+  for (uint8_t i = 0; i < maxcustomers; i++) {
+    Customer customer = getCustomer(i);
+    if (random < customer.balance) {
+      return i;
     }
-    return 0;
+    random -= customer.balance;
+  }
+  return 0;
 }
