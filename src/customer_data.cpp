@@ -47,7 +47,7 @@
 //
 
 const char harryOne[] PROGMEM = "K" OE "p bil hos Harry";
-const char harryTwo[] PROGMEM = "En god bil aff" AE "r (f" OE "r harry!)";
+const char harryTwo[] PROGMEM = "En god bilaff" AE "r (f" OE "r harry!)";
 const char harryThree[] PROGMEM = "Hederlige Harrys Bilar";
 const message harryText[] PROGMEM = {
     {
@@ -80,35 +80,35 @@ const message ankaText[] PROGMEM = {
 const char svarteOne[] PROGMEM = "L" AA "t Petter bygga " AA "t dig";
 const char svarteTwo[] PROGMEM = "Bygga svart? Ring Petter";
 const message svarteText[] PROGMEM = {
-  {
-    SCROLLING,
-    svarteOne,
-  },
-  {
-    STATIC,
-    svarteTwo,
-  },
+    {
+        SCROLLING,
+        svarteOne,
+    },
+    {
+        STATIC,
+        svarteTwo,
+    },
 };
 
 const char langOne[] PROGMEM = "Mysterier? Ring L" AA "ngben";
 const char langTwo[] PROGMEM = "L" AA "ngben fixar biffen";
 const message langText[] PROGMEM = {
-  {
-    STATIC,
-    langOne,
-  },
-  {
-    STATIC,
-    langTwo,
-  },
+    {
+        STATIC,
+        langOne,
+    },
+    {
+        STATIC,
+        langTwo,
+    },
 };
 
 const char iotOne[] PROGMEM = "Synas h" AE "r? IOT:s Reklambyr" AA;
 const message iotText[] PROGMEM = {
-  {
-    STATIC,
-    iotOne,
-  },
+    {
+        STATIC,
+        iotOne,
+    },
 };
 
 const Customer customers[] PROGMEM = {

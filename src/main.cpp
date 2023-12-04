@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define maxCustomers 5 
+#define maxCustomers 5
 
 int main(void) {
   // initialize timer (TODO: How to sync with NTP-server?)
@@ -33,24 +33,16 @@ int main(void) {
   uint8_t winningCustomer = rnd.getRandomCustomer(maxCustomers, totalPayed);
 
   char buff[33];
-  sprintf(buff, "%u", totalPayed);
-  lcd.WriteText(buff);
-  _delay_ms(1000);
   while (1) {
     // Making sure same dont get shown twice
     while (lastShown == winningCustomer) {
-      sprintf(buff, "RNG THINGY");
-      lcd.Clear();
-      lcd.WriteText(buff);
-      winningCustomer = rnd.getRandomCustomer(0, maxCustomers, totalPayed, &lcd);
+      winningCustomer =
+          rnd.getRandomCustomer(0, maxCustomers, totalPayed, &lcd);
     }
-    sprintf(buff, "%u", winningCustomer);
-    lcd.Clear();
-    lcd.WriteText(buff);
-    _delay_ms(1000);
 
     lastShown = winningCustomer;
 
+    // should move this into its own function, so many memcopies
     Customer customer = getCustomer(winningCustomer);
     message custMessage = {0, nullptr};
     uint16_t rndMsg = rnd.getRandom(0, customer.billboardsCount - 1);

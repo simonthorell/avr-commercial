@@ -67,9 +67,12 @@ uint16_t pseudoRandom::getRandom(uint16_t minInclusive, uint16_t maxInclusive) {
   return value;
 }
 
-uint16_t pseudoRandom::scaleNumber(uint16_t minInclusive, uint16_t maxInclusive, uint16_t value) {
+uint16_t pseudoRandom::scaleNumber(uint16_t minInclusive, uint16_t maxInclusive,
+                                   uint16_t value) {
   double dvalue = value;
-  dvalue = (((maxInclusive - minInclusive) * (dvalue - minInclusive)) / (0xFFFF - 0)) + minInclusive;
+  dvalue = (((maxInclusive - minInclusive) * (dvalue - minInclusive)) /
+            (0xFFFF - 0)) +
+           minInclusive;
   dvalue += 0.5;
   return (uint16_t)dvalue;
 }
@@ -110,7 +113,8 @@ uint8_t pseudoRandom::getRandomCustomer(uint8_t maxCustomers,
   return 0;
 }
 
-uint8_t pseudoRandom::getRandomCustomer(uint8_t minCustomers, uint8_t maxCustomers,
+uint8_t pseudoRandom::getRandomCustomer(uint8_t minCustomers,
+                                        uint8_t maxCustomers,
                                         uint16_t totalPayed, HD44780 *lcd) {
   uint16_t random = getRandom(0, totalPayed);
   char buff[30];

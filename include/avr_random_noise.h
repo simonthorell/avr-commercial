@@ -24,13 +24,15 @@ public:
   uint16_t getRandom(uint16_t minInclusive, uint16_t maxInclusive);
   void randomTest(HD44780 *lcd); // FIXME: Remove before release
   uint8_t getRandomCustomer(uint8_t maxCustomers, uint16_t totalPayed);
-  uint8_t getRandomCustomer(uint8_t minCustomers, uint8_t maxCustomers, uint16_t totalPayed, HD44780 *lcd);
+  uint8_t getRandomCustomer(uint8_t minCustomers, uint8_t maxCustomers,
+                            uint16_t totalPayed, HD44780 *lcd);
 
 private:
   uint8_t port;
   void initializeRandom(uint8_t port);
   uint16_t randomValue(void);
-  uint16_t scaleNumber(uint16_t minInclusive, uint16_t maxInclusive, uint16_t value);
+  uint16_t scaleNumber(uint16_t minInclusive, uint16_t maxInclusive,
+                       uint16_t value);
 };
 
 #endif // !__avr_random_noise_h

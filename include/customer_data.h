@@ -20,12 +20,12 @@ typedef struct {
 } message;
 
 // Define a structure for customer data
-typedef struct  {
+typedef struct {
   char name[MAX_CUSTOMER_NAME_LENGTH]; // Customer name
   uint16_t balance;                    // Account balance
   uint8_t billboardsCount;             // Number of billboards
   const message *messageArray;
-}Customer;
+} Customer;
 
 // Define a function to get a customer from PROGMEM
 Customer getCustomer(int index);
