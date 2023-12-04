@@ -14,8 +14,8 @@ int main(void) {
   // Initialize & clear the LCD
   lcd.Initialize();
   lcd.Clear();
-  initializeRandom();
-  randomTest(&lcd); //runs a demo random function loop
+  pseudoRandom rnd;
+  rnd.randomTest(&lcd);
 
     while(1) {
         // LOOP THROUGH ALL CUSTOMERS FOR TESTING

@@ -5,10 +5,27 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void initializeRandom(void) {
+pseudoRandom::pseudoRandom(void) {
+  initializeRandom(3);
+  return;
+}
+
+// FIXME: need to figure this out
+// pseudoRandom::pseudoRandom(uint8_t port) {
+//   initializeRandom(port);
+//   return;
+// }
+
+pseudoRandom::~pseudoRandom(void) {
+  PRR ^= (1 << PRADC); // turn off the ADC
+  return;
+}
+
+void pseudoRandom::initializeRandom(uint8_t port) {
+  this->port = PD3;
   PRR &= ~(1 << PRADC);                    // Turn on power to the ADC
   ADMUX &= ~((1 << REFS0) | (1 << REFS1)); // set VCC as voltage reference
-  ADMUX |= PD3;                            // Start pin 3
+  ADMUX |= this->port;                      // Start pin 3
   ADCSRA |=
       ((1 << ADPS0) |
        (1 << ADPS1));    // set the speed, lower speed needed for10bit accuracy
@@ -16,7 +33,7 @@ void initializeRandom(void) {
   return;
 }
 
-uint16_t randomValue() {
+uint16_t pseudoRandom::randomValue() {
   uint16_t rnd = 0;
   ADCSRA |= (1 << ADSC);         // set the ADSC bit
   while (ADCSRA & (1 << ADSC)) { // wait until its cleared, we have data then
@@ -27,22 +44,20 @@ uint16_t randomValue() {
   return rnd;
 }
 
-uint16_t getRandom(uint16_t max) {
+uint16_t pseudoRandom::getRandom(uint16_t max) {
   uint16_t value = 0;
   uint16_t rnd;
-  uint8_t numBytes = 2; //getNumBytes(value);
+  uint8_t numBytes = 2; // getNumBytes(value);
   for (uint8_t i = 0; i < numBytes * 4; i++) {
     rnd = randomValue();
     rnd = rnd & 0x3;
     value += rnd << i * 2;
   }
-  // value = 0xFFFF;
-  // value = 0x0;
   value = scaleNumber(max, value);
   return value;
 }
 
-uint8_t getNumBytes(uint16_t value) {
+uint8_t pseudoRandom::getNumBytes(uint16_t value) {
   if (value > 0xFF) {
     return 2;
   } else if (0xFFFF >= value) {
@@ -51,14 +66,15 @@ uint8_t getNumBytes(uint16_t value) {
   return 0;
 }
 
-//off by one, it can roll 0
-uint16_t scaleNumber(uint16_t max, uint16_t value){
+// off by one, it can roll 0
+// FIXME: sort fix that bug before release!
+uint16_t pseudoRandom::scaleNumber(uint16_t max, uint16_t value) {
   uint32_t longValue = value;
   return (((max) * (longValue + 1)) / 0xFFFF - 1) + 1;
 }
 
 // FIXME: Remove before release
-void randomTest(HD44780 *lcd) {
+void pseudoRandom::randomTest(HD44780 *lcd) {
   uint16_t rnd = 0;
   uint8_t rndLow = 0;
   uint8_t rndHigh = 0;
@@ -66,7 +82,7 @@ void randomTest(HD44780 *lcd) {
   while (1) {
     lcd->Clear();
     lcd->GoTo(0, 0);
-    rnd = getRandom(1372);
+    rnd = getRandom(100);
     rndLow = rnd & 0xff;
     rndHigh = rnd >> 8;
     sprintf(rndBuff, "%u", rnd);
