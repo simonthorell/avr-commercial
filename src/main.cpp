@@ -12,9 +12,7 @@
 int main(void) {
   // Create an instance of the LCD and random
   HD44780 lcd;
-  pseudoRandom rnd(3);
-
-  rnd.randomTest(&lcd);
+  pseudoRandom rnd;
 
   uint16_t totalPayed = 0;
   // FIXME: We should probably keep track of how many customers we have in total
