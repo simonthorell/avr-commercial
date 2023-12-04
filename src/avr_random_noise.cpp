@@ -10,7 +10,6 @@ pseudoRandom::pseudoRandom(void) {
   return;
 }
 
-// FIXME: need to figure this out
 pseudoRandom::pseudoRandom(uint8_t port) {
   initializeRandom(port);
   return;
@@ -21,13 +20,12 @@ pseudoRandom::~pseudoRandom(void) {
   return;
 }
 
-// FIXME: sort this PD3 shit out
 void pseudoRandom::initializeRandom(uint8_t port) {
   this->port = port;
   PRR &= ~(1 << PRADC);                    // Turn on power to the ADC
   ADMUX &= ~((1 << REFS0) | (1 << REFS1)); // set VCC as voltage reference
-  ADMUX |= this->port;                     // Start selected pin 
-  ADCSRA |=
+  ADMUX |= this->port;                     // Start selected pin
+  ADCSRA &=
       ~((1 << ADPS0) | (1 << ADPS1) |
         (1 << ADPS2));   // Clear the speed division bits for maximum SPEEEEEED
   ADCSRA |= (1 << ADEN); // Start the ADC
@@ -45,17 +43,29 @@ uint16_t pseudoRandom::randomValue() {
   return rnd;
 }
 
-uint16_t pseudoRandom::getRandom(uint16_t max) {
+uint16_t pseudoRandom::getRandom(uint16_t maxInclusive) {
   uint16_t value = 0;
   uint16_t rnd;
-  // uint8_t numBytes = 2; // getNumBytes(value);
   uint8_t numBytes = getNumBytes(value);
   for (uint8_t i = 0; i < numBytes * 4; i++) {
     rnd = randomValue();
     rnd = rnd & 0x3;
     value += rnd << i * 2;
   }
-  value = scaleNumber(max, value);
+  value = scaleNumber(0, maxInclusive, value);
+  return value;
+}
+
+uint16_t pseudoRandom::getRandom(uint16_t minInclusive, uint16_t maxInclusive) {
+  uint16_t value = 0;
+  uint16_t rnd;
+  uint8_t numBytes = getNumBytes(value);
+  for (uint8_t i = 0; i < numBytes * 4; i++) {
+    rnd = randomValue();
+    rnd = rnd & 0x3;
+    value += rnd << i * 2;
+  }
+  value = scaleNumber(minInclusive, maxInclusive, value);
   return value;
 }
 
@@ -68,11 +78,11 @@ uint8_t pseudoRandom::getNumBytes(uint16_t value) {
   return 0;
 }
 
-// off by one, it can roll 0
-// FIXME: sort fix that bug before release!
-uint16_t pseudoRandom::scaleNumber(uint16_t max, uint16_t value) {
-  uint32_t longValue = value;
-  return (((max) * (longValue + 1)) / 0xFFFF - 1) + 1;
+uint16_t pseudoRandom::scaleNumber(uint16_t minInclusive, uint16_t maxInclusive, uint16_t value) {
+  double dvalue = value;
+  dvalue = (((maxInclusive - minInclusive) * (dvalue - minInclusive)) / (0xFFFF - 0)) + minInclusive;
+  dvalue += 0.5;
+  return (uint16_t)dvalue;
 }
 
 // FIXME: Remove before release
@@ -84,7 +94,7 @@ void pseudoRandom::randomTest(HD44780 *lcd) {
   while (1) {
     lcd->Clear();
     lcd->GoTo(0, 0);
-    rnd = getRandom(100);
+    rnd = getRandom(2, 15235);
     rndLow = rnd & 0xff;
     rndHigh = rnd >> 8;
     sprintf(rndBuff, "%u", rnd);
@@ -98,10 +108,23 @@ void pseudoRandom::randomTest(HD44780 *lcd) {
   return;
 }
 
-uint8_t pseudoRandom::getRandomCustomer(uint8_t maxcustomers,
+uint8_t pseudoRandom::getRandomCustomer(uint8_t maxCustomers,
                                         uint16_t totalPayed) {
-  uint16_t random = getRandom(totalPayed);
-  for (uint8_t i = 0; i < maxcustomers; i++) {
+  uint16_t random = getRandom(0, totalPayed);
+  for (uint8_t i = 0; i < maxCustomers; i++) {
+    Customer customer = getCustomer(i);
+    if (random < customer.balance) {
+      return i;
+    }
+    random -= customer.balance;
+  }
+  return 0;
+}
+
+uint8_t pseudoRandom::getRandomCustomer(uint8_t minCustomers, uint8_t maxCustomers,
+                                        uint16_t totalPayed) {
+  uint16_t random = getRandom(minCustomers, totalPayed);
+  for (uint8_t i = 0; i < maxCustomers; i++) {
     Customer customer = getCustomer(i);
     if (random < customer.balance) {
       return i;
