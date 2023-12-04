@@ -10,12 +10,13 @@
 // Define special characters
 #define OE "\xEF"
 #define AE "\xE1"
-#define AA "\x08" //YOU NEED TO CREATE THE CHARACTER FIRST!
+#define AA "\x08"
 
 // Define a structure for customer data
 struct Customer {
     char name[MAX_CUSTOMER_NAME_LENGTH];  // Customer name
     uint16_t balance;  // Account balance
+    uint8_t billboardsCount;  // Number of billboards
     char displayProperties[5]; // Display properties for each billboard
     char billboards[MAX_BILLBOARDS][MAX_BILLBOARD_TEXT_LENGTH];  // Array of billboard strings
 };
