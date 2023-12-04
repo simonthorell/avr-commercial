@@ -77,6 +77,40 @@ const message ankaText[] PROGMEM = {
     },
 };
 
+const char svarteOne[] PROGMEM = "L" AA "t Petter bygga " AA "t dig";
+const char svarteTwo[] PROGMEM = "Bygga svart? Ring Petter";
+const message svarteText[] PROGMEM = {
+  {
+    SCROLLING,
+    svarteOne,
+  },
+  {
+    STATIC,
+    svarteTwo,
+  },
+};
+
+const char langOne[] PROGMEM = "Mysterier? Ring L" AA "ngben";
+const char langTwo[] PROGMEM = "L" AA "ngben fixar biffen";
+const message langText[] PROGMEM = {
+  {
+    STATIC,
+    langOne,
+  },
+  {
+    STATIC,
+    langTwo,
+  },
+};
+
+const char iotOne[] PROGMEM = "Synas h" AE "r? IOT:s Reklambyr" AA;
+const message iotText[] PROGMEM = {
+  {
+    STATIC,
+    iotOne,
+  },
+};
+
 const Customer customers[] PROGMEM = {
     {
         "Hederlige Harrys Bilar",
@@ -90,24 +124,24 @@ const Customer customers[] PROGMEM = {
         2,
         ankaText,
     },
-    // {
-    //     "Svarte Petters SvartByggen",
-    //     1500,
-    //     2,
-    //     0xFFFF,
-    // },
-    // {
-    //     "L" AA "ngbens detektivbyr" AA,
-    //     4000,
-    //     2,
-    //     0xFFFF,
-    // },
-    // {
-    //     "IOT:s Reklambyr" AA,
-    //     1000,
-    //     1,
-    //     0xFFFF,
-    // },
+    {
+        "Svarte Petters SvartByggen",
+        1500,
+        2,
+        svarteText,
+    },
+    {
+        "L" AA "ngbens detektivbyr" AA,
+        4000,
+        2,
+        langText,
+    },
+    {
+        "IOT:s Reklambyr" AA,
+        1000,
+        1,
+        iotText,
+    },
 };
 
 /********************************************************************

@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define maxCustomers 2
+#define maxCustomers 5 
 
 int main(void) {
   // initialize timer (TODO: How to sync with NTP-server?)
@@ -42,7 +42,6 @@ int main(void) {
       sprintf(buff, "RNG THINGY");
       lcd.Clear();
       lcd.WriteText(buff);
-      // upper bound is inclusive so maxCustomers - 1
       winningCustomer = rnd.getRandomCustomer(0, maxCustomers, totalPayed, &lcd);
     }
     sprintf(buff, "%u", winningCustomer);
@@ -53,25 +52,12 @@ int main(void) {
     lastShown = winningCustomer;
 
     Customer customer = getCustomer(winningCustomer);
-    // Customer customer = getCustomer(0);
     message custMessage = {0, nullptr};
     uint16_t rndMsg = rnd.getRandom(0, customer.billboardsCount - 1);
     memcpy_P(&custMessage, &customer.messageArray[rndMsg], sizeof(message));
 
-    // Display random billboard
-    // uint8_t randomBillboard = rnd.getRandom(customer.billboardsCount);
-    // for (uint8_t i = 0; i < sizeof(buff); i++) {
-    //   memcpy_P(&buff + i, custMessage.messageText + i, sizeof(char));
-    //   if (buff[i] == '\0') {
-    //     break;
-    //   }
-    // }
     memcpy_P(&buff, custMessage.messageText, 32);
     displayBillboard(&lcd, buff, sizeof(buff), custMessage.messageFlags);
-    // displayBillboard(&lcd, customer.billboards[randomBillboard],
-    //                  sizeof(customer.billboards[randomBillboard]),
-    //                  customer.displayProperties[randomBillboard]
-    //                 );
   }
 
   return EXIT_SUCCESS;
