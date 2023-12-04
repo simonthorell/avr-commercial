@@ -39,7 +39,12 @@ int main(void) {
 
     Customer customer = getCustomer(winningCustomer);
 
-    displayBillboard(&lcd, customer.billboards[0], sizeof(customer.billboards[0]), customer.displayProperties[0]);
+    // Display random billboard
+    uint8_t randomBillboard = rnd.getRandom(customer.billboardsCount);
+    displayBillboard(&lcd, customer.billboards[randomBillboard], 
+                     sizeof(customer.billboards[randomBillboard]), 
+                     customer.displayProperties[randomBillboard]
+                    );
   }
 
   return EXIT_SUCCESS;
