@@ -46,8 +46,7 @@ uint16_t pseudoRandom::randomValue() {
 uint16_t pseudoRandom::getRandom(uint16_t maxInclusive) {
   uint16_t value = 0;
   uint16_t rnd;
-  uint8_t numBytes = getNumBytes(value);
-  for (uint8_t i = 0; i < numBytes * 4; i++) {
+  for (uint8_t i = 0; i < 8; i++) {
     rnd = randomValue();
     rnd = rnd & 0x3;
     value += rnd << i * 2;
@@ -59,23 +58,13 @@ uint16_t pseudoRandom::getRandom(uint16_t maxInclusive) {
 uint16_t pseudoRandom::getRandom(uint16_t minInclusive, uint16_t maxInclusive) {
   uint16_t value = 0;
   uint16_t rnd;
-  uint8_t numBytes = getNumBytes(value);
-  for (uint8_t i = 0; i < numBytes * 4; i++) {
+  for (uint8_t i = 0; i < 8; i++) {
     rnd = randomValue();
     rnd = rnd & 0x3;
     value += rnd << i * 2;
   }
   value = scaleNumber(minInclusive, maxInclusive, value);
   return value;
-}
-
-uint8_t pseudoRandom::getNumBytes(uint16_t value) {
-  if (value > 0xFF) {
-    return 1;
-  } else if (0xFFFF >= value) {
-    return 2;
-  }
-  return 0;
 }
 
 uint16_t pseudoRandom::scaleNumber(uint16_t minInclusive, uint16_t maxInclusive, uint16_t value) {

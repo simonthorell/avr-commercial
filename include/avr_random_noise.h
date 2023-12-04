@@ -30,7 +30,6 @@ private:
   uint8_t port;
   void initializeRandom(uint8_t port);
   uint16_t randomValue(void);
-  uint8_t getNumBytes(uint16_t value);
   uint16_t scaleNumber(uint16_t minInclusive, uint16_t maxInclusive, uint16_t value);
 };
 
