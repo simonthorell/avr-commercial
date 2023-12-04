@@ -6,7 +6,7 @@
 #include <stdlib.h>
 
 pseudoRandom::pseudoRandom(void) {
-  initializeRandom(3);
+  initializeRandom();
   return;
 }
 
