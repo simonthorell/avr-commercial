@@ -34,6 +34,16 @@ int main(void) {
 
   setClock(&lcd);
   timer_init();
+
+  while (1) {
+    uint8_t currentSeconds = seconds;
+    char time[12];
+    sprintf(time, "%02d:%02d:%02d", hours, minutes, seconds);
+    displayText(&lcd, time);
+    while (currentSeconds == seconds) {
+    }
+  }
+
   uint8_t lastShown = maxCustomers; // Out of bounds to start
   uint8_t winningCustomer = rnd.getRandomCustomer(maxCustomers, totalPayed);
 
