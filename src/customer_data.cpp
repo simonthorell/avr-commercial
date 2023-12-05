@@ -41,11 +41,11 @@ const char svarteOne[] PROGMEM = "L" AA "t Petter bygga " AA "t dig";
 const char svarteTwo[] PROGMEM = "Bygga svart? Ring Petter";
 const message svarteText[] PROGMEM = {
     {
-        SCROLLING,
+        TIME_MIN_EVEN | SCROLLING,
         svarteOne,
     },
     {
-        STATIC,
+        TIME_MIN_ODD | STATIC,
         svarteTwo,
     },
 };
