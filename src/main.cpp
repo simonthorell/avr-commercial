@@ -32,7 +32,7 @@ int main(void) {
   lcd.Initialize();
   lcd.Clear();
 
-  setClock(lcd);
+  setClock(&lcd);
 
   uint8_t lastShown = maxCustomers; // Out of bounds to start
   uint8_t winningCustomer = rnd.getRandomCustomer(maxCustomers, totalPayed);

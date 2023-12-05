@@ -8,9 +8,8 @@
 #include "lcd_display_options.h"
 #include "timer.h"
 
-int setClock(HD44780 lcd);
+int setClock(HD44780 *lcd);
 void initializeButtons();
 int readButton(uint8_t pin);
-void updateDisplay();
 
 #endif

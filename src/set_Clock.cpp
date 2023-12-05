@@ -5,7 +5,7 @@ const int buttonMinutePin = PB1; // Pin for the minute button
 const int buttonSecondPin = PB2; // Pin for the second button
 const int buttonSetPin = PB3;    // Pin for the set button
 
-int setClock(HD44780 lcd) {
+int setClock(HD44780 *lcd) {
 
   initializeButtons();
 
@@ -14,7 +14,7 @@ int setClock(HD44780 lcd) {
   uint8_t currentSeconds = seconds;
     char time[12];
     sprintf(time, "%02d:%02d:%02d", hours, minutes, seconds);
-    displayText(&lcd, time);
+    displayText(lcd, time);
     while (currentSeconds == seconds) {
 
       if (readButton(buttonHourPin)) {
