@@ -40,38 +40,33 @@ int main(void) {
       winningCustomer =
           rnd.getRandomCustomer(maxCustomers, totalPayed);
     }
-
     lastShown = winningCustomer;
-
-
-    Customer customer = getCustomer(winningCustomer);
-
-    uint8_t billboardDisplayed = MAX_BILLBOARDS; //to not randomly get assigned 0
-    uint8_t lastBillboard;
-    while (billboardDisplayed != SUCCESS) {
-      // Display random billboard
-      uint8_t randomBillboard = rnd.getRandom(customer.billboardsCount);
-      if (randomBillboard != lastBillboard) {
-        billboardDisplayed = displayBillboard(&lcd, customer.billboards[randomBillboard], 
-                                              sizeof(customer.billboards[randomBillboard]), 
-                                              customer.displayProperties[randomBillboard]
-                                              );
-      }
-      lastBillboard = randomBillboard; 
-    }
 
     displayMessage(winningCustomer, &lcd, &rnd);
 
   }
-
   return EXIT_SUCCESS;
 }
 
 void displayMessage(uint8_t winner, HD44780 *lcd, pseudoRandom *rnd){
   char buff[40]; //some extra padding
-    Customer customer = getCustomer(winner);
-    message custMessage = getMessage(&customer, rnd->getRandom(customer.billboardsCount - 1));
-    memcpy_P(&buff, custMessage.messageText, 40);
-    displayBillboard(lcd, buff, getStrLen(buff), custMessage.messageFlags);
+  Customer customer = getCustomer(winner);
+
+  // WHY ??? :) 
+  uint8_t billboardDisplayed = MAX_BILLBOARDS; //to not randomly get assigned 0
+
+  while (billboardDisplayed != SUCCESS) {
+    // Display random billboard
+    uint8_t lastBillboard = -1; // Out of bounds to start
+    uint8_t randomBillboard = rnd->getRandom(customer.billboardsCount);
+
+    if (randomBillboard != lastBillboard) {
+      message custMessage = getMessage(&customer, rnd->getRandom(customer.billboardsCount - 1));
+      memcpy_P(&buff, custMessage.messageText, 40);
+      billboardDisplayed = displayBillboard(lcd, buff, getStrLen(buff), custMessage.messageFlags);
+    }
+    lastBillboard = randomBillboard; 
+  }
+
   return;
 }
