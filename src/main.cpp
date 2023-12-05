@@ -26,7 +26,7 @@ int main(void) {
     Customer customer = getCustomer(i);
     totalPayed += customer.balance;
   }
-
+  
   // Initialize & clear the LCD
   lcd.Initialize();
   lcd.Clear();
