@@ -4,11 +4,11 @@
 #include "lcd.h"
 
 // Define flags for billboard display properties
-#define STATIC          0x00
-#define SCROLLING       0x01
-#define BLINKING        0x02
-#define TIME_MIN_EVEN   0x03
-#define TIME_MIN_ODD    0x04
+#define STATIC          0x01  // Binary: 00000001
+#define SCROLLING       0x02  // Binary: 00000010
+#define BLINKING        0x04  // Binary: 00000100
+#define TIME_MIN_EVEN   0x08  // Binary: 00001000
+#define TIME_MIN_ODD    0x10  // Binary: 00010000
 
 enum displayStatus {
     SUCCESS,  // 0 
