@@ -4,8 +4,6 @@
 #include "lcd_display_options.h"
 #include "timer.h" // Minutes and seconds
 
-#include <string.h>
-
 #define DISPLAY_TIME 20000
 
 /********************************************************************
