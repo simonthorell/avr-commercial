@@ -35,7 +35,7 @@ int main(void) {
   uint8_t winningCustomer = rnd.getRandomCustomer(maxCustomers, totalPayed);
 
   while (1) {
-    // Making sure same dont get shown twice
+    // Making sure same customer dont get shown twice
     while (lastShown == winningCustomer) {
       winningCustomer =
           rnd.getRandomCustomer(maxCustomers, totalPayed);
@@ -48,15 +48,13 @@ int main(void) {
   return EXIT_SUCCESS;
 }
 
+// Display random billboard
 void displayMessage(uint8_t winner, HD44780 *lcd, pseudoRandom *rnd){
   char buff[40]; //some extra padding
   Customer customer = getCustomer(winner);
 
-  // WHY ??? :) 
-  uint8_t billboardDisplayed = -1; //to not randomly get assigned 0
-
+  uint8_t billboardDisplayed = -1; //Out of bounds to start to not randomly get assigned 0
   while (billboardDisplayed != SUCCESS) {
-    // Display random billboard
     uint8_t lastBillboard = -1; // Out of bounds to start
     uint8_t randomBillboard = rnd->getRandom(customer.billboardsCount);
 
