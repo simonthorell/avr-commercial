@@ -8,20 +8,30 @@
 *                   LCD DISPLAY BILLBOARD MAIN FUNCTION
 ********************************************************************/
 
-void displayBillboard(HD44780 *lcd, char* text, int length, char displayProperties) {
+uint8_t displayBillboard(HD44780 *lcd, char* text, int length, char displayProperties) {
     switch(displayProperties) {
+        case TIME_MIN_EVEN:
+        //check time
+        //if minute not even, return and get new random message from same customer
+        //return TIME_ERROR;
+        //else continue
+        case TIME_MIN_ODD:
+        //check time
+        //return TIME_ERROR;
+        //if minute not odd, return and get new random message from same customer
+        //else continue
         case STATIC:
             displayStaticText(lcd, text);
-            break;
+            return SUCCESS;
         case BLINKING:
             displayBlinkingText(lcd, text);
-            break;
+            return SUCCESS;
         case SCROLLING:
             displayScrollingText(lcd, text, length);
-            break;
+            return SUCCESS;
         default: // Fallback to static
             displayStaticText(lcd, text);
-            break;
+            return SUCCESS;
     }
 }
 

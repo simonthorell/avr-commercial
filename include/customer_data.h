@@ -18,7 +18,6 @@
 struct Customer {
     char name[MAX_CUSTOMER_NAME_LENGTH];  // Customer name
     uint16_t balance;  // Account balance
-    bool timeSpecific;
     uint8_t billboardsCount;  // Number of billboards
     char displayProperties[5]; // Display properties for each billboard
     char billboards[MAX_BILLBOARDS][MAX_BILLBOARD_TEXT_LENGTH];  // Array of billboard strings
