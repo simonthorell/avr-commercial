@@ -156,3 +156,9 @@ Customer getCustomer(int index) {
   // Return the customer
   return customer;
 }
+
+message getMessage(Customer *cust, uint8_t index) {
+  message msg = { 0, nullptr }; //idk why the default constructor is borked
+  memcpy_P(&msg, &cust->messageArray[index], sizeof(message));
+  return msg;
+}

@@ -44,9 +44,7 @@ int main(void) {
 
     // should move this into its own function, so many memcopies
     Customer customer = getCustomer(winningCustomer);
-    message custMessage = {0, nullptr};
-    uint16_t rndMsg = rnd.getRandom(0, customer.billboardsCount - 1);
-    memcpy_P(&custMessage, &customer.messageArray[rndMsg], sizeof(message));
+    message custMessage = getMessage(&customer, rnd.getRandom(customer.billboardsCount - 1));
 
     memcpy_P(&buff, custMessage.messageText, 32);
     displayBillboard(&lcd, buff, getStrLen(buff), custMessage.messageFlags);

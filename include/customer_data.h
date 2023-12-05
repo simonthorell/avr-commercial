@@ -29,5 +29,6 @@ typedef struct {
 
 // Define a function to get a customer from PROGMEM
 Customer getCustomer(int index);
+message getMessage(Customer *cust, uint8_t index);
 
 #endif

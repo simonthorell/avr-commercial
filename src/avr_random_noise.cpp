@@ -117,21 +117,25 @@ uint8_t pseudoRandom::getRandomCustomer(uint8_t minCustomers,
                                         uint8_t maxCustomers,
                                         uint16_t totalPayed, HD44780 *lcd) {
   uint16_t random = getRandom(0, totalPayed);
+  //FIXME: Remove before release
   char buff[30];
   lcd->Clear();
   sprintf(buff, "%u %u %u", random, totalPayed, maxCustomers);
   lcd->WriteText(buff);
   _delay_ms(2000);
+  //FIXME_END
   for (uint8_t i = 0; i < maxCustomers; i++) {
     Customer customer = getCustomer(i);
     if (random < customer.balance) {
       return i;
     }
     random -= customer.balance;
+    //FIXME: Remove before release
     lcd->Clear();
     sprintf(buff, "%u %u", random, i);
     lcd->WriteText(buff);
     _delay_ms(1000);
+    //FIXME_END
   }
   return 0;
 }
