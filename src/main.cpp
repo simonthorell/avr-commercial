@@ -5,7 +5,6 @@
 #include "timer.h"
 #include <avr/io.h>
 #include <stdint.h> //So I dont get all the uint errors, just for my IDE
-#include <stdio.h>
 #include <stdlib.h>
 #include <util/delay.h>
 
@@ -20,7 +19,6 @@ int main(void) {
   pseudoRandom rnd;
 
   uint16_t totalPayed = 0;
-  // FIXME: We should probably keep track of how many customers we have in total
   for (uint8_t i = 0; i < getNumCustomers(); i++) {
     Customer customer = getCustomer(i);
     totalPayed += customer.balance;
