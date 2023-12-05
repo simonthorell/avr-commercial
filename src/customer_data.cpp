@@ -122,3 +122,9 @@ message getMessage(Customer *cust, uint8_t index) {
   memcpy_P(&msg, &cust->messageArray[index], sizeof(message));
   return msg;
 }
+
+constexpr uint8_t customerLength = sizeof(customers) / sizeof(Customer);
+
+uint8_t getNumCustomers(void){
+  return customerLength;
+}
