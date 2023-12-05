@@ -4,7 +4,7 @@
 #include "lcd_display_options.h"
 #include "timer.h" // Minutes and seconds
 
-#include <string.h>
+#define DISPLAY_TIME 20000
 
 /********************************************************************
 *                   LCD DISPLAY BILLBOARD MAIN FUNCTION
@@ -59,24 +59,32 @@ uint8_t displayBillboard(HD44780 *lcd, char* text, int length, char displayPrope
 
 void displayStaticText(HD44780 *lcd, char* text) {
     displayText(lcd, text);
-    _delay_ms(3000);
+    _delay_ms(DISPLAY_TIME);
 }
 
 void displayScrollingText(HD44780 *lcd, char* text, int length) {
-    for(int i = 0; i < length; i++) {
-        displayText(lcd, text);
-        _delay_ms(200);
-        scrollText(text, length);
+    int duration = DISPLAY_TIME;
+    while(duration > 0){
+        for(int i = 0; i < length; i++) {
+            displayText(lcd, text);
+            _delay_ms(200);
+            duration -= 200;
+            if (duration <= 0) {
+                return;
+            }
+            scrollText(text, length);
+        }
     }
 }
 
 void displayBlinkingText(HD44780 *lcd, char* text) {
-    int duration = 5; // seconds
-    for(int i = 0; i < duration; i++) {
+    int duration = DISPLAY_TIME;
+    while(duration > 0) {
         displayText(lcd, text);
         _delay_ms(500);
         lcd->Clear();
         _delay_ms(500);
+        duration -= 1000;
     }
 }
 
