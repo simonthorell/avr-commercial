@@ -6,7 +6,7 @@
 
 #include <string.h>
 
-#define DISPLAY_TIME 10000
+#define DISPLAY_TIME 20000
 
 /********************************************************************
 *                   LCD DISPLAY BILLBOARD MAIN FUNCTION
@@ -70,8 +70,11 @@ void displayScrollingText(HD44780 *lcd, char* text, int length) {
         for(int i = 0; i < length; i++) {
             displayText(lcd, text);
             _delay_ms(200);
-            scrollText(text, length);
             duration -= 200;
+            if (duration <= 0) {
+                return;
+            }
+            scrollText(text, length);
         }
     }
 }
