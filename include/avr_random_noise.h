@@ -13,8 +13,7 @@ public:
   uint16_t getRandom(uint16_t maxInclusive);
   uint16_t getRandom(uint16_t minInclusive, uint16_t maxInclusive);
   uint8_t getRandomCustomer(uint8_t maxCustomers, uint16_t totalPayed);
-  uint8_t getRandomCustomer(uint8_t maxCustomers, uint16_t totalPayed,
-                            HD44780 *lcd);
+  uint8_t getRandomCustomer(uint8_t maxCustomers, uint16_t totalPayed);
 
 private:
   uint8_t port;
@@ -23,6 +22,5 @@ private:
   uint16_t scaleNumber(uint16_t minInclusive, uint16_t maxInclusive,
                        uint16_t value);
 };
-
 
 #endif // !__avr_random_noise_h

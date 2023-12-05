@@ -90,7 +90,7 @@ uint8_t pseudoRandom::getRandomCustomer(uint8_t maxCustomers,
 }
 
 uint8_t pseudoRandom::getRandomCustomer(uint8_t maxCustomers,
-                                        uint16_t totalPayed, HD44780 *lcd) {
+                                        uint16_t totalPayed) {
   uint16_t random = getRandom(0, totalPayed);
   for (uint8_t i = 0; i < maxCustomers; i++) {
     Customer customer = getCustomer(i);
