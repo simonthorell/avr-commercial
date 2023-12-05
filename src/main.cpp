@@ -49,7 +49,7 @@ int main(void) {
     memcpy_P(&custMessage, &customer.messageArray[rndMsg], sizeof(message));
 
     memcpy_P(&buff, custMessage.messageText, 32);
-    displayBillboard(&lcd, buff, sizeof(buff), custMessage.messageFlags);
+    displayBillboard(&lcd, buff, getStrLen(buff), custMessage.messageFlags);
   }
 
   return EXIT_SUCCESS;
