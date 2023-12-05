@@ -88,16 +88,3 @@ uint8_t pseudoRandom::getRandomCustomer(uint8_t maxCustomers,
   }
   return 0;
 }
-
-uint8_t pseudoRandom::getRandomCustomer(uint8_t maxCustomers,
-                                        uint16_t totalPayed) {
-  uint16_t random = getRandom(0, totalPayed);
-  for (uint8_t i = 0; i < maxCustomers; i++) {
-    Customer customer = getCustomer(i);
-    if (random < customer.balance) {
-      return i;
-    }
-    random -= customer.balance;
-  }
-  return 0;
-}

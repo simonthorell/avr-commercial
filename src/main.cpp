@@ -38,7 +38,7 @@ int main(void) {
     // Making sure same dont get shown twice
     while (lastShown == winningCustomer) {
       winningCustomer =
-          rnd.getRandomCustomer(maxCustomers, totalPayed, &lcd);
+          rnd.getRandomCustomer(maxCustomers, totalPayed);
     }
 
     lastShown = winningCustomer;
