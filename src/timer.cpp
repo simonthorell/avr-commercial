@@ -36,7 +36,7 @@ void timer_init() {
 
 while (1) {
     uint8_t currentSeconds = seconds;
-    char time[8];
+    char time[12];
     sprintf(time, "%02d:%02d:%02d", hours, minutes, seconds);
     displayText(&lcd, time);
     while (currentSeconds == seconds) {
