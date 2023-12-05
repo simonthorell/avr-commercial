@@ -1,6 +1,8 @@
 #ifndef CUSTOMER_DATA_H
 #define CUSTOMER_DATA_H
 
+#include <stdint.h>
+
 // Define the number of customers
 #define MAX_CUSTOMERS 10
 #define MAX_CUSTOMER_NAME_LENGTH 30
@@ -12,16 +14,21 @@
 #define AE "\xE1"
 #define AA "\x08"
 
+typedef struct {
+  const unsigned char messageFlags;
+  const char *messageText;
+} message;
+
 // Define a structure for customer data
-struct Customer {
-    char name[MAX_CUSTOMER_NAME_LENGTH];  // Customer name
-    uint16_t balance;  // Account balance
-    uint8_t billboardsCount;  // Number of billboards
-    char displayProperties[5]; // Display properties for each billboard
-    char billboards[MAX_BILLBOARDS][MAX_BILLBOARD_TEXT_LENGTH];  // Array of billboard strings
-};
+typedef struct {
+  char name[MAX_CUSTOMER_NAME_LENGTH]; // Customer name
+  uint16_t balance;                    // Account balance
+  uint8_t billboardsCount;             // Number of billboards
+  const message *messageArray;
+} Customer;
 
 // Define a function to get a customer from PROGMEM
 Customer getCustomer(int index);
+message getMessage(Customer *cust, uint8_t index);
 
 #endif

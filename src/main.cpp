@@ -10,6 +10,8 @@
 
 #define maxCustomers 5
 
+void displayMessage(uint8_t winner, HD44780 *lcd, pseudoRandom *rnd);  
+
 int main(void) {
   // initialize timer (TODO: How to sync with NTP-server?)
   timer_init();
@@ -30,27 +32,27 @@ int main(void) {
   lcd.Clear();
 
   uint8_t lastShown = maxCustomers; // Out of bounds to start
-  uint8_t winningCustomer = rnd.getRandomCustomer(maxCustomers - 1, totalPayed);
+  uint8_t winningCustomer = rnd.getRandomCustomer(maxCustomers, totalPayed);
 
   while (1) {
-    //Making sure same dont get shown twice
+    // Making sure same dont get shown twice
     while (lastShown == winningCustomer) {
-      //upper bound is inclusive so maxCustomers - 1
-      winningCustomer = rnd.getRandomCustomer(maxCustomers - 1, totalPayed);
+      winningCustomer =
+          rnd.getRandomCustomer(maxCustomers, totalPayed);
     }
 
     lastShown = winningCustomer;
-
-    Customer customer = getCustomer(winningCustomer);
-
-    // Display random billboard
-    uint8_t randomBillboard = rnd.getRandom(customer.billboardsCount);
-    displayBillboard(&lcd, customer.billboards[randomBillboard], 
-                     sizeof(customer.billboards[randomBillboard]), 
-                     customer.displayProperties[randomBillboard]
-                    );
+    displayMessage(winningCustomer, &lcd, &rnd);
   }
 
   return EXIT_SUCCESS;
-  
+}
+
+void displayMessage(uint8_t winner, HD44780 *lcd, pseudoRandom *rnd){
+  char buff[40]; //some extra padding
+    Customer customer = getCustomer(winner);
+    message custMessage = getMessage(&customer, rnd->getRandom(customer.billboardsCount - 1));
+    memcpy_P(&buff, custMessage.messageText, 40);
+    displayBillboard(lcd, buff, getStrLen(buff), custMessage.messageFlags);
+  return;
 }
