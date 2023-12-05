@@ -27,5 +27,6 @@ void displayBlinkingText(HD44780 *lcd, char* text);
 // Helper function prototypes
 void scrollText(char* text, int length);
 void displayText(HD44780 *lcd, char* text);
+uint8_t getStrLen(char *text);
 
 #endif // LCD_DISPLAY_OPTIONS_H

@@ -87,3 +87,12 @@ void displayText(HD44780 *lcd, char* text) {
     lcd->Clear();
     lcd->WriteText(text);
 }
+
+uint8_t getStrLen(char *text){
+  uint8_t len = 0;
+  while(*(text + len) != 0 ){
+    len++;
+  }
+  len++;
+  return len;
+}
