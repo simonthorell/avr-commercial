@@ -9,30 +9,39 @@
 ********************************************************************/
 
 uint8_t displayBillboard(HD44780 *lcd, char* text, int length, char displayProperties) {
+    uint8_t timeStatus = currentTime();
+    uint8_t test = currentTime();
+
     switch(displayProperties) {
         case TIME_MIN_EVEN:
-            uint8_t timeStatus = currentTime();
-            if(timeStatus =! EVEN_MINUTE){
+            if(timeStatus != EVEN_MINUTE){
                 return TIME_ERROR;
             }
+            break;
         case TIME_MIN_ODD:
-            uint8_t test = currentTime();
-            if(test =! EVEN_MINUTE){
+            if(test != EVEN_MINUTE){
                 return TIME_ERROR;
             }
+            break;
         case STATIC:
             displayStaticText(lcd, text);
             return SUCCESS;
+            break;
         case BLINKING:
             displayBlinkingText(lcd, text);
             return SUCCESS;
+            break;
         case SCROLLING:
             displayScrollingText(lcd, text, length);
             return SUCCESS;
+            break;
         default: // Fallback to static
             displayStaticText(lcd, text);
             return SUCCESS;
+            break;
     }
+    
+    return NOT_FOUND_ERROR;
 }
 
 /********************************************************************
@@ -59,15 +68,6 @@ void displayBlinkingText(HD44780 *lcd, char* text) {
         _delay_ms(500);
         lcd->Clear();
         _delay_ms(500);
-    }
-}
-
-void displayTimebasedText(HD44780 *lcd, char* text) {
-    // psuedocode!
-    if (minutes % 2 == 0) {
-            // Code for even minutes
-    } else {
-        // Code for uneven minutes
     }
 }
 

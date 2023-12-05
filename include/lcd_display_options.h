@@ -13,6 +13,7 @@
 enum displayStatus {
     SUCCESS,  // 0 
     TIME_ERROR, // 1
+    NOT_FOUND_ERROR // 2
 };
 
 // Main function prototype
