@@ -3,6 +3,7 @@
 #include "lcd.h"
 #include "lcd_display_options.h"
 #include "timer.h"
+#include "set_Clock.h"
 #include <avr/io.h>
 #include <stdint.h> //So I dont get all the uint errors, just for my IDE
 #include <stdio.h>
@@ -30,6 +31,8 @@ int main(void) {
   // Initialize & clear the LCD
   lcd.Initialize();
   lcd.Clear();
+
+  setClock(lcd);
 
   uint8_t lastShown = maxCustomers; // Out of bounds to start
   uint8_t winningCustomer = rnd.getRandomCustomer(maxCustomers, totalPayed);
