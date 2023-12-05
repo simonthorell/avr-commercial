@@ -42,8 +42,8 @@ int main(void) {
   //   }
   // }
 
-  uint8_t lastShown = maxCustomers; // Out of bounds to start
-  uint8_t winningCustomer = rnd.getRandomCustomer(maxCustomers, totalPayed);
+  uint8_t lastShown = getNumCustomers(); // Out of bounds to start
+  uint8_t winningCustomer = rnd.getRandomCustomer(getNumCustomers(), totalPayed);
 
 
   while (1) {
