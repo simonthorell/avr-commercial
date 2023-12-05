@@ -53,7 +53,7 @@ void displayMessage(uint8_t winner, HD44780 *lcd, pseudoRandom *rnd){
   Customer customer = getCustomer(winner);
 
   // WHY ??? :) 
-  uint8_t billboardDisplayed = MAX_BILLBOARDS; //to not randomly get assigned 0
+  uint8_t billboardDisplayed = -1; //to not randomly get assigned 0
 
   while (billboardDisplayed != SUCCESS) {
     // Display random billboard
