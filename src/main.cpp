@@ -5,10 +5,9 @@
 #include "timer.h"
 #include <avr/io.h>
 #include <stdint.h> //So I dont get all the uint errors, just for my IDE
-#include <stdio.h>
 #include <stdlib.h>
 
-#define maxCustomers 5
+#define currentCustomers 5
 
 void displayMessage(uint8_t winner, HD44780 *lcd, pseudoRandom *rnd);  
 
@@ -22,7 +21,7 @@ int main(void) {
 
   uint16_t totalPayed = 0;
   // FIXME: We should probably keep track of how many customers we have in total
-  for (uint8_t i = 0; i < maxCustomers; i++) {
+  for (uint8_t i = 0; i < currentCustomers; i++) {
     Customer customer = getCustomer(i);
     totalPayed += customer.balance;
   }
@@ -31,14 +30,14 @@ int main(void) {
   lcd.Initialize();
   lcd.Clear();
 
-  uint8_t lastShown = maxCustomers; // Out of bounds to start
-  uint8_t winningCustomer = rnd.getRandomCustomer(maxCustomers, totalPayed);
+  uint8_t lastShown = currentCustomers; // Out of bounds to start
+  uint8_t winningCustomer = rnd.getRandomCustomer(currentCustomers, totalPayed);
 
   while (1) {
     // Making sure same customer dont get shown twice
     while (lastShown == winningCustomer) {
       winningCustomer =
-          rnd.getRandomCustomer(maxCustomers, totalPayed);
+          rnd.getRandomCustomer(currentCustomers, totalPayed);
     }
     lastShown = winningCustomer;
 
