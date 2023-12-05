@@ -1,5 +1,6 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include "timer.h"
 
 // Global variables
 volatile uint8_t seconds = 0;
@@ -21,4 +22,12 @@ void timer1_init() {
     TCCR1B |= ((1 << CS10) | (1 << CS11)); // Start timer at Fcpu/64
     TIMSK1 |= (1 << OCIE1A); // Enable timer compare interrupt
     sei(); // Enable global interrupts
+}
+
+uint8_t currentTime(){
+    if(minutes % 2){
+        return EVEN_MINUTE;
+    }else{
+        return ODD_MINUTE;
+    }
 }

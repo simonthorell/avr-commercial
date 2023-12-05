@@ -11,15 +11,15 @@
 uint8_t displayBillboard(HD44780 *lcd, char* text, int length, char displayProperties) {
     switch(displayProperties) {
         case TIME_MIN_EVEN:
-        //check time
-        //if minute not even, return and get new random message from same customer
-        //return TIME_ERROR;
-        //else continue
+            uint8_t timeStatus = currentTime();
+            if(timeStatus =! EVEN_MINUTE){
+                return TIME_ERROR;
+            }
         case TIME_MIN_ODD:
-        //check time
-        //return TIME_ERROR;
-        //if minute not odd, return and get new random message from same customer
-        //else continue
+            uint8_t test = currentTime();
+            if(test =! EVEN_MINUTE){
+                return TIME_ERROR;
+            }
         case STATIC:
             displayStaticText(lcd, text);
             return SUCCESS;
