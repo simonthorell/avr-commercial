@@ -78,7 +78,7 @@ uint16_t pseudoRandom::scaleNumber(uint16_t minInclusive, uint16_t maxInclusive,
 
 uint8_t pseudoRandom::getRandomCustomer(uint8_t maxCustomers,
                                         uint16_t totalPayed) {
-  uint16_t random = getRandom(0, totalPayed);
+  uint16_t random = getRandom(0, totalPayed - 1);
   for (uint8_t i = 0; i < maxCustomers; i++) {
     Customer customer = getCustomer(i);
     if (random < customer.balance) {
