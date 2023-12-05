@@ -1,5 +1,4 @@
 #include "avr_random_noise.h"
-#include "lcd.h" //FIXME: Rmove with randomTest
 #include <avr/io.h>
 #include <stdint.h> //So I dont get all the uint errors, just for my IDE
 #include <stdio.h>
@@ -77,29 +76,6 @@ uint16_t pseudoRandom::scaleNumber(uint16_t minInclusive, uint16_t maxInclusive,
   return (uint16_t)dvalue;
 }
 
-// FIXME: Remove before release
-void pseudoRandom::randomTest(HD44780 *lcd) {
-  uint16_t rnd = 0;
-  uint8_t rndLow = 0;
-  uint8_t rndHigh = 0;
-  char rndBuff[30];
-  while (1) {
-    lcd->Clear();
-    lcd->GoTo(0, 0);
-    rnd = getRandom(2, 15235);
-    rndLow = rnd & 0xff;
-    rndHigh = rnd >> 8;
-    sprintf(rndBuff, "%u", rnd);
-    lcd->WriteText(rndBuff);
-    sprintf(rndBuff, BYTE_TO_BINARY_PATTERN BYTE_TO_BINARY_PATTERN,
-            BYTE_TO_BINARY(rndHigh), BYTE_TO_BINARY(rndLow));
-    lcd->GoTo(0, 1);
-    lcd->WriteText(rndBuff);
-    _delay_ms(500);
-  }
-  return;
-}
-
 uint8_t pseudoRandom::getRandomCustomer(uint8_t maxCustomers,
                                         uint16_t totalPayed) {
   uint16_t random = getRandom(0, totalPayed);
@@ -116,25 +92,12 @@ uint8_t pseudoRandom::getRandomCustomer(uint8_t maxCustomers,
 uint8_t pseudoRandom::getRandomCustomer(uint8_t maxCustomers,
                                         uint16_t totalPayed, HD44780 *lcd) {
   uint16_t random = getRandom(0, totalPayed);
-  // FIXME: Remove before release
-  char buff[30];
-  lcd->Clear();
-  sprintf(buff, "%u %u %u", random, totalPayed, maxCustomers);
-  lcd->WriteText(buff);
-  _delay_ms(2000);
-  // FIXME_END
   for (uint8_t i = 0; i < maxCustomers; i++) {
     Customer customer = getCustomer(i);
     if (random < customer.balance) {
       return i;
     }
     random -= customer.balance;
-    // FIXME: Remove before release
-    lcd->Clear();
-    sprintf(buff, "%u %u", random, i);
-    lcd->WriteText(buff);
-    _delay_ms(1000);
-    // FIXME_END
   }
   return 0;
 }
