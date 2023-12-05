@@ -3,6 +3,7 @@
 #include "lcd.h"
 #include "lcd_display_options.h"
 #include "timer.h"
+#include "set_Clock.h"
 #include <avr/io.h>
 #include <stdint.h> //So I dont get all the uint errors, just for my IDE
 #include <stdlib.h>
@@ -11,8 +12,6 @@
 void displayMessage(uint8_t winner, HD44780 *lcd, pseudoRandom *rnd);
 
 int main(void) {
-  // initialize timer (TODO: How to sync with NTP-server?)
-  timer_init();
 
   // Create an instance of the LCD and random
   HD44780 lcd;
@@ -23,14 +22,29 @@ int main(void) {
     Customer customer = getCustomer(i);
     totalPayed += customer.balance;
   }
-
+  
   // Initialize & clear the LCD
   lcd.Initialize();
   lcd.Clear();
 
-  uint8_t lastShown = getNumCustomers(); // Out of bounds to start
-  uint8_t winningCustomer =
-      rnd.getRandomCustomer(getNumCustomers(), totalPayed);
+
+  // Set start time
+  setClock(&lcd);
+  // initialize timer
+  timer_init();
+
+  // while (1) {
+  //   uint8_t currentSeconds = seconds;
+  //   char time[12];
+  //   sprintf(time, "%02d:%02d:%02d", hours, minutes, seconds);
+  //   displayText(&lcd, time);
+  //   while (currentSeconds == seconds) {
+  //   }
+  // }
+
+  uint8_t lastShown = maxCustomers; // Out of bounds to start
+  uint8_t winningCustomer = rnd.getRandomCustomer(maxCustomers, totalPayed);
+
 
   while (1) {
     // Making sure same customer dont get shown twice

@@ -2,11 +2,6 @@
 #include <avr/interrupt.h>
 #include "timer.h"
 
-// Global variables
-volatile uint8_t seconds = 0;
-volatile uint8_t minutes = 0;
-volatile uint8_t hours = 0;
-
 // Timer interrupt service routine
 ISR(TIMER1_COMPA_vect) {
     seconds++;
