@@ -6,6 +6,8 @@
 #include <avr/io.h>
 #include <stdint.h> //So I dont get all the uint errors, just for my IDE
 #include <stdlib.h>
+#include <util/delay.h>
+#include <stdio.h>
 
 #define currentCustomers 5
 
@@ -29,6 +31,11 @@ int main(void) {
   // Initialize & clear the LCD
   lcd.Initialize();
   lcd.Clear();
+
+  char buff[10];
+  sprintf(buff, "%d", getNumCustomers());
+  lcd.WriteText(buff);
+  _delay_ms(5000);
 
   uint8_t lastShown = currentCustomers; // Out of bounds to start
   uint8_t winningCustomer = rnd.getRandomCustomer(currentCustomers, totalPayed);
