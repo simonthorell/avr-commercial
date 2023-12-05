@@ -14,8 +14,8 @@ void displayMessage(uint8_t winner, HD44780 *lcd, pseudoRandom *rnd);
 
 int main(void) {
   // initialize timer (TODO: How to sync with NTP-server?)
-  timer1_init();
-
+  timer_init();
+  
   // Create an instance of the LCD and random
   HD44780 lcd;
   pseudoRandom rnd;
