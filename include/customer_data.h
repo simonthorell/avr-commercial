@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 #ifndef CUSTOMER_DATA_H
 #define CUSTOMER_DATA_H
 

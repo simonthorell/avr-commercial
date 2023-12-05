@@ -42,7 +42,26 @@ int main(void) {
     }
 
     lastShown = winningCustomer;
+
+
+    Customer customer = getCustomer(winningCustomer);
+
+    uint8_t billboardDisplayed = MAX_BILLBOARDS; //to not randomly get assigned 0
+    uint8_t lastBillboard;
+    while (billboardDisplayed != SUCCESS) {
+      // Display random billboard
+      uint8_t randomBillboard = rnd.getRandom(customer.billboardsCount);
+      if (randomBillboard != lastBillboard) {
+        billboardDisplayed = displayBillboard(&lcd, customer.billboards[randomBillboard], 
+                                              sizeof(customer.billboards[randomBillboard]), 
+                                              customer.displayProperties[randomBillboard]
+                                              );
+      }
+      lastBillboard = randomBillboard; 
+    }
+
     displayMessage(winningCustomer, &lcd, &rnd);
+
   }
 
   return EXIT_SUCCESS;

@@ -1,5 +1,6 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include "timer.h"
 
 // Global variables
 volatile uint8_t seconds = 0;
@@ -31,6 +32,15 @@ void timer_init() {
     sei(); // Enable global interrupts
 }
 
+
+uint8_t currentTime(){
+    if(minutes % 2){
+        return EVEN_MINUTE;
+    }else{
+        return ODD_MINUTE;
+    }
+}
+
 /************************* TIMER TEST *************************
  * Paste below loop into main() to display clock on lcd
 
@@ -43,3 +53,4 @@ while (1) {
     }
 }
 ************************* TIMER TEST ************************/
+
