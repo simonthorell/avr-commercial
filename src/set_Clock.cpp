@@ -1,5 +1,5 @@
 #include "set_Clock.h"
-
+// nånting
 const int buttonHourPin = PB0;   // Pin for the hour button
 const int buttonMinutePin = PB1; // Pin for the minute button
 const int buttonSecondPin = PB2; // Pin for the second button
