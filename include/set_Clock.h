@@ -4,9 +4,6 @@
 
 #include <avr/io.h>
 #include <util/delay.h>
-#include <stdio.h>
-#include "lcd_display_options.h"
-#include "timer.h"
 
 int setClock(HD44780 *lcd);
 void initializeButtons();
