@@ -23,7 +23,7 @@ int setClock(HD44780 *lcd) {
 
     while (currentSeconds == seconds) {
       if (readButton(buttonHourPin)) {
-        _delay_ms(200);  // Debounce delay
+        _delay_ms(250);  // Debounce delay
         hours = (hours % 24) + 1;  // Increment hours from 1 to 24
         if(hours > 24){
           hours = 0;
@@ -34,7 +34,7 @@ int setClock(HD44780 *lcd) {
       }
       // Button to iterate through minutes
       if (readButton(buttonMinutePin)) {
-        _delay_ms(200);
+        _delay_ms(250);
         minutes = (minutes + 1) % 60;  // Increment minutes from 0 to 59
         if(minutes > 60){
           minutes = 0;
@@ -45,7 +45,7 @@ int setClock(HD44780 *lcd) {
       }
       // Button to iterate through seconds
       if (readButton(buttonSecondPin)) {
-        _delay_ms(200);
+        _delay_ms(250);
         seconds = (seconds + 1) % 60;  // Increment seconds from 0 to 59
         if(seconds > 60){
           seconds = 0;
