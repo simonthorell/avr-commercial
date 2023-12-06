@@ -65,6 +65,7 @@ void displayStaticText(HD44780 *lcd, char *text) {
 }
 
 void displayScrollingText(HD44780 *lcd, char *text, int length) {
+  //TODO: NEEDS CLEANUP
   for (int i = length; i < 45; i++) {
     text[i] = ' ';
   }
@@ -98,6 +99,7 @@ void displayBlinkingText(HD44780 *lcd, char *text) {
  *                         HELPER FUNCTIONS
  ********************************************************************/
 
+//TODO: THIS NEEDS A CLEANUP
 void scrollText(char *text, int length) {
  length = length < 32 ? 32 : length;
   char first = text[0];
