@@ -76,6 +76,12 @@ void HD44780::Initialize(void) {
   _delay_us(25); //safety delay
   uint8_t customChar[] = customA;
   CreateChar(0, customChar);
+  uint8_t customCharTwo[] = hourglass;
+  CreateChar(1, customCharTwo);
+  uint8_t leftHour[] = leftSideHourglass;
+  CreateChar(2, leftHour);
+  uint8_t rightHour[] = rightSideHourglass;
+  CreateChar(3, rightHour);
 }
 
 void HD44780::OutNibble(unsigned char nibble) {

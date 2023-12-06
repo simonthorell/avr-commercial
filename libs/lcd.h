@@ -3,8 +3,8 @@
 #define LCD_H_
 
 #include <avr/io.h>
-#include <util/delay.h>
 #include <avr/pgmspace.h>
+#include <util/delay.h>
 
 // Pin configuration
 #define LCD_RS_DIR DDRD
@@ -36,8 +36,14 @@
 #define HD44780_HOME 0x02
 // ... [rest of the command set]
 
-#define customA                                                              \
+#define customA                                                                \
   { 0x4, 0x0, 0xe, 0x1, 0xf, 0x11, 0xf, 0x0 }
+#define hourglass                                                              \
+  { 0x1f, 0x11, 0xa, 0x4, 0x4, 0xa, 0x11, 0x1f }
+#define leftSideHourglass                                                      \
+  { 0x00, 0x0C, 0x0A, 0x09, 0x0A, 0x0C, 0x00, 0x00 }
+#define rightSideHourglass                                                     \
+  { 0x00, 0x06, 0x0A, 0x12, 0x0A, 0x06, 0x00, 0x00 }
 
 // HD44780 LCD class
 class HD44780 {
