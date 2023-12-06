@@ -17,7 +17,8 @@ public:
 private:
   uint8_t port;
   void initializeRandom(uint8_t port);
-  uint16_t randomValue(void);
+  // uint16_t randomValue(void);
+  uint8_t randomValue(void);
   uint16_t scaleNumber(uint16_t minInclusive, uint16_t maxInclusive,
                        uint16_t value);
 };
