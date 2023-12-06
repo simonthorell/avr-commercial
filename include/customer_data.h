@@ -1,14 +1,10 @@
-#include <stdbool.h>
-
 #ifndef CUSTOMER_DATA_H
 #define CUSTOMER_DATA_H
 
 #include <stdint.h>
 
 // Define the number of customers
-#define MAX_CUSTOMERS 10
 #define MAX_CUSTOMER_NAME_LENGTH 30
-#define MAX_BILLBOARDS 5
 #define MAX_BILLBOARD_TEXT_LENGTH 45
 
 // Define special characters

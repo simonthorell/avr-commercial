@@ -1,4 +1,5 @@
 #include "avr_random_noise.h"
+#include "customer_data.h"
 #include <avr/io.h>
 #include <stdint.h> //So I dont get all the uint errors, just for my IDE
 
@@ -21,6 +22,7 @@ void pseudoRandom::initializeRandom(uint8_t port) {
   this->port = port;
   PRR &= ~(1 << PRADC);                    // Turn on power to the ADC
   ADMUX &= ~((1 << REFS0) | (1 << REFS1)); // set VCC as voltage reference
+  ADMUX &= ~(1 << ADLAR);                  // Make sure we are in 10bit mode
   ADMUX |= this->port;                     // Start selected pin
   ADCSRA &=
       ~((1 << ADPS0) | (1 << ADPS1) |
@@ -29,14 +31,14 @@ void pseudoRandom::initializeRandom(uint8_t port) {
   return;
 }
 
-uint16_t pseudoRandom::randomValue() {
-  uint16_t rnd = 0;
+uint8_t pseudoRandom::randomValue(){
+  uint8_t rnd;
   ADCSRA |= (1 << ADSC);         // set the ADSC bit to start ADC conversion
   while (ADCSRA & (1 << ADSC)) { // wait until its cleared, we have data then
     asm(""); // dirty hack to make sure the loop doesnt get optimized out
   }
   rnd = ADCL;         // read lower 8 bits
-  rnd += (ADCH << 8); // read the high 2 bits
+  // discarding high bytes anyway
   return rnd;
 }
 

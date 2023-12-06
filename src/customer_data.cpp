@@ -118,13 +118,16 @@ Customer getCustomer(int index) {
 }
 
 message getMessage(Customer *cust, uint8_t index) {
-  message msg = { 0, nullptr }; //idk why the default constructor is borked
-  memcpy_P(&msg, &cust->messageArray[index], sizeof(message));
+  unsigned char msgFlags;
+  char *msgTxt;
+  memcpy_P(&msgFlags, &cust->messageArray[index].messageFlags,
+           sizeof(const unsigned char));
+  memcpy_P(&msgTxt, &cust->messageArray[index].messageText,
+           sizeof(const char *));
+  message msg = {msgFlags, msgTxt};
   return msg;
 }
 
 constexpr uint8_t customerLength = sizeof(customers) / sizeof(Customer);
 
-uint8_t getNumCustomers(void){
-  return customerLength;
-}
+uint8_t getNumCustomers(void) { return customerLength; }
