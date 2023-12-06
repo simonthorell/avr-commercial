@@ -25,7 +25,8 @@ const message harryText[] PROGMEM = {
 };
 
 const char ankaOne[] PROGMEM = "K" OE "p paj hos Farmor Anka";
-const char ankaTwo[] PROGMEM = "Skynda innan    M" AA "rten " AE "tit alla pajer";
+const char ankaTwo[] PROGMEM =
+    "Skynda innan    M" AA "rten " AE "tit alla pajer";
 const message ankaText[] PROGMEM = {
     {
         SCROLLING,
@@ -71,36 +72,52 @@ const message iotText[] PROGMEM = {
     },
 };
 
+const char yrrolOne[] PROGMEM =
+    "T-R" OE "d - f" OE "r dig som t" AE "nkt klart";
+const char yrrolTwo[] PROGMEM =
+    "Claes M" AA "nsson - om flickan sj" AE "lv f" AA " r v" AE "lja";
+const message yrrolText[] PROGMEM = {
+    {
+        SCROLLING,
+        yrrolOne,
+    },
+    {
+        BLINKING,
+        yrrolTwo,
+    },
+};
+
 const Customer customers[] PROGMEM = {
     {
-        "Hederlige Harrys Bilar",
-        5000,
+        1500,
+    //FIXME: dynamicly get the amount of messages
         3,
         harryText,
     },
     {
-        "Farmor Ankas Pajer AB",
         3000,
         2,
         ankaText,
     },
     {
-        "Svarte Petters SvartByggen",
         1500,
         2,
         svarteText,
     },
     {
-        "L" AA "ngbens detektivbyr" AA,
         4000,
         2,
         langText,
     },
     {
-        "IOT:s Reklambyr" AA,
         1000,
         1,
         iotText,
+    },
+    {
+        6000,
+        2,
+        yrrolText,
     },
 };
 
