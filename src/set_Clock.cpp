@@ -1,9 +1,5 @@
 #include "set_Clock.h"
-// nånting
-const int buttonHourPin = PB0;   // Pin for the hour button
-const int buttonMinutePin = PB1; // Pin for the minute button
-const int buttonSecondPin = PB2; // Pin for the second button
-const int buttonSetPin = PB3;    // Pin for the set button
+#include "buttons.h"
 
 volatile uint8_t seconds = 0;
 volatile uint8_t minutes = 0;
@@ -65,13 +61,4 @@ int setClock(HD44780 *lcd) {
   }
 
   return 0;
-}
-
-void initializeButtons() {
-  DDRB &= ~((1 << buttonHourPin) | (1 << buttonMinutePin) | (1 << buttonSecondPin) | (1 << buttonSetPin));
-  PORTB |= (1 << buttonHourPin) | (1 << buttonMinutePin) | (1 << buttonSecondPin) | (1 << buttonSetPin);
-}
-
-int readButton(uint8_t pin) {
-  return bit_is_clear(PINB, pin);
 }
