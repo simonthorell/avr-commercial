@@ -25,7 +25,7 @@ const message harryText[] PROGMEM = {
 };
 
 const char ankaOne[] PROGMEM = "K" OE "p paj hos Farmor Anka";
-const char ankaTwo[] PROGMEM = "Skynda innan M" AA "rten " AE "tit alla pajer";
+const char ankaTwo[] PROGMEM = "Skynda innan    M" AA "rten " AE "tit alla pajer";
 const message ankaText[] PROGMEM = {
     {
         SCROLLING,
@@ -38,7 +38,7 @@ const message ankaText[] PROGMEM = {
 };
 
 const char svarteOne[] PROGMEM = "L" AA "t Petter bygga " AA "t dig";
-const char svarteTwo[] PROGMEM = "Bygga svart? Ring Petter";
+const char svarteTwo[] PROGMEM = "Bygga svart?    Ring Petter";
 const message svarteText[] PROGMEM = {
     {
         TIME_MIN_EVEN | SCROLLING,
@@ -51,7 +51,7 @@ const message svarteText[] PROGMEM = {
 };
 
 const char langOne[] PROGMEM = "Mysterier? Ring L" AA "ngben";
-const char langTwo[] PROGMEM = "L" AA "ngben fixar biffen";
+const char langTwo[] PROGMEM = "L" AA "ngben fixar   biffen";
 const message langText[] PROGMEM = {
     {
         STATIC,
