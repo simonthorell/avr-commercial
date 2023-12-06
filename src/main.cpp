@@ -60,7 +60,7 @@ int main(void) {
 
 // Display random billboard
 void displayMessage(uint8_t winner, HD44780 *lcd, pseudoRandom *rnd) {
-  char buff[40]; // some extra padding
+  char buff[MAX_BILLBOARD_TEXT_LENGTH]; // some extra padding
   Customer customer = getCustomer(winner);
 
   uint8_t billboardDisplayed =
