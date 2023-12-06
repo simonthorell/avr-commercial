@@ -23,7 +23,6 @@ void pseudoRandom::initializeRandom(uint8_t port) {
   PRR &= ~(1 << PRADC);                    // Turn on power to the ADC
   ADMUX &= ~((1 << REFS0) | (1 << REFS1)); // set VCC as voltage reference
   ADMUX &= ~(1 << ADLAR);                  // Make sure we are in 10bit mode
-  ADMUX |= this->port;                     // Start selected pin
   ADCSRA &=
       ~((1 << ADPS0) | (1 << ADPS1) |
         (1 << ADPS2));   // Clear the speed division bits for maximum SPEEEEEED
@@ -43,6 +42,7 @@ uint8_t pseudoRandom::randomValue(){
 }
 
 uint16_t pseudoRandom::getRandom(uint16_t maxInclusive) {
+  ADMUX |= this->port;
   uint16_t value = 0;
   uint16_t rnd;
   for (uint8_t i = 0; i < 8; i++) {
@@ -50,6 +50,7 @@ uint16_t pseudoRandom::getRandom(uint16_t maxInclusive) {
     rnd = rnd & 0x3;
     value += rnd << i * 2;
   }
+  ADMUX ^= this->port;
   value = scaleNumber(0, maxInclusive, value);
   return value;
 }
