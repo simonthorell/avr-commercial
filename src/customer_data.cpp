@@ -8,7 +8,7 @@
 // ********************************************************************/
 const char harryOne[] PROGMEM = "K" OE "p bil hos Harry";
 const char harryTwo[] PROGMEM = "En god bilaff" AE "r (f" OE "r harry!)";
-const char harryThree[] PROGMEM = "Hederlige Harrys Bilar";
+const char harryThree[] PROGMEM = "Hederlige HarrysBilar";
 const message harryText[] PROGMEM = {
     {
         SCROLLING,
@@ -63,7 +63,7 @@ const message langText[] PROGMEM = {
     },
 };
 
-const char iotOne[] PROGMEM = "Synas h" AE "r? IOT:s Reklambyr" AA;
+const char iotOne[] PROGMEM = "Synas h" AE "r? IOT:sReklambyr" AA;
 const message iotText[] PROGMEM = {
     {
         STATIC,
