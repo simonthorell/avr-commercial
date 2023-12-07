@@ -4,7 +4,6 @@
 #include <stdint.h>
 
 // Define the number of customers
-#define MAX_CUSTOMER_NAME_LENGTH 30
 #define MAX_BILLBOARD_TEXT_LENGTH 45
 
 // Define special characters
@@ -19,9 +18,8 @@ typedef struct {
 
 // Define a structure for customer data
 typedef struct {
-  char name[MAX_CUSTOMER_NAME_LENGTH]; // Customer name
-  uint16_t balance;                    // Account balance
-  uint8_t billboardsCount;             // Number of billboards
+  uint16_t balance;        // Account balance
+  uint8_t billboardsCount; // Number of billboards
   const message *messageArray;
 } Customer;
 
