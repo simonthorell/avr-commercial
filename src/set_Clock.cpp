@@ -10,7 +10,7 @@ volatile uint8_t seconds = 0;
 volatile uint8_t minutes = 0;
 volatile uint8_t hours = 0;
 
-int setClock(HD44780 *lcd) {
+void setClock(HD44780 *lcd) {
 
   volatile uint8_t localSeconds = 0;
   volatile uint8_t localMinutes = 0;
@@ -19,8 +19,7 @@ int setClock(HD44780 *lcd) {
 
   initializeButtons();
 
-  int run = 1;
-  while (run) {
+  while (1) {
 
     // Limit screen refresh to prevent flashing
     if (seconds != lastShownSecond) {
@@ -54,10 +53,10 @@ int setClock(HD44780 *lcd) {
       seconds = localSeconds;
       minutes = localMinutes;
       hours = localHours;
-      return 0;
+      return;
     }
   }
-  return 0;
+  return;
 }
 
 void displayTime(uint8_t localHours, uint8_t localMinutes, uint8_t localSeconds,
@@ -78,7 +77,7 @@ void displayTime(uint8_t localHours, uint8_t localMinutes, uint8_t localSeconds,
   }
   lcd->Clear();
   lcd->GoTo(0, 0);
-  lcd->WriteText((char*)setTime);
+  lcd->WriteText((char *)setTime);
   lcd->GoTo(0, 1);
   lcd->WriteText(time);
   return;
