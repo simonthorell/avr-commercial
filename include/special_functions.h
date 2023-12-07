@@ -17,13 +17,13 @@ See timer.h and timer.cpp for more information
 extern volatile uint8_t specialFunctionsFlags;
 
 // Bitwise flags
-const uint8_t FIRE_ALARM = 1 << 0;    // 00000001
+const uint8_t FIRE_ALARM = 1 << 0;     // 00000001
 const uint8_t DISPLAY_CLOCK = 1 << 1;  // 00000010
-const uint8_t FLAG_THREE = 1 << 2;  // 00000100
-const uint8_t FLAG_FOUR = 1 << 3;     // 00001000
+const uint8_t FLAG_THREE = 1 << 2;     // 00000100
+const uint8_t FLAG_FOUR = 1 << 3;      // 00001000
 
 // Core function
-void checkButtonPressed(HD44780 *lcd);
+void initializeButtonInterrupts();
 
 // Button pressed logic
 int specialFunctions(HD44780 *lcd);
