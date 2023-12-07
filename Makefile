@@ -87,18 +87,22 @@ $(ELF_OUT): $(OBJECTS)
 
 # Test specific settings
 TEST_SRC_DIR := tests
-TEST_SRCS := $(wildcard $(TEST_SRC_DIR)/*.c)
-TEST_OBJS := $(patsubst $(TEST_SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(TEST_SRCS))
+TEST_SRCS := $(wildcard $(TEST_SRC_DIR)/*.cpp)
+TEST_OBJS := $(patsubst $(TEST_SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(TEST_SRCS))
 TEST_TARGET := test_suite
 
 # Rule to compile test objects
-$(OBJ_DIR)/%.o: $(TEST_SRC_DIR)/%.c
+$(OBJ_DIR)/%.o: $(TEST_SRC_DIR)/%.cpp
 	@$(call MKDIR,$(OBJ_DIR))
 	$(CC) $(CFLAGS) -I$(INCLUDE_DIR) -c $< -o $@
 
-# Rule to compile the test suite
-$(TEST_TARGET): $(TEST_OBJS) $(filter-out $(OBJ_DIR)/main.o, $(OBJECTS))
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
+# Rule to compile the test suite for C++
+$(TEST_TARGET): $(TEST_OBJS)
+	$(CC) $(CFLAGS) -o $@ $^
+
+# Rule to run the test suite
+test: $(TEST_TARGET)
+	./$(TEST_TARGET)
 
 # Hex
 $(OUT): $(ELF_OUT)
