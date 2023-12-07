@@ -61,25 +61,21 @@ void setClock(HD44780 *lcd) {
 
 void displayTime(uint8_t localHours, uint8_t localMinutes, uint8_t localSeconds,
                  HD44780 *lcd) {
-  const char *setTime = "Set the time";
-  char time[15];
+  char time[33];
+  sprintf(time, "%16s", "Set the time" "    ");
   if (seconds % 2 == 0) {
-    sprintf(time,
+    sprintf(time + 16,
             "%02d:%02d:%02d "
             "\x09",
             localHours, localMinutes, localSeconds);
   } else {
-    sprintf(time,
+    sprintf(time + 16,
             "%02d:%02d:%02d "
             "\x0a"
             "\x0b",
             localHours, localMinutes, localSeconds);
   }
-  lcd->Clear();
-  lcd->GoTo(0, 0);
-  lcd->WriteText((char *)setTime);
-  lcd->GoTo(0, 1);
-  lcd->WriteText(time);
+  displayText(lcd, time);
   return;
 }
 
