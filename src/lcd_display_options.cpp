@@ -2,6 +2,7 @@
 #include "customer_data.h"
 #include "lcd.h"
 #include "timer.h" // Minutes and seconds
+#include "special_functions.h"
 #include <avr/io.h>
 #include <util/delay.h>
 
@@ -61,6 +62,7 @@ uint8_t displayBillboard(HD44780 *lcd, char *text, int length,
 
 void displayStaticText(HD44780 *lcd, char *text) {
   displayText(lcd, text);
+  checkButtonPressed(lcd); // Check for button press
   _delay_ms(DISPLAY_TIME);
 }
 
@@ -79,6 +81,7 @@ void displayScrollingText(HD44780 *lcd, char *text, int length) {
       if (duration <= 0) {
         return;
       }
+      checkButtonPressed(lcd); // Check for button press
       scrollText(text, length);
     }
   }
@@ -89,8 +92,10 @@ void displayBlinkingText(HD44780 *lcd, char *text) {
   while (duration > 0) {
     displayText(lcd, text);
     _delay_ms(500);
+    checkButtonPressed(lcd); // Check for button press
     lcd->Clear();
     _delay_ms(500);
+    checkButtonPressed(lcd); // Check for button press
     duration -= 1000;
   }
 }
