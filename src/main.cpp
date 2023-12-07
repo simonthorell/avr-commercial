@@ -47,7 +47,7 @@ int runBillboards() {
   uint16_t totalPayed = 0;
   calculateTotalPayed(&totalPayed);
 
-  uint8_t lastShown = 255; // Out of bounds to start (max uint8_t = 255)
+  uint8_t lastShown = 4; // Set index to IoT23 to avoid as first customer
   uint8_t winningCustomer = rnd.getRandomCustomer(getNumCustomers(), totalPayed);
 
   while (1) {
