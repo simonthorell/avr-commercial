@@ -6,6 +6,16 @@
 #include <stdio.h>              // sprintf
 #include <avr/interrupt.h>      // For ISR
 
+/* 
+In main.cpp, call initializeButtonInterrupts() to enable interrupts.
+Also call initialzeButtons() from 'buttons.h' to configure the buttons 
+as inputs.
+
+In keep calling specialFunctions() to execute functions triggered by
+the button presses. The functions are executed in the order they are
+called.
+*/
+
 // Declare global variable (Bitwise flags)
 volatile uint8_t specialFunctionsFlags = 0;
 
@@ -26,18 +36,8 @@ ISR(PCINT0_vect) {
 }
 
 /********************************************************************
- *                  SPECIAL FUNCTIONS MAIN FUNCTION
+ *                    INITIALIZE BUTTON INTERRUPTS
  ********************************************************************/
-
-/* 
-In main.cpp, call initializeButtonInterrupts() to enable interrupts.
-Also call initialzeButtons() from 'buttons.h' to configure the buttons 
-as inputs.
-
-In keep calling specialFunctions() to execute functions triggered by
-the button presses. The functions are executed in the order they are
-called.
-*/
 
 // Configure interrupts for buttons
 void initializeButtonInterrupts() {
@@ -86,6 +86,11 @@ int displayClock(HD44780 *lcd) {
         sprintf(time, "%02d:%02d:%02d", hours, minutes, seconds);
         displayText(lcd, time);
         while (currentSeconds == seconds) {
+            // Wait for next second
+            if (FIRE_ALARM & specialFunctionsFlags) {
+                // break if button pressed
+                return 0;
+            }
         }
     }
     return 0;
