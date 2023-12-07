@@ -9,13 +9,13 @@
 #include <stdlib.h>
 #include <util/delay.h>
 
+// Create global instance of the LCD
 HD44780 lcd;
 
 void displayMessage(uint8_t winner, HD44780 *lcd, pseudoRandom *rnd);
 
 int main(void) {
-
-  // Create an instance of the LCD and random
+  // Create an instance of random
   pseudoRandom rnd;
 
   uint16_t totalPayed = 0;

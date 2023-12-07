@@ -1,14 +1,16 @@
 #include "special_functions.h"
-#include "buttons.h"
 #include "lcd_display_options.h"
 #include "timer.h"
+#include <avr/io.h>
+#include <util/delay.h>
+#include <stdio.h> // sprintf
 
 // Declare global variable (Bitwise flags)
 volatile uint8_t specialFunctionsFlags = 0;
 volatile uint8_t lastSecond = 0;
 
 /********************************************************************
- *                  SPECIAL FUNCTIONS CORE FUNCTION
+ *                  SPECIAL FUNCTIONS MAIN FUNCTION
  ********************************************************************/
 
 /* 
@@ -33,19 +35,19 @@ int specialFunctions(HD44780 *lcd) {
     int run = 1;
     while (run) {
         if (readButton(buttonHourPin)) {
-            _delay_ms(250);
+            _delay_ms(200);
             specialFunctionsFlags |= FIRE_ALARM;
         }
         if (readButton(buttonMinutePin)) {
-            _delay_ms(250);
-            specialFunctionsFlags |= DISPLAY_TIME;
+            _delay_ms(200);
+            specialFunctionsFlags |= DISPLAY_CLOCK;
         }
         if (readButton(buttonSecondPin)) {
-            _delay_ms(250);
+            _delay_ms(200);
             specialFunctionsFlags |= FLAG_THREE;
         }
         if (readButton(buttonSetPin)) {
-            _delay_ms(250);
+            _delay_ms(200);
             specialFunctionsFlags |= FLAG_FOUR;
         }
 
@@ -55,9 +57,9 @@ int specialFunctions(HD44780 *lcd) {
             fireAlarm(lcd);
             return 0; // End current process
         }
-        if (specialFunctionsFlags & DISPLAY_TIME) {
-            specialFunctionsFlags &= ~DISPLAY_TIME;
-            displayTime(lcd);
+        if (specialFunctionsFlags & DISPLAY_CLOCK) {
+            specialFunctionsFlags &= ~DISPLAY_CLOCK;
+            displayClock(lcd);
             return 0;
         }
         if (specialFunctionsFlags & FLAG_THREE) {
@@ -78,22 +80,24 @@ int specialFunctions(HD44780 *lcd) {
  *                        SPECIAL FUNCTIONS
  ********************************************************************/
 
+// int fireAlarm(HD44780 *lcd) {
+//     char alarmMessage[] = "FIRE ALARM";
+//     displayBlinkingText(lcd, alarmMessage);
+//     return 0;
+// }
+
 int fireAlarm(HD44780 *lcd) {
     char alarmMessage[] = "FIRE ALARM";
-    displayBlinkingText(lcd, alarmMessage);
-    while (1) {
-        checkButtonPressed(lcd); // Check for button press
-        _delay_ms(500);
-    }
+    displayText(lcd, alarmMessage);
     return 0;
 }
 
-int displayTime(HD44780 *lcd) {
+int displayClock(HD44780 *lcd) {
     while (1) {
         uint8_t currentSeconds = seconds;
         char time[12];
         sprintf(time, "%02d:%02d:%02d", hours, minutes, seconds);
-        displayText(&lcd, time);
+        displayText(lcd, time);
         while (currentSeconds == seconds) {
         }
     }

@@ -6,7 +6,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-#define DISPLAY_TIME 20000
+#define DISPLAY_TIME 2000
 
 /********************************************************************
  *                   LCD DISPLAY BILLBOARD MAIN FUNCTION
@@ -62,7 +62,7 @@ uint8_t displayBillboard(HD44780 *lcd, char *text, int length,
 
 void displayStaticText(HD44780 *lcd, char *text) {
   displayText(lcd, text);
-  checkButtonPressed(lcd); // Check for button press
+  checkButtonPressed(lcd); // Check for button presses
   _delay_ms(DISPLAY_TIME);
 }
 
@@ -81,8 +81,8 @@ void displayScrollingText(HD44780 *lcd, char *text, int length) {
       if (duration <= 0) {
         return;
       }
-      checkButtonPressed(lcd); // Check for button press
       scrollText(text, length);
+      checkButtonPressed(lcd); // Check for button presses
     }
   }
 }
@@ -92,11 +92,10 @@ void displayBlinkingText(HD44780 *lcd, char *text) {
   while (duration > 0) {
     displayText(lcd, text);
     _delay_ms(500);
-    checkButtonPressed(lcd); // Check for button press
     lcd->Clear();
     _delay_ms(500);
-    checkButtonPressed(lcd); // Check for button press
     duration -= 1000;
+    checkButtonPressed(lcd); // Check for button presses
   }
 }
 
