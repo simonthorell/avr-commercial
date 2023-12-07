@@ -30,13 +30,13 @@ void pseudoRandom::initializeRandom(uint8_t port) {
   return;
 }
 
-uint8_t pseudoRandom::randomValue(){
+uint8_t pseudoRandom::randomValue() {
   uint8_t rnd;
   ADCSRA |= (1 << ADSC);         // set the ADSC bit to start ADC conversion
   while (ADCSRA & (1 << ADSC)) { // wait until its cleared, we have data then
     asm(""); // dirty hack to make sure the loop doesnt get optimized out
   }
-  rnd = ADCL;         // read lower 8 bits
+  rnd = ADCL; // read lower 8 bits
   // discarding high bytes anyway
   return rnd;
 }

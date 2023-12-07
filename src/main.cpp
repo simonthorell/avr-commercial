@@ -29,9 +29,9 @@ int main(void) {
 
 
   // Set start time
+  timer_init();
   setClock(&lcd);
   // initialize timer
-  timer_init();
 
   // while (1) {
   //   uint8_t currentSeconds = seconds;
