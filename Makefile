@@ -85,6 +85,21 @@ $(ELF_OUT): $(OBJECTS)
 	$(CC) $(LDFLAGS) -o $@ $^
 	$(AVRSIZE) $@
 
+# Test specific settings
+TEST_SRC_DIR := tests
+TEST_SRCS := $(wildcard $(TEST_SRC_DIR)/*.c)
+TEST_OBJS := $(patsubst $(TEST_SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(TEST_SRCS))
+TEST_TARGET := test_suite
+
+# Rule to compile test objects
+$(OBJ_DIR)/%.o: $(TEST_SRC_DIR)/%.c
+	@$(call MKDIR,$(OBJ_DIR))
+	$(CC) $(CFLAGS) -I$(INCLUDE_DIR) -c $< -o $@
+
+# Rule to compile the test suite
+$(TEST_TARGET): $(TEST_OBJS) $(filter-out $(OBJ_DIR)/main.o, $(OBJECTS))
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
+
 # Hex
 $(OUT): $(ELF_OUT)
 	$(OBJCOPY) -O ihex -R .eeprom $< $@
