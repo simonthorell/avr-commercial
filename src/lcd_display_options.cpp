@@ -66,10 +66,10 @@ void displayStaticText(HD44780 *lcd, char *text) {
 
 void displayScrollingText(HD44780 *lcd, char *text, int length) {
   //TODO: NEEDS CLEANUP
-  for (int i = length; i < 45; i++) {
+  for (int i = length; i < MAX_BILLBOARD_TEXT_LENGTH; i++) {
     text[i] = ' ';
   }
-  text[MAX_CUSTOMER_NAME_LENGTH - 1] = '\0';
+  text[MAX_BILLBOARD_TEXT_LENGTH - 1] = '\0';
   int duration = DISPLAY_TIME;
   while (duration > 0) {
     for (int i = 0; i < length; i++) {

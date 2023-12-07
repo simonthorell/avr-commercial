@@ -3,6 +3,8 @@
 #include "lcd_display_options.h" // For the display properties
 #include <avr/pgmspace.h>
 
+#define getNumMessages(x) (sizeof(x) / sizeof(message))
+
 // /********************************************************************
 // *                          CUSTOMER DATA
 // ********************************************************************/
@@ -25,7 +27,8 @@ const message harryText[] PROGMEM = {
 };
 
 const char ankaOne[] PROGMEM = "K" OE "p paj hos Farmor Anka";
-const char ankaTwo[] PROGMEM = "Skynda innan    M" AA "rten " AE "tit alla pajer";
+const char ankaTwo[] PROGMEM =
+    "Skynda innan    M" AA "rten " AE "tit alla pajer";
 const message ankaText[] PROGMEM = {
     {
         SCROLLING,
@@ -71,36 +74,51 @@ const message iotText[] PROGMEM = {
     },
 };
 
+const char yrrolOne[] PROGMEM =
+    "T-R" OE "d - f" OE "r dig som t" AE "nkt klart";
+const char yrrolTwo[] PROGMEM =
+    "Claes M" AA "nsson - om flickan sj" AE "lv f" AA " r v" AE "lja";
+const message yrrolText[] PROGMEM = {
+    {
+        SCROLLING,
+        yrrolOne,
+    },
+    {
+        BLINKING,
+        yrrolTwo,
+    },
+};
+
 const Customer customers[] PROGMEM = {
     {
-        "Hederlige Harrys Bilar",
-        5000,
-        3,
+        1500,
+      getNumMessages(harryText),
         harryText,
     },
     {
-        "Farmor Ankas Pajer AB",
         3000,
-        2,
+        getNumMessages(ankaText),
         ankaText,
     },
     {
-        "Svarte Petters SvartByggen",
         1500,
-        2,
+        getNumMessages(svarteText),
         svarteText,
     },
     {
-        "L" AA "ngbens detektivbyr" AA,
         4000,
-        2,
+        getNumMessages(langText),
         langText,
     },
     {
-        "IOT:s Reklambyr" AA,
         1000,
-        1,
+        getNumMessages(iotText),
         iotText,
+    },
+    {
+        6000,
+        getNumMessages(yrrolText),
+        yrrolText,
     },
 };
 
@@ -129,5 +147,4 @@ message getMessage(Customer *cust, uint8_t index) {
 }
 
 constexpr uint8_t customerLength = sizeof(customers) / sizeof(Customer);
-
 uint8_t getNumCustomers(void) { return customerLength; }
