@@ -3,16 +3,17 @@
 #include "lcd.h"
 #include "lcd_display_options.h"
 #include "set_Clock.h"
-#include "timer.h"
+#include "timer.h"               // Start the timer/clock
+#include "buttons.h"             // Button interrupts
+#include "special_functions.h"   // Button interrupts
 #include <avr/io.h>
-#include <stdint.h> //So I dont get all the uint errors, just for my IDE
+#include <stdint.h>  // So I dont get all the uint errors, just for my IDE
 #include <stdlib.h>
 #include <util/delay.h>
 
 void displayMessage(uint8_t winner, HD44780 *lcd, pseudoRandom *rnd);
 
 int main(void) {
-
   // Create an instance of the LCD and random
   HD44780 lcd;
   pseudoRandom rnd;
@@ -27,19 +28,13 @@ int main(void) {
   lcd.Initialize();
   lcd.Clear();
 
-  // Set start time
+  // Set start time and start timer
   timer_init();
   setClock(&lcd);
-  // initialize timer
 
-  // while (1) {
-  //   uint8_t currentSeconds = seconds;
-  //   char time[12];
-  //   sprintf(time, "%02d:%02d:%02d", hours, minutes, seconds);
-  //   displayText(&lcd, time);
-  //   while (currentSeconds == seconds) {
-  //   }
-  // }
+  // Initialize buttons interupts for 'special functions'
+  initializeButtons();
+  initializeButtonInterrupts();
 
   uint8_t lastShown = getNumCustomers(); // Out of bounds to start
   uint8_t winningCustomer =
