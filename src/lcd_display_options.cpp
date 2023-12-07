@@ -6,8 +6,8 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-#define DISPLAY_TIME 2000 // ms
-#define INTERUPT_TIME 10  // ms
+#define DISPLAY_TIME 20000    // Total display time in ms
+#define INTERUPT_TIMER 100    // Interval for calling specialFunctions in ms
 
 /********************************************************************
  *                   LCD DISPLAY BILLBOARD MAIN FUNCTION
@@ -45,15 +45,6 @@ uint8_t displayBillboard(HD44780 *lcd, char *text, int length,
     return SUCCESS;
   }
 
-  /*** TESTING BITWISE ***/
-  // displayProperties = TIME_MIN_EVEN | BLINKING;
-  // char binaryStr[9];  // Buffer for binary string representation
-  // for (int i = 7; i >= 0; --i) {
-  //     binaryStr[7 - i] = (displayProperties & (1 << i)) ? '1' : '0';
-  // }
-  // binaryStr[8] = '\0';  // Null-terminate the string
-  // displayStaticText(lcd, binaryStr);
-
   return NOT_FOUND_ERROR;
 }
 
@@ -62,18 +53,23 @@ uint8_t displayBillboard(HD44780 *lcd, char *text, int length,
  ********************************************************************/
 
 void displayStaticText(HD44780 *lcd, char *text) {
-  uint8_t duration = DISPLAY_TIME / INTERUPT_TIME;
+  uint16_t duration = DISPLAY_TIME;
   displayText(lcd, text);
-
+  
   while (duration > 0) {
-    specialFunctions(lcd);
-    _delay_ms(INTERUPT_TIME);
-    duration--;
+    uint8_t functionExecuted = specialFunctions(lcd);
+    if (functionExecuted == 1) {
+      // After special function was executed, display text again. 
+      displayText(lcd, text);
+    }
+    _delay_ms(INTERUPT_TIMER);
+    duration -= INTERUPT_TIMER;
   }
 }
 
 void displayScrollingText(HD44780 *lcd, char *text, int length) {
   //TODO: NEEDS CLEANUP
+  uint8_t scrollDelay = 200; // ms
   for (int i = length; i < MAX_BILLBOARD_TEXT_LENGTH; i++) {
     text[i] = ' ';
   }
@@ -82,9 +78,13 @@ void displayScrollingText(HD44780 *lcd, char *text, int length) {
   while (duration > 0) {
     for (int i = 0; i < length; i++) {
       displayText(lcd, text);
-      specialFunctions(lcd);
-      _delay_ms(200);
-      duration -= 200;
+
+      for (uint16_t i = 0; i < scrollDelay; i += INTERUPT_TIMER) {
+        specialFunctions(lcd); // Check if button was pressed
+        _delay_ms(INTERUPT_TIMER);
+        duration -= INTERUPT_TIMER;
+      }
+
       if (duration <= 0) {
         return;
       }
@@ -94,14 +94,22 @@ void displayScrollingText(HD44780 *lcd, char *text, int length) {
 }
 
 void displayBlinkingText(HD44780 *lcd, char *text) {
-  int duration = DISPLAY_TIME;
+  uint16_t duration = DISPLAY_TIME;
+  uint16_t blinkDelay = 500; // ms
+
   while (duration > 0) {
     displayText(lcd, text);
-    _delay_ms(500);
+    for (uint16_t i = 0; i < blinkDelay; i += INTERUPT_TIMER) {
+      specialFunctions(lcd); // Check if button was pressed
+      _delay_ms(INTERUPT_TIMER);
+      duration -= INTERUPT_TIMER;
+    }
     lcd->Clear();
-    _delay_ms(500);
-    specialFunctions(lcd);
-    duration -= 1000;
+    for (uint16_t i = 0; i < blinkDelay; i += INTERUPT_TIMER) {
+      specialFunctions(lcd); // Check if button was pressed
+      _delay_ms(INTERUPT_TIMER);
+      duration -= INTERUPT_TIMER;
+    }
   }
 }
 

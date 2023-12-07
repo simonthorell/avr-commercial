@@ -19,18 +19,25 @@ called.
 // Declare global variable (Bitwise flags)
 volatile uint8_t specialFunctionsFlags = 0;
 
+#define BUTTON_DEBOUNCE_TIME 250 // ms
+
 // ISR for button presses
 ISR(PCINT0_vect) {
+    // Using XOR to toggle the functions on/off
     if (readButton(buttonHourPin)) {
+        _delay_ms(BUTTON_DEBOUNCE_TIME);
         specialFunctionsFlags ^= FIRE_ALARM;
     }
     if (readButton(buttonMinutePin)) {
+        _delay_ms(BUTTON_DEBOUNCE_TIME);
         specialFunctionsFlags ^= DISPLAY_CLOCK;
     }
     if (readButton(buttonSecondPin)) {
+        _delay_ms(BUTTON_DEBOUNCE_TIME);
         specialFunctionsFlags ^= FLAG_THREE;
     }
     if (readButton(buttonSetPin)) {
+        _delay_ms(BUTTON_DEBOUNCE_TIME);
         specialFunctionsFlags ^= FLAG_FOUR;
     }
 }
@@ -57,9 +64,11 @@ int specialFunctions(HD44780 *lcd) {
     // Act based on flags
     if (specialFunctionsFlags & FIRE_ALARM) {
         fireAlarm(lcd);
+        return 1;
     }
     if (specialFunctionsFlags & DISPLAY_CLOCK) {
         displayClock(lcd);
+        return 1;
     }
     // ... TODO: Add more special functions here
     return 0;
@@ -70,12 +79,14 @@ int specialFunctions(HD44780 *lcd) {
  ********************************************************************/
 
 int fireAlarm(HD44780 *lcd) {
-    char alarmMessage[] = "FIRE ALARM";
+    char alarmMessage[] = "FIRE ALARM!";
+    char alarmOffMessage[] = "FIRE IS OVER!";
     displayText(lcd, alarmMessage);
     while (FIRE_ALARM & specialFunctionsFlags) {
         // Wait for button press handled by ISR
-        _delay_ms(10);
     }
+    displayText(lcd, alarmOffMessage);
+    _delay_ms(2000);
     return 0;
 }
 
