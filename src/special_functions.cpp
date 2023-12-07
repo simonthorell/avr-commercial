@@ -91,6 +91,7 @@ int displayClock(HD44780 *lcd) {
                 // break if button pressed
                 return 0;
             }
+         _delay_ms(10);
         }
     }
     return 0;

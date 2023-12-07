@@ -1,16 +1,9 @@
 #ifndef SPECIAL_FUNCTIONS_H
 #define SPECIAL_FUNCTIONS_H
 
-/* 
-These functions depend on a separate timer 
-interupt (ISR) to check for button presses. 
-See timer.h and timer.cpp for more information
-*/
-
 #include <avr/io.h>
 #include <util/delay.h>
 #include "buttons.h"
-
 #include "lcd.h" // HD44780 library
 
 // Global variable (Bitwise flags)
