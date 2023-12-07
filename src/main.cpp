@@ -32,14 +32,14 @@ int main(void) {
   setClock(&lcd);
   // initialize timer
 
-  while (1) {
-    uint8_t currentSeconds = seconds;
-    char time[12];
-    sprintf(time, "%02d:%02d:%02d", hours, minutes, seconds);
-    displayText(&lcd, time);
-    while (currentSeconds == seconds) {
-    }
-  }
+  // while (1) {
+  //   uint8_t currentSeconds = seconds;
+  //   char time[12];
+  //   sprintf(time, "%02d:%02d:%02d", hours, minutes, seconds);
+  //   displayText(&lcd, time);
+  //   while (currentSeconds == seconds) {
+  //   }
+  // }
 
   uint8_t lastShown = getNumCustomers(); // Out of bounds to start
   uint8_t winningCustomer =

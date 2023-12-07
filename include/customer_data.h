@@ -18,8 +18,8 @@ typedef struct {
 
 // Define a structure for customer data
 typedef struct {
-  uint16_t balance;                    // Account balance
-  uint8_t billboardsCount;             // Number of billboards
+  uint16_t balance;        // Account balance
+  uint8_t billboardsCount; // Number of billboards
   const message *messageArray;
 } Customer;
 

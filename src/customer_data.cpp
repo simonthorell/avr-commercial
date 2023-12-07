@@ -3,6 +3,8 @@
 #include "lcd_display_options.h" // For the display properties
 #include <avr/pgmspace.h>
 
+#define getNumMessages(x) (sizeof(x) / sizeof(message))
+
 // /********************************************************************
 // *                          CUSTOMER DATA
 // ********************************************************************/
@@ -90,33 +92,32 @@ const message yrrolText[] PROGMEM = {
 const Customer customers[] PROGMEM = {
     {
         1500,
-    //FIXME: dynamicly get the amount of messages
-        3,
+      getNumMessages(harryText),
         harryText,
     },
     {
         3000,
-        2,
+        getNumMessages(ankaText),
         ankaText,
     },
     {
         1500,
-        2,
+        getNumMessages(svarteText),
         svarteText,
     },
     {
         4000,
-        2,
+        getNumMessages(langText),
         langText,
     },
     {
         1000,
-        1,
+        getNumMessages(iotText),
         iotText,
     },
     {
         6000,
-        2,
+        getNumMessages(yrrolText),
         yrrolText,
     },
 };
@@ -146,5 +147,4 @@ message getMessage(Customer *cust, uint8_t index) {
 }
 
 constexpr uint8_t customerLength = sizeof(customers) / sizeof(Customer);
-
 uint8_t getNumCustomers(void) { return customerLength; }
