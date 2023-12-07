@@ -10,5 +10,6 @@
 
 int setClock(HD44780 *lcd);
 void displayTime(uint8_t hours, uint8_t minutes, uint8_t seconds, HD44780 *lcd);
+void adjustTime(uint8_t maxBeforeWrap, volatile uint8_t *valueToAdjust);
 
 #endif

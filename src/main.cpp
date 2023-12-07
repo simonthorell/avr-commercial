@@ -2,8 +2,8 @@
 #include "customer_data.h"
 #include "lcd.h"
 #include "lcd_display_options.h"
-#include "timer.h"
 #include "set_Clock.h"
+#include "timer.h"
 #include <avr/io.h>
 #include <stdint.h> //So I dont get all the uint errors, just for my IDE
 #include <stdlib.h>
@@ -22,29 +22,28 @@ int main(void) {
     Customer customer = getCustomer(i);
     totalPayed += customer.balance;
   }
-  
+
   // Initialize & clear the LCD
   lcd.Initialize();
   lcd.Clear();
-
 
   // Set start time
   timer_init();
   setClock(&lcd);
   // initialize timer
 
-  // while (1) {
-  //   uint8_t currentSeconds = seconds;
-  //   char time[12];
-  //   sprintf(time, "%02d:%02d:%02d", hours, minutes, seconds);
-  //   displayText(&lcd, time);
-  //   while (currentSeconds == seconds) {
-  //   }
-  // }
+  while (1) {
+    uint8_t currentSeconds = seconds;
+    char time[12];
+    sprintf(time, "%02d:%02d:%02d", hours, minutes, seconds);
+    displayText(&lcd, time);
+    while (currentSeconds == seconds) {
+    }
+  }
 
   uint8_t lastShown = getNumCustomers(); // Out of bounds to start
-  uint8_t winningCustomer = rnd.getRandomCustomer(getNumCustomers(), totalPayed);
-
+  uint8_t winningCustomer =
+      rnd.getRandomCustomer(getNumCustomers(), totalPayed);
 
   while (1) {
     // Making sure same customer dont get shown twice

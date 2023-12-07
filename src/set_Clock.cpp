@@ -22,43 +22,35 @@ int setClock(HD44780 *lcd) {
   int run = 1;
   while (run) {
 
+    // Limit screen refresh to prevent flashing
     if (seconds != lastShownSecond) {
       lastShownSecond = seconds;
       displayTime(localHours, localMinutes, localSeconds, lcd);
     }
 
+    // Button to iterate through hours
     if (readButton(buttonHourPin)) {
-      localHours = (localHours % 24) + 1; // Increment hours from 1 to 24
-      if (localHours >= 24) {
-        localHours = 0;
-      }
+      adjustTime(24, &localHours);
       displayTime(localHours, localMinutes, localSeconds, lcd);
       _delay_ms(debounceTime);
       lastShownSecond = seconds;
     }
     // Button to iterate through minutes
     if (readButton(buttonMinutePin)) {
-      localMinutes = (localMinutes + 1) % 60; // Increment minutes from 0 to 59
-      if (localMinutes >= 60) {
-        localMinutes = 0;
-      }
+      adjustTime(60, &localMinutes);
       displayTime(localHours, localMinutes, localSeconds, lcd);
       _delay_ms(debounceTime);
       lastShownSecond = seconds;
     }
     // Button to iterate through seconds
     if (readButton(buttonSecondPin)) {
-      localSeconds = (localSeconds + 1) % 60; // Increment seconds from 0 to 59
-      if (localSeconds >= 60) {
-        localSeconds = 0;
-      }
+      adjustTime(60, &localSeconds);
       displayTime(localHours, localMinutes, localSeconds, lcd);
       _delay_ms(debounceTime);
       lastShownSecond = seconds;
     }
     // Button to set the time
     if (readButton(buttonSetPin)) {
-      // _delay_ms(50);
       seconds = localSeconds;
       minutes = localMinutes;
       hours = localHours;
@@ -70,6 +62,7 @@ int setClock(HD44780 *lcd) {
 
 void displayTime(uint8_t localHours, uint8_t localMinutes, uint8_t localSeconds,
                  HD44780 *lcd) {
+  const char *setTime = "Set the time";
   char time[15];
   if (seconds % 2 == 0) {
     sprintf(time,
@@ -83,6 +76,18 @@ void displayTime(uint8_t localHours, uint8_t localMinutes, uint8_t localSeconds,
             "\x0b",
             localHours, localMinutes, localSeconds);
   }
-  displayText(lcd, time);
+  lcd->Clear();
+  lcd->GoTo(0, 0);
+  lcd->WriteText((char*)setTime);
+  lcd->GoTo(0, 1);
+  lcd->WriteText(time);
   return;
+}
+
+void adjustTime(uint8_t maxBeforeWrap, volatile uint8_t *valueToAdjust) {
+  *valueToAdjust =
+      (*valueToAdjust + 1) % maxBeforeWrap; // Increment seconds from 0 to 59
+  if (*valueToAdjust >= maxBeforeWrap) {
+    *valueToAdjust = 0;
+  }
 }
