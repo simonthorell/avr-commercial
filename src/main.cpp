@@ -39,16 +39,16 @@ int displayMessage(uint8_t winner, HD44780 *lcd, pseudoRandom *rnd);
  ********************************************************************/
 
 int main(void) {
-  lcd.Initialize();   // Initialize the LCD
-  lcd.Clear();        // Clear the LCD
+  lcd.Initialize();               // Initialize the LCD
+  lcd.Clear();                    // Clear the LCD
 
-  setClock(&lcd);     // Set start time
-  timer_init();       // Start timer/clock
+  setClock(&lcd);                 // Set start time
+  timer_init();                   // Start timer/clock
   
   initializeButtons();            // Configure buttons as inputs
   initializeButtonInterrupts();   // Enable interrupts
 
-  runBillboards(); // Start the loop
+  runBillboards();                // Start the loop
   
   return EXIT_SUCCESS;
 }
