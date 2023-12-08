@@ -122,7 +122,7 @@ void scrollText(char *text, int length) {
   char first = text[0];
   for (int i = 0; i < length - 1; i++) {
     if(text[i + 1] == '\0'){
-      text[i + i] = ' ';
+      text[i + 1] = ' ';
     }
     text[i] = text[i + 1];
   }
