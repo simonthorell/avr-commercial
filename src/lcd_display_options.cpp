@@ -70,7 +70,7 @@ void displayStaticText(HD44780 *lcd, char *text) {
 void displayScrollingText(HD44780 *lcd, char *text, int length) {
   //TODO: NEEDS CLEANUP
   uint8_t scrollDelay = 200; // ms
-  for (int i = length; i < MAX_BILLBOARD_TEXT_LENGTH; i++) {
+  for (int i = length - 1; i < MAX_BILLBOARD_TEXT_LENGTH - 1; i++) {
     text[i] = ' ';
   }
   text[MAX_BILLBOARD_TEXT_LENGTH - 1] = '\0';
@@ -117,17 +117,15 @@ void displayBlinkingText(HD44780 *lcd, char *text) {
  *                         HELPER FUNCTIONS
  ********************************************************************/
 
-//TODO: THIS NEEDS A CLEANUP
+#define textMaxLength 32
 void scrollText(char *text, int length) {
- length = length < 32 ? 32 : length;
+ length = length < textMaxLength ? textMaxLength : length;
   char first = text[0];
   for (int i = 0; i < length - 1; i++) {
-    text[i] = text[i + 1];
-  }
-  for(int i = 0; i < length; i++){
-    if(text[i] == '\0'){
-      text[i] = ' ';
+    if(text[i + 1] == '\0'){
+      text[i + i] = ' ';
     }
+    text[i] = text[i + 1];
   }
   text[length - 1] = first;
   text[length] = '\0';
