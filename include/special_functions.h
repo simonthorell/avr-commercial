@@ -1,8 +1,6 @@
 #ifndef SPECIAL_FUNCTIONS_H
 #define SPECIAL_FUNCTIONS_H
 
-#include <avr/io.h>
-#include <util/delay.h>
 #include "buttons.h"
 #include "lcd.h" // HD44780 library
 
