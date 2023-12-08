@@ -42,8 +42,8 @@ int main(void) {
   lcd.Initialize();               // Initialize the LCD
   lcd.Clear();                    // Clear the LCD
 
-  setClock(&lcd);                 // Set start time
   timer_init();                   // Start timer/clock
+  setClock(&lcd);                 // Set start time
   
   initializeButtons();            // Configure buttons as inputs
   initializeButtonInterrupts();   // Enable interrupts
