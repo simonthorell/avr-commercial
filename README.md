@@ -25,7 +25,7 @@ The project is organized into several directories, each containing specific type
 - `customer_data.h`: Header file containing customer data structures.
 - `lcd_display_option.h`: Header file for LCD display options.
 - `set_Clock.h`: Header file for the function to set time.
-- `special_functions.h`: //TODO FIX SOMETHING HERE
+- `special_functions.h`: Header file for the functions triggered by buttons.
 - `timer.h`: Header file for the internal timer.
 
 ### /libs
