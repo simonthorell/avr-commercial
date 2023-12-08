@@ -68,7 +68,6 @@ void displayStaticText(HD44780 *lcd, char *text) {
 }
 
 void displayScrollingText(HD44780 *lcd, char *text, int length) {
-  //TODO: NEEDS CLEANUP
   uint8_t scrollDelay = 200; // ms
   for (int i = length - 1; i < MAX_BILLBOARD_TEXT_LENGTH - 1; i++) {
     text[i] = ' ';
