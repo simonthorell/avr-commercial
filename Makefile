@@ -103,9 +103,10 @@ $(APP_DIR)/$(TEST_TARGET): $(TEST_OBJS)
 	@$(call MKDIR,$(APP_DIR))
 	$(CC) $(LDFLAGS) -o $@ $^
 
-# Test target - run in simavr to test on 16MHz clock
+# Test target
 test: $(APP_DIR)/$(TEST_TARGET)
-	simavr -m atmega328p -f $(F_CPU) $(APP_DIR)/$(TEST_TARGET)
+	@echo "Running test suite"
+	./$(APP_DIR)/$(TEST_TARGET)
 
 # Hex
 $(OUT): $(ELF_OUT)
