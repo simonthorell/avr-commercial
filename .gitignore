@@ -2,5 +2,6 @@
 app/
 bin/
 obj/
+obj_test/
 .DS_Store
 .cache/
