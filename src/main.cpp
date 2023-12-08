@@ -103,7 +103,7 @@ int displayMessage(uint8_t winner, HD44780 *lcd, pseudoRandom *rnd) {
 
     if (randomBillboard != lastBillboard) {
       message custMessage = getMessage(&customer, rnd->getRandom(customer.billboardsCount - 1));
-      memcpy_P(&buff, custMessage.messageText, 40);
+      memcpy_P(&buff, custMessage.messageText, MAX_BILLBOARD_TEXT_LENGTH);
 
       billboardDisplayed = displayBillboard(lcd, buff, getStrLen(buff), custMessage.messageFlags);
     }
