@@ -33,9 +33,8 @@ ifeq ($(OS),Windows_NT)
 endif
 
 MCU=atmega328p
-F_CPU := 16000000
 CFLAGS=-Wall -Wextra -Wundef -pedantic \
-        -Os -std=c++11 -DF_CPU=$(F_CPU)UL -Os -mmcu=$(MCU) -DBAUD=19200 -Iinclude
+        -Os -std=c++11 -DF_CPU=16000000UL -mmcu=$(MCU) -DBAUD=19200 -Iinclude
 LDFLAGS=-mmcu=$(MCU)
 
 # Libraries directory
@@ -59,6 +58,18 @@ SOURCES=$(wildcard $(SRC_DIR)/*.cpp) $(LIBS_SRC)
 HEADERS=$(wildcard $(INCLUDE_DIR)/*.h) $(wildcard $(LIBS_DIR)/*.h)
 OBJECTS=$(addprefix $(OBJ_DIR)/,$(notdir $(SOURCES:.cpp=.o)))
 
+# Test Source and Object Directories
+TEST_DIR=tests
+OBJ_TEST_DIR=obj_test
+
+# Test Source and Object Files
+TEST_SOURCES=$(wildcard $(TEST_DIR)/*.cpp)
+TEST_OBJECTS=$(addprefix $(OBJ_TEST_DIR)/,$(notdir $(TEST_SOURCES:.cpp=.o)))
+
+# Test Executable Output
+TEST_BIN=test-avr
+TEST_OUT=$(APP_DIR)/$(TEST_BIN).elf
+
 # Debug/Release Output Directory
 DEBUG?=1
 ifeq ($(DEBUG), 1)
@@ -67,8 +78,17 @@ else
     OUTPUTDIR=$(APP_DIR)/release
 endif
 
+# Phony Targets
+.PHONY: all test clean isp
+
 # Default target
 all: $(OUT)
+
+# Test target
+test: $(TEST_OBJECTS)
+	@$(call MKDIR,$(APP_DIR))
+	$(CC) $(LDFLAGS) -o $(TEST_OUT) $^
+	$(AVRSIZE) $(TEST_OUT)
 
 # Compile
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp $(HEADERS) $(LIBS_SRC)
@@ -80,33 +100,22 @@ $(OBJ_DIR)/%.o: $(LIBS_DIR)/%.cpp $(HEADERS)
 	@$(call MKDIR,$(OBJ_DIR))
 	$(CC) $(CFLAGS) -c $< -o $@
 
+# Compile Test Sources
+$(OBJ_TEST_DIR)/%.o: $(TEST_DIR)/%.cpp $(HEADERS)
+	@$(call MKDIR,$(OBJ_TEST_DIR))
+	$(CC) $(CFLAGS) -c $< -o $@
+
 # Link
 $(ELF_OUT): $(OBJECTS)
 	@$(call MKDIR,$(APP_DIR))
 	$(CC) $(LDFLAGS) -o $@ $^
 	$(AVRSIZE) $@
 
-# Test settings
-TEST_DIR := tests
-TEST_SRCS := $(wildcard $(TEST_DIR)/*.cpp)
-TEST_OBJS := $(patsubst $(TEST_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(TEST_SRCS))
-TEST_TARGET := test_suite.elf
-TEST_CC := g++  # Using standard g++ for test compilation
-
-# Compile test sources
-$(OBJ_DIR)/%.o: $(TEST_DIR)/%.cpp
-	@$(call MKDIR,$(OBJ_DIR))
-	$(TEST_CC) -std=c++11 -I$(INCLUDE_DIR) -c $< -o $@
-    
-# Link test suite
-$(APP_DIR)/$(TEST_TARGET): $(TEST_OBJS)
+# Link Test Executable
+$(TEST_OUT): $(TEST_OBJECTS) $(OBJECTS) # Assuming tests may use the main object files
 	@$(call MKDIR,$(APP_DIR))
 	$(CC) $(LDFLAGS) -o $@ $^
-
-# Test target - run in simavr to test on 16MHz clock
-test: $(APP_DIR)/$(TEST_TARGET)
-	@echo "Running test suite"
-	./$(APP_DIR)/$(TEST_TARGET)
+	$(AVRSIZE) $@
 
 # Hex
 $(OUT): $(ELF_OUT)
@@ -118,9 +127,5 @@ isp: $(OUT)
 
 # Clean
 clean:
-	rm -f $(OBJ_DIR)/*.o $(ELF_OUT) $(OUT)
-	rm -rf $(APP_DIR) $(OBJ_DIR)
-	rm -f $(TEST_DIR)/*.o $(TEST_TARGET)
-
-# Phony Targets
-.PHONY: all clean isp
+	rm -f $(OBJ_DIR)/*.o $(OBJ_TEST_DIR)/*.o $(ELF_OUT) $(OUT) $(TEST_OUT)
+	rm -rf $(APP_DIR) $(OBJ_DIR) $(OBJ_TEST_DIR)
