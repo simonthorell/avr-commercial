@@ -33,9 +33,8 @@ ifeq ($(OS),Windows_NT)
 endif
 
 MCU=atmega328p
-F_CPU := 16000000
 CFLAGS=-Wall -Wextra -Wundef -pedantic \
-        -Os -std=c++11 -DF_CPU=$(F_CPU)UL -Os -mmcu=$(MCU) -DBAUD=19200 -Iinclude
+        -Os -std=c++11 -DF_CPU=16000000UL -mmcu=$(MCU) -DBAUD=19200 -Iinclude
 LDFLAGS=-mmcu=$(MCU)
 
 # Libraries directory
@@ -86,28 +85,6 @@ $(ELF_OUT): $(OBJECTS)
 	$(CC) $(LDFLAGS) -o $@ $^
 	$(AVRSIZE) $@
 
-# Test settings
-TEST_DIR := tests
-TEST_SRCS := $(wildcard $(TEST_DIR)/*.cpp)
-TEST_OBJS := $(patsubst $(TEST_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(TEST_SRCS))
-TEST_TARGET := test_suite.elf
-TEST_CC := g++  # Using standard g++ for test compilation
-
-# Compile test sources
-$(OBJ_DIR)/%.o: $(TEST_DIR)/%.cpp
-	@$(call MKDIR,$(OBJ_DIR))
-	$(TEST_CC) -std=c++11 -I$(INCLUDE_DIR) -c $< -o $@
-    
-# Link test suite
-$(APP_DIR)/$(TEST_TARGET): $(TEST_OBJS)
-	@$(call MKDIR,$(APP_DIR))
-	$(CC) $(LDFLAGS) -o $@ $^
-
-# Test target
-test: $(APP_DIR)/$(TEST_TARGET)
-	@echo "Running test suite"
-	./$(APP_DIR)/$(TEST_TARGET)
-
 # Hex
 $(OUT): $(ELF_OUT)
 	$(OBJCOPY) -O ihex -R .eeprom $< $@
@@ -120,7 +97,6 @@ isp: $(OUT)
 clean:
 	rm -f $(OBJ_DIR)/*.o $(ELF_OUT) $(OUT)
 	rm -rf $(APP_DIR) $(OBJ_DIR)
-	rm -f $(TEST_DIR)/*.o $(TEST_TARGET)
 
 # Phony Targets
 .PHONY: all clean isp
