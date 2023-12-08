@@ -103,7 +103,7 @@ $(APP_DIR)/$(TEST_TARGET): $(TEST_OBJS)
 	@$(call MKDIR,$(APP_DIR))
 	$(CC) $(LDFLAGS) -o $@ $^
 
-# Test target
+# Test target - run in simavr to test on 16MHz clock
 test: $(APP_DIR)/$(TEST_TARGET)
 	@echo "Running test suite"
 	./$(APP_DIR)/$(TEST_TARGET)
