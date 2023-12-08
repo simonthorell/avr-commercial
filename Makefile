@@ -1,3 +1,5 @@
+# Makefile for AVR programming with testing using simavr
+
 # Define MKDIR command based on the OS
 ifeq ($(OS),Windows_NT)
     MKDIR=if not exist "$(1)" mkdir "$(1)"
@@ -67,7 +69,7 @@ TEST_SOURCES=$(wildcard $(TEST_DIR)/*.cpp)
 TEST_OBJECTS=$(addprefix $(OBJ_TEST_DIR)/,$(notdir $(TEST_SOURCES:.cpp=.o)))
 
 # Test Executable Output
-TEST_BIN=test-avr
+TEST_BIN=test-avr-commercial
 TEST_OUT=$(APP_DIR)/$(TEST_BIN).elf
 
 # Debug/Release Output Directory
