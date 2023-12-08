@@ -39,7 +39,7 @@ The project is organized into several directories, each containing specific type
 - `lcd_display_options.cpp`: Implementation of LCD display options.
 - `main.cpp`: The main entry point for the program.
 - `set_Clock.cpp`: Implementation of the ability to select the time.
-- `special_functions.cpp`: //TODO FIX THIS
+- `special_functions.cpp`: Implements functions that can be triggered by buttons.
 - `timer.cpp`: Implementation of the internal timer.
 
 ### Root Directory
