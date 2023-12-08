@@ -16,17 +16,27 @@ This project aims to program an LCD1602 display using AVR-GCC for an Atmega328p 
 The project is organized into several directories, each containing specific types of files:
 
 ### /include
+- `avr_random_noise.h`
+- `buttons.h`
 - `customer_data.h`: Header file containing customer data structures.
 - `lcd_display_option.h`: Header file for LCD display options.
+- `set_Clock.h`
+- `special_functions.h`
+- `timer.h`
 
 ### /libs
 - `lcd.cpp`: Source file for the LCD control functions.
 - `lcd.h`: Header file for the LCD control functions.
 
 ### /src
+- `avr_random_noise.cpp`
+- `buttons.cpp`
 - `customer_data.cpp`: Implementation of customer data handling.
 - `lcd_display_options.cpp`: Implementation of LCD display options.
 - `main.cpp`: The main entry point for the program.
+- `set_Clock.cpp`
+- `special_functions.cpp`
+- `timer.cpp`
 
 ### Root Directory
 - `Makefile`: Contains commands to compile the project.
