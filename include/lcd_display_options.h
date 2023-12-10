@@ -26,6 +26,8 @@ void displayBlinkingText(HD44780 *lcd, char* text);
 
 // Helper function prototypes
 void scrollText(char* text, int length);
+void bounceSecondRow(char *text, char *result, int ticks, int flips);
+void clipToSecondPart(char *text, char *result);
 void displayText(HD44780 *lcd, char* text);
 uint8_t getStrLen(char *text);
 
