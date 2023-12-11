@@ -34,7 +34,7 @@ ISR(PCINT0_vect) {
     }
     if (readButton(buttonSecondPin)) {
         _delay_ms(BUTTON_DEBOUNCE_TIME);
-        specialFunctionsFlags ^= FLAG_THREE;
+        specialFunctionsFlags ^= NEXT_BILLBOARD;
     }
     if (readButton(buttonSetPin)) {
         _delay_ms(BUTTON_DEBOUNCE_TIME);
@@ -64,11 +64,15 @@ int specialFunctions(HD44780 *lcd) {
     // Act based on flags
     if (specialFunctionsFlags & FIRE_ALARM) {
         fireAlarm(lcd);
-        return 1;
+        return DISPLAY_FUNCTION;
     }
     if (specialFunctionsFlags & DISPLAY_CLOCK) {
         displayClock(lcd);
-        return 1;
+        return DISPLAY_FUNCTION;
+    }
+    if (specialFunctionsFlags & NEXT_BILLBOARD) {
+        specialFunctionsFlags ^= NEXT_BILLBOARD;
+        return SHOW_NEXT_BILLBOARD;
     }
     // ... TODO: Add more special functions here
     return 0;

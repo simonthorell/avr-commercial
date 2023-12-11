@@ -76,9 +76,13 @@ void displayStaticText(HD44780 *lcd, char *text) {
     }
     
     uint8_t functionExecuted = specialFunctions(lcd);
-    if (functionExecuted == 1) {
+    if (functionExecuted == DISPLAY_FUNCTION) {
       // After special function was executed, display text again. 
       displayText(lcd, text);
+    } 
+    if (functionExecuted == SHOW_NEXT_BILLBOARD) {
+      // Break if next billboard was requested
+      return;
     }
     _delay_ms(INTERUPT_TIMER);
     duration -= INTERUPT_TIMER;
@@ -99,7 +103,11 @@ void displayScrollingText(HD44780 *lcd, char *text, int length) {
       displayText(lcd, text);
 
       for (uint16_t i = 0; i < scrollDelay; i += INTERUPT_TIMER) {
-        specialFunctions(lcd); // Check if button was pressed
+        uint8_t functionExecuted = specialFunctions(lcd); // Check if button was pressed
+        if (functionExecuted == SHOW_NEXT_BILLBOARD) {
+          // Break if next billboard was requested
+          return;
+        }
         _delay_ms(INTERUPT_TIMER);
         duration -= INTERUPT_TIMER;
       }
@@ -129,13 +137,21 @@ void displayBlinkingText(HD44780 *lcd, char *text) {
     }
     
     for (uint16_t i = 0; i < blinkDelay; i += INTERUPT_TIMER) {
-      specialFunctions(lcd); // Check if button was pressed
+      uint8_t functionExecuted = specialFunctions(lcd); // Check if button was pressed
+      if (functionExecuted == SHOW_NEXT_BILLBOARD) {
+        // Break if next billboard was requested
+        return;
+      }
       _delay_ms(INTERUPT_TIMER);
       duration -= INTERUPT_TIMER;
     }
     lcd->Clear();
     for (uint16_t i = 0; i < blinkDelay; i += INTERUPT_TIMER) {
-      specialFunctions(lcd); // Check if button was pressed
+      uint8_t functionExecuted = specialFunctions(lcd); // Check if button was pressed
+      if (functionExecuted == SHOW_NEXT_BILLBOARD) {
+        // Break if next billboard was requested
+        return;
+      }
       _delay_ms(INTERUPT_TIMER);
       duration -= INTERUPT_TIMER;
     }

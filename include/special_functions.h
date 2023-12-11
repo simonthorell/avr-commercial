@@ -10,8 +10,13 @@ extern volatile uint8_t specialFunctionsFlags;
 // Bitwise flags
 const uint8_t FIRE_ALARM = 1 << 0;     // 00000001
 const uint8_t DISPLAY_CLOCK = 1 << 1;  // 00000010
-const uint8_t FLAG_THREE = 1 << 2;     // 00000100
+const uint8_t NEXT_BILLBOARD = 1 << 2; // 00000100
 const uint8_t FLAG_FOUR = 1 << 3;      // 00001000
+
+enum SpecialFunctions {
+  DISPLAY_FUNCTION = 1,
+  SHOW_NEXT_BILLBOARD = 2,
+};
 
 // Core function
 void initializeButtonInterrupts();
