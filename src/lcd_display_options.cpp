@@ -76,11 +76,11 @@ void displayStaticText(HD44780 *lcd, char *text) {
     }
     
     uint8_t functionExecuted = specialFunctions(lcd);
-    if (functionExecuted == 1) {
+    if (functionExecuted == DISPLAY_FUNCTION) {
       // After special function was executed, display text again. 
       displayText(lcd, text);
     } 
-    if (functionExecuted == 2) {
+    if (functionExecuted == SHOW_NEXT_BILLBOARD) {
       // Break if next billboard was requested
       return;
     }
@@ -104,7 +104,7 @@ void displayScrollingText(HD44780 *lcd, char *text, int length) {
 
       for (uint16_t i = 0; i < scrollDelay; i += INTERUPT_TIMER) {
         uint8_t functionExecuted = specialFunctions(lcd); // Check if button was pressed
-        if (functionExecuted == 2) {
+        if (functionExecuted == SHOW_NEXT_BILLBOARD) {
           // Break if next billboard was requested
           return;
         }
@@ -138,7 +138,7 @@ void displayBlinkingText(HD44780 *lcd, char *text) {
     
     for (uint16_t i = 0; i < blinkDelay; i += INTERUPT_TIMER) {
       uint8_t functionExecuted = specialFunctions(lcd); // Check if button was pressed
-      if (functionExecuted == 2) {
+      if (functionExecuted == SHOW_NEXT_BILLBOARD) {
         // Break if next billboard was requested
         return;
       }
@@ -148,7 +148,7 @@ void displayBlinkingText(HD44780 *lcd, char *text) {
     lcd->Clear();
     for (uint16_t i = 0; i < blinkDelay; i += INTERUPT_TIMER) {
       uint8_t functionExecuted = specialFunctions(lcd); // Check if button was pressed
-      if (functionExecuted == 2) {
+      if (functionExecuted == SHOW_NEXT_BILLBOARD) {
         // Break if next billboard was requested
         return;
       }

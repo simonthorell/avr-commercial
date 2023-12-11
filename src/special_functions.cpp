@@ -64,15 +64,15 @@ int specialFunctions(HD44780 *lcd) {
     // Act based on flags
     if (specialFunctionsFlags & FIRE_ALARM) {
         fireAlarm(lcd);
-        return 1;
+        return DISPLAY_FUNCTION;
     }
     if (specialFunctionsFlags & DISPLAY_CLOCK) {
         displayClock(lcd);
-        return 1;
+        return DISPLAY_FUNCTION;
     }
     if (specialFunctionsFlags & NEXT_BILLBOARD) {
         specialFunctionsFlags ^= NEXT_BILLBOARD;
-        return 2;
+        return SHOW_NEXT_BILLBOARD;
     }
     // ... TODO: Add more special functions here
     return 0;
