@@ -6,7 +6,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-#define DISPLAY_TIME 10000    // Total display time in ms
+#define DISPLAY_TIME 20000    // Total display time in ms
 #define INTERUPT_TIMER 100    // Interval for calling specialFunctions in ms
 #define BOUNCE_TIMER 300
 
