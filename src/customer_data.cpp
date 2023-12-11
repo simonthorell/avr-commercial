@@ -53,7 +53,7 @@ const message svarteText[] PROGMEM = {
     },
 };
 
-const char langOne[] PROGMEM = "Mysterier? Ring L" AA "ngben";
+const char langOne[] PROGMEM = "Mysterier?      Ring L" AA "ngben";
 const char langTwo[] PROGMEM = "L" AA "ngben fixar   biffen";
 const message langText[] PROGMEM = {
     {
@@ -77,7 +77,7 @@ const message iotText[] PROGMEM = {
 const char yrrolOne[] PROGMEM =
     "T-R" OE "d - f" OE "r dig som t" AE "nkt klart";
 const char yrrolTwo[] PROGMEM =
-    "Claes M" AA "nsson - om flickan sj" AE "lv f" AA " r v" AE "lja";
+    "Claes M" AA "nsson - om flickan sj" AE "lv f" AA "r v" AE "lja";
 const message yrrolText[] PROGMEM = {
     {
         SCROLLING,
