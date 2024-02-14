@@ -4,3 +4,5 @@ bin/
 obj/
 .DS_Store
 .cache/
+out/
+compile_commands.json

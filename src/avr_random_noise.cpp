@@ -1,7 +1,6 @@
 #include "avr_random_noise.h"
 #include "customer_data.h"
 #include <avr/io.h>
-#include <stdint.h> //So I dont get all the uint errors, just for my IDE
 
 pseudoRandom::pseudoRandom(void) {
   initializeRandom(3);

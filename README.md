@@ -50,7 +50,7 @@ The project is organized into several directories, each containing specific type
 1. Ensure you have AVR-GCC installed on your system.
 2. Clone the repository to your local machine.
 3. Navigate to the root directory of the project.
-4. Run `make` to compile the project.
+4. Compile using CMake
 5. After successful compilation, upload the binary to the Atmega328p microcontroller.
 6. The LCD should display the programmed output upon successful upload.
 
